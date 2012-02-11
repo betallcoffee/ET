@@ -8,6 +8,8 @@
 #ifndef ETSELECT_H
 #define ETSELECT_H
 
+#include "ETWatcher.h"
+
 namespace ET
 {
 
@@ -24,7 +26,7 @@ class ETEventLoop;
 
     /// Dispatch the I/O events
     /// Must be called in the loop thread.
-    virtual int select(int timeout, WatchList *activeList);
+    virtual int select(int timeout, WatcherList *activeList);
 
     /// add or update a watcher on a particular fd
     virtual void addWatcher(ETWatcher *w) = 0;

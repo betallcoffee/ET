@@ -8,10 +8,13 @@
 #ifndef ETWATCHER_H
 #define ETWATCHER_H
 
+#include <vector>
+
 namespace ET
 {
 
 class ETEventLoop;
+class ETWatcher;
 
 typedef std::vector<ETWatcher*> WatcherList;
 
@@ -24,7 +27,7 @@ typedef std::vector<ETWatcher*> WatcherList;
     class ETWatcher
     {
     public:
-        typedef (*EventCallback)();
+        typedef void (*EventCallback)();
 
         ETWatcher(ETEventLoop *eventLoop, int fd);
         ~ETWatcher();
@@ -36,13 +39,13 @@ typedef std::vector<ETWatcher*> WatcherList;
         ETEventLoop *ownerLoop() { return eventLoop_; }
 
         /// Set activeEvents_
-        void setAcitveEvents(int events) { activeEvents_ = events; }
+        void setActiveEvents(int events) { activeEvents_ = events; }
         /// Get events_
         int getEvents() { return events_; }
 
         void setReadCallback(EventCallback cb) { readCallback_ = cb; }
         void setWriteCallback(EventCallback cb) { writeCallback_ = cb; }
-        void setCloseCallback(EventCallback cb) { closeCalback_ = cb; }
+        void setCloseCallback(EventCallback cb) { closeCallback_ = cb; }
         void setErrorCallback(EventCallback cb) { errorCallback_ = cb; }
 
         void enableReading() { events_ |= READ; update(); }

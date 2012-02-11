@@ -15,7 +15,6 @@
 namespace ET
 {
 
-class ETWatcher;
 class ETSelect;
 
 ///
@@ -36,8 +35,11 @@ class ETSelect;
         void updateWatcher(ETWatcher *w);
 
     private:
-        ETEpollSelect *select_;
+        ETSelect *select_;
         int running;
+        std::vector<ETWatcher*> activeWatcherList_;
+
+
     };
 } // end namespace ET
 #endif // ETEVENTLOOP_H

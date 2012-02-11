@@ -5,8 +5,11 @@
 
 #include "ETEpollSelect.h"
 
-#include <sys/time.h>
-#include <sys/map.h>
+#include <sys/epoll.h>
+#include <errno.h>
+#include <unistd.h>
+
+#include <map>
 
 #include "ETWatcher.h"
 
@@ -20,7 +23,7 @@ ETEpollSelect::ETEpollSelect()
 
     if (epollfd_ < 0)
     {
-        cout << "ETEpollSelect::ETEpollSelect" << endl;
+        //printf("ETEpollSelect::ETEpollSelect\n");
     }
 }
 
@@ -53,7 +56,7 @@ int ETEpollSelect::select(int timeout, WatcherList *activeList)
     /// Check what of the reqeusted events occurred on the file descriptors.
     for (int i = 0; i < res; ++i)
     {
-        Watcher *w = events_[i].data.ptr;
+        ETWatcher *w = (ETWatcher*)events_[i].data.ptr;
         int events = 0;
         int what = events_[i].events;
         w->setActiveEvents(events);
@@ -63,13 +66,13 @@ int ETEpollSelect::select(int timeout, WatcherList *activeList)
 }
 
 /// Add a watcher on a particular fd
-void ETWatcher::addWatcher(ETWatcher *w)
+void ETEpollSelect::addWatcher(ETWatcher *w)
 {
     struct epoll_event event;
     
-    if (watcherList_.find(w->getFD()))
+    if (watcherList_.find(w->getFD()) != watcherList_.end())
     {
-        updateWathcer(w);
+        updateWatcher(w);
     }
     else
     {
@@ -79,22 +82,22 @@ void ETWatcher::addWatcher(ETWatcher *w)
     
     if (epoll_ctl(epollfd_, EPOLL_CTL_ADD, w->getFD(), &event) < 0)
     {
-        printf("epoll_ctl op=EPOLL_CTL_ADD error\n");
+        //printf("epoll_ctl op=EPOLL_CTL_ADD error\n");
     }
     else
     {
-        watcherList_.[w->getFD()] = w;
+        watcherList_[w->getFD()] = w;
     }
     }
 }
 
 /// Remove a watcher on a particular fd
-void ETWatcher::removeWatcher(ETWatcher *w)
+void ETEpollSelect::removeWatcher(ETWatcher *w)
 {
     struct epoll_event event;
     std::map<int, ETWatcher *>::iterator it;
 
-    if (it = watcherList_.find(w->getFD()))
+    if ((it = watcherList_.find(w->getFD())) != watcherList_.end())
     {
         /// Since Linux 2.6.9, event can be specified as NULL 
         /// when using EPOLL_CTL_DEL. Applications that need
@@ -106,7 +109,7 @@ void ETWatcher::removeWatcher(ETWatcher *w)
 
         if (epoll_ctl(epollfd_, EPOLL_CTL_DEL, w->getFD(), &event) < 0)
         {
-            printf("epoll_ctl op=EPOLL_CTL_DEL error\n");
+            //printf("epoll_ctl op=EPOLL_CTL_DEL error\n");
         }
         else
         {
@@ -116,12 +119,12 @@ void ETWatcher::removeWatcher(ETWatcher *w)
 }
 
 /// Update a watcher on a particular fd
-void ETWatcher::updateWatcher(ETWatcher *w)
+void ETEpollSelect::updateWatcher(ETWatcher *w)
 {
     struct epoll_event event;
     std::map<int, ETWatcher *>::iterator it;
 
-    if (it = watcherList_.find(w->getFD()))
+    if ((it = watcherList_.find(w->getFD())) != watcherList_.end())
     {
         event.events |= w->getEvents();
         event.events |= EPOLLET;
@@ -129,7 +132,7 @@ void ETWatcher::updateWatcher(ETWatcher *w)
 
         if (epoll_ctl(epollfd_, EPOLL_CTL_MOD, w->getFD(), &event) < 0)
         {
-            printf("epoll_ctl op=EPOLL_CTL_MOD error\n");
+            //printf("epoll_ctl op=EPOLL_CTL_MOD error\n");
         }
     }
     else

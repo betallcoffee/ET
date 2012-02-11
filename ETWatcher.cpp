@@ -6,6 +6,8 @@
 
 #include "ETWatcher.h"
 
+#include <sys/epoll.h>
+
 #include "ETEventLoop.h"
 
 using namespace ET;
@@ -21,10 +23,10 @@ const int ETWatcher::WRITE = EPOLLOUT;
 const int ETWatcher::ERROR = EPOLLERR;
 const int ETWatcher::CLOSE = EPOLLHUP;
 
-ETWatcher::ETWatcher(EventLoop *eventLoop, int fd)
-    : eventLoop_(eventLoop)
-      fd_(fd)
-      events_(0)
+ETWatcher::ETWatcher(ETEventLoop *eventLoop, int fd)
+    : eventLoop_(eventLoop),
+      fd_(fd),
+      events_(0),
       activeEvents_(0)
 {
 }
@@ -35,19 +37,19 @@ ETWatcher::~ETWatcher()
 
 void ETWatcher::handleEvent()
 {
-    if (activeEvents & CLOSE)
+    if (activeEvents_ & CLOSE)
     {
         if (closeCallback_) closeCallback_();
     }
-    if (activeEvents & ERROR)
+    if (activeEvents_ & ERROR)
     {
         if (errorCallback_) errorCallback_();
     }
-    if (activeEvents & READ)
+    if (activeEvents_ & READ)
     {
         if (readCallback_) readCallback_();
     }
-    if (activeEvents & WRITE)
+    if (activeEvents_ & WRITE)
     {
         if (writeCallback_) writeCallback_();
     }

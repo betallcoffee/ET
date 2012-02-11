@@ -10,6 +10,8 @@
 
 #include "ETSelect.h"
 
+#include <sys/epoll.h>
+
 #include <map>
 
 namespace ET
@@ -29,7 +31,7 @@ class ETWatcher;
 
 	/// Dispatch the I/O events
 	/// Must be called in the loop thread.
-	    virtual int select(int timeout, WatcherLIst *activeList);
+	    virtual int select(int timeout, WatcherList *activeList);
 
 	/// Add a watcher on a particular fd
 	    virtual void addWatcher(ETWatcher *w);
@@ -38,7 +40,7 @@ class ETWatcher;
 	    virtual void removeWatcher(ETWatcher *w);
 
 	/// Update a watcher on a particular fd 
-	    virtual void updateWathcer(ETWatcher *w);
+	    virtual void updateWatcher(ETWatcher *w);
 
     private:
         int epollfd_;

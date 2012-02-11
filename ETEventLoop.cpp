@@ -22,7 +22,7 @@ ETEventLoop::~ETEventLoop()
 void ETEventLoop::runLoop()
 {
     int timeout = 0;
-    WatcherList::iterator it;
+    std::vector<ETWatcher*>::iterator it;
     running = 1;
 
     while (running)
@@ -30,9 +30,9 @@ void ETEventLoop::runLoop()
         activeWatcherList_.clear();
         select_->select(timeout, &activeWatcherList_);
 
-        for (it = activeWatcherList.begin(); it < activeWatcherList.end(); ++it)
+        for (it = activeWatcherList_.begin(); it != activeWatcherList_.end(); ++it)
         {
-            it->handleEvent();
+            (*it)->handleEvent();
         }
     }
 }
@@ -59,6 +59,6 @@ void ETEventLoop::removeWatcher(ETWatcher *w)
 
 void ETEventLoop::updateWatcher(ETWatcher *w)
 {
-    select_->updateWatcher();
+    select_->updateWatcher(w);
 }
 
