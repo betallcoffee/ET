@@ -13,6 +13,7 @@ using namespace ET;
 
 ETEventLoop::ETEventLoop()
 {
+    running = 0;
 }
 
 ETEventLoop::~ETEventLoop()

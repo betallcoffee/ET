@@ -10,12 +10,11 @@
 
 #include <vector>
 
-#include "ETWatcher.h"
-
 namespace ET
 {
 
 class ETSelect;
+class ETWatcher;
 
 ///
 /// class for event loop

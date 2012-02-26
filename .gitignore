@@ -1,0 +1,5 @@
+.libs
+*.swp
+*.o
+*.tar.gz
+tags
