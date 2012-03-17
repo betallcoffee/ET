@@ -49,10 +49,15 @@ enum connStates
         void send(char *data, int length);
 
     private:
-        static void handWrite();
-        static void handRead();
-        static void handError();
-        static void handClose();
+        static void handWrite(void *param);
+        static void handRead(void *param);
+        static void handError(void *param);
+        static void handClose(void *param);
+        
+        void handWrite();
+        void handRead();
+        void handError();
+        void handClose();
 
         ETEventLoop *eventLoop_;
         ETWatcher *watcher_;

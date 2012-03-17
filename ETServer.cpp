@@ -6,10 +6,10 @@
 // This is an interal header file, you should not include this file.
 //
 
-#ifndef ETSERVER_H
-#define ETSERVER_H
-
 #include "ETServer.h"
+
+#include <stdlib.h>
+
 #include "ETEventLoop.h"
 #include "ETAcceptor.h"
 #include "ETConnector.h"
@@ -20,6 +20,7 @@ ETServer::ETServer(char *ip, unsigned short port)
 {
     eventLoop_ = new ETEventLoop();
     acceptor_ = new ETAcceptor(eventLoop_, ip, port);
+    acceptor_->setParam(this);
     acceptor_->setNewConnectCallback(ETServer::newConnector);
     state_ = serverStatesStopped;
 }
@@ -27,13 +28,19 @@ ETServer::ETServer(char *ip, unsigned short port)
 ETServer::~ETServer()
 {
     free(eventLoop_);
-    free(acceptro_);
+    free(acceptor_);
 }
 
 void ETServer::start()
 {
     state_ = serverStatesRunning;
     acceptor_->listen();
+}
+
+void ETServer::newConnector(void *param, int fd)
+{
+    ETServer *server = (ETServer *)param;
+    server->newConnector(fd);
 }
 
 void ETServer::newConnector(int fd)

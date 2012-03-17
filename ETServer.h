@@ -35,7 +35,6 @@ enum serverStates
         ~ETServer();
 
         void start();
-        static void newConnector(int fd);
 
         void setWriteCompleteCallback(callback cb)
         { writeCompleteCallback_ = cb; }
@@ -45,6 +44,9 @@ enum serverStates
         { connectCallback_ = cb; }
 
     private:
+        static void newConnector(void *param, int fd);
+        void newConnector(int fd);
+
         ETEventLoop *eventLoop_;
         ETAcceptor *acceptor_;
         std::map<int, ETConnector*> connectorList_;

@@ -53,7 +53,8 @@ ARFLAGS = cru
 libET_a_AR = $(AR) $(ARFLAGS)
 libET_a_LIBADD =
 am_libET_a_OBJECTS = ETEpollSelect.$(OBJEXT) ETEventLoop.$(OBJEXT) \
-	ETSelect.$(OBJEXT) ETWatcher.$(OBJEXT)
+	ETSelect.$(OBJEXT) ETWatcher.$(OBJEXT) ETConnector.$(OBJEXT) \
+	ETAcceptor.$(OBJEXT) ETServer.$(OBJEXT)
 libET_a_OBJECTS = $(am_libET_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -179,10 +180,16 @@ libET_a_SOURCES = ETEpollSelect.h \
      ETEventLoop.h \
      ETSelect.h \
      ETWatcher.h \
+	 ETConnector.h \
+	 ETAcceptor.h \
+	 ETServer.h\
      ETEpollSelect.cpp \
      ETEventLoop.cpp \
      ETSelect.cpp \
-     ETWatcher.cpp
+     ETWatcher.cpp \
+	 ETConnector.cpp \
+	 ETAcceptor.cpp \
+	 ETServer.cpp
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -254,9 +261,12 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETAcceptor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETConnector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEpollSelect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEventLoop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETSelect.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETServer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETWatcher.Po@am__quote@
 
 .cpp.o:

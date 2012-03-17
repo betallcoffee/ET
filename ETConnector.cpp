@@ -6,6 +6,12 @@
 
 #include "ETConnector.h"
 
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+
 #include "ETEventLoop.h"
 #include "ETWatcher.h"
 
@@ -15,7 +21,8 @@ ETConnector::ETConnector(ETEventLoop *eventLoop, int sockFD)
 {
     eventLoop_ = eventLoop;
     state_ = connStatesConnecting;
-    watcher_ = new ETWathcer(eventLoop, sockFD);
+    watcher_ = new ETWatcher(eventLoop, sockFD);
+    watcher_->setParam(this);
     watcher_->setWriteCallback(ETConnector::handWrite);
     watcher_->setReadCallback(ETConnector::handRead);
     watcher_->setErrorCallback(ETConnector::handError);
@@ -49,11 +56,11 @@ void ETConnector::connectDestroy()
     }
 }
 
-void ETConnector::send(char *data, int length);
+void ETConnector::send(char *data, int length)
 {
     int res = 0;
     if (!watcher_->isWriting()) {
-        res = send(watcher_->getFD(), data, length, 0);
+        res = ::send(watcher_->getFD(), data, length, 0);
         if (res < 0) {
             if (errno != EWOULDBLOCK) {
                 // printf error!
@@ -64,8 +71,8 @@ void ETConnector::send(char *data, int length);
     if (length - res > 0) {
         writeLength_ = length - res;
         writeIndex_ = 0;
-        writeData_ = malloc(length * sizeof(char));
-        memcpy(writeData_, data + res, length_);
+        writeData_ = (char*)malloc(length * sizeof(char));
+        memcpy(writeData_, data + res, length);
         if (!watcher_->isWriting()) {
             watcher_->enableWriting();
         }
@@ -74,11 +81,17 @@ void ETConnector::send(char *data, int length);
     }
 }
 
+void ETConnector::handWrite(void *param)
+{
+    ETConnector *connector = (ETConnector *)param;
+    connector->handWrite();
+}
+
 void ETConnector::handWrite()
 {
     int res = 0;
-    if (wathcer_->isWriting()) {
-        res = send(watcher_->getFD(), writeData_ + writeIndex_, writeLength_, 0);
+    if (watcher_->isWriting()) {
+        res = ::send(watcher_->getFD(), writeData_ + writeIndex_, writeLength_, 0);
         if (res < 0 ) {
             if (errno != EWOULDBLOCK) {
                 // printf error!
@@ -103,6 +116,11 @@ void ETConnector::handWrite()
         }
     }
 }
+
+void ETConnector::handRead(void *param)
+{
+    ETConnector *connector = (ETConnector *)param;
+    connector->handRead();
 }
 
 void ETConnector::handRead()
@@ -111,7 +129,7 @@ void ETConnector::handRead()
     int res = 0;
     ioctl(watcher_->getFD(), FIONREAD, &size);
     if (size > 0) {
-        readData_ = malloc(size * sizeof(char));
+        readData_ = (char*)malloc(size * sizeof(char));
         res = recv(watcher_->getFD(), readData_, size, 0);
         if (res != size) {
             // printf error
@@ -125,9 +143,21 @@ void ETConnector::handRead()
     }
 }
 
+void ETConnector::handError(void *param)
+{
+    ETConnector *connector = (ETConnector *)param;
+    connector->handError();
+    // printf error
+}
+
 void ETConnector::handError()
 {
-    // printf error
+}
+
+void ETConnector::handClose(void *param)
+{
+    ETConnector *connector = (ETConnector *)param;
+    connector->handClose();
 }
 
 void ETConnector::handClose()

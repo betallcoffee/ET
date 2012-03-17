@@ -27,7 +27,7 @@ typedef std::vector<ETWatcher*> WatcherList;
     class ETWatcher
     {
     public:
-        typedef void (*EventCallback)();
+        typedef void (*EventCallback)(void *);
 
         ETWatcher(ETEventLoop *eventLoop, int fd);
         ~ETWatcher();
@@ -43,6 +43,7 @@ typedef std::vector<ETWatcher*> WatcherList;
         /// Get events_
         int getEvents() { return events_; }
 
+        void setParam(void *param) { param_ = param; }
         void setReadCallback(EventCallback cb) { readCallback_ = cb; }
         void setWriteCallback(EventCallback cb) { writeCallback_ = cb; }
         void setCloseCallback(EventCallback cb) { closeCallback_ = cb; }
@@ -68,6 +69,7 @@ typedef std::vector<ETWatcher*> WatcherList;
         const int fd_;
         int events_;
         int activeEvents_;
+        void *param_;
         EventCallback readCallback_;
         EventCallback writeCallback_;
         EventCallback closeCallback_;

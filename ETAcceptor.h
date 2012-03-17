@@ -19,20 +19,24 @@ namespace ET
     class ETAcceptor
     {
     public:
-        typedef void (*newConnectCallback)(int);
+        typedef void (*newConnectCallback)(void *, int);
         ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short port);
         ~ETAcceptor();
 
         int listen();
 
+        void setParam(void *param) 
+        { param_ = param; }
         void setNewConnectCallback(newConnectCallback cb)
         { newConnectCallback_ = cb; }
 
     private:
-        static void handRead();
+        static void handRead(void *param);
+        void handRead();
 
         int sockFD_;
         int listenning_;
+        void *param_;
 
         ETEventLoop *eventLoop_;
         ETWatcher *watcher_;
@@ -40,3 +44,5 @@ namespace ET
         newConnectCallback newConnectCallback_;
     }; // end class ETAcceptor
 }// end namespace ET
+
+#endif // end ETACCEPTOR_H

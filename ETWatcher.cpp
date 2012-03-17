@@ -39,19 +39,19 @@ void ETWatcher::handleEvent()
 {
     if (activeEvents_ & CLOSE)
     {
-        if (closeCallback_) closeCallback_();
+        if (closeCallback_) closeCallback_(param_);
     }
     if (activeEvents_ & ERROR)
     {
-        if (errorCallback_) errorCallback_();
+        if (errorCallback_) errorCallback_(param_);
     }
     if (activeEvents_ & READ)
     {
-        if (readCallback_) readCallback_();
+        if (readCallback_) readCallback_(param_);
     }
     if (activeEvents_ & WRITE)
     {
-        if (writeCallback_) writeCallback_();
+        if (writeCallback_) writeCallback_(param_);
     }
 }
 
