@@ -6,6 +6,7 @@
 #include <sys/epoll.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "ETEpollSelect.h"
 #include "ETWatcher.h"
@@ -27,6 +28,13 @@ ETEpollSelect::ETEpollSelect()
     if (epollfd_ < 0)
     {
         //printf("ETEpollSelect::ETEpollSelect\n");
+        events_ = NULL;
+        evSize_ = 0;
+    }
+    else
+    {
+        events_ = (struct epoll_event*)malloc(sizeof(struct epoll_event) * kEventsSize);
+        evSize_ = kEventsSize;
     }
 }
 

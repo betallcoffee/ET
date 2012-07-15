@@ -44,6 +44,7 @@ class ETWatcher;
 	    virtual int updateWatcher(ETWatcher *w);
 
     private:
+        static const int kEventsSize = 16;
         int epollfd_;
         struct epoll_event *events_;
         int evSize_;
