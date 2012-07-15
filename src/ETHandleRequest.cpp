@@ -5,6 +5,7 @@
 //
 
 #include "ETHandleRequest.h"
+#include "ETHandleFactory.h"
 #include "ETConnector.h"
 
 using namespace ET;

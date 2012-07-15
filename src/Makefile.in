@@ -47,9 +47,10 @@ AR = ar
 ARFLAGS = cru
 libET_a_AR = $(AR) $(ARFLAGS)
 libET_a_LIBADD =
-am_libET_a_OBJECTS = ETEpollSelect.$(OBJEXT) ETEventLoop.$(OBJEXT) \
-	ETSelect.$(OBJEXT) ETWatcher.$(OBJEXT) ETConnector.$(OBJEXT) \
-	ETAcceptor.$(OBJEXT) ETHandleFactory.$(OBJEXT)
+am_libET_a_OBJECTS = ETEventLoop.$(OBJEXT) ETWatcher.$(OBJEXT) \
+	ETSelect.$(OBJEXT) ETEpollSelect.$(OBJEXT) \
+	ETAcceptor.$(OBJEXT) ETConnector.$(OBJEXT) \
+	ETHandleFactory.$(OBJEXT) ETHandleRequest.$(OBJEXT)
 libET_a_OBJECTS = $(am_libET_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -161,22 +162,22 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = libET.a
-libET_a_SOURCES = ETEpollSelect.h \
-     ETEventLoop.h \
-     ETSelect.h \
-     ETWatcher.h \
-	 ETConnector.h \
-	 ETAcceptor.h \
-	 ETHandleRequest.h \
-	 ETHandleFactory.h \
-     ETEpollSelect.cpp \
-     ETEventLoop.cpp \
-     ETSelect.cpp \
-     ETWatcher.cpp \
-	 ETConnector.cpp \
-	 ETAcceptor.cpp \
-	 ETHandleRequest.ccp \
-	 ETHandleFactory.cpp
+libET_a_SOURCES = ETEventLoop.h \
+				 ETWatcher.h \
+				 ETSelect.h \
+				 ETEpollSelect.h \
+				 ETAcceptor.h \
+				 ETConnector.h \
+				 ETHandleFactory.h \
+				 ETHandleRequest.h \
+				 ETEventLoop.cpp \
+				 ETWatcher.cpp \
+				 ETSelect.cpp \
+				 ETEpollSelect.cpp \
+				 ETAcceptor.cpp \
+				 ETConnector.cpp \
+				 ETHandleFactory.cpp \
+				 ETHandleRequest.cpp 
 
 all: all-am
 
@@ -231,6 +232,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEpollSelect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEventLoop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETHandleFactory.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETHandleRequest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETSelect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETWatcher.Po@am__quote@
 

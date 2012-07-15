@@ -16,7 +16,7 @@ ETHandleFactory::ETHandleFactory(ETAcceptor *acceptor) : acceptor_(acceptor)
 
 ETHandleRequest *ETHandleFactory::makeRequest(ETConnector *conn)
 {
-    ETHandleRequest *request = new ETHandleRequest(this);
+    ETHandleRequest *request = new ETHandleRequest(this, conn);
     request->setConn(conn);
     return request;
 }

@@ -22,10 +22,14 @@ class ETWathcer;
     class ETEventLoop
     {
     public:
-        ETEventLoop();
+        ETEventLoop(ETSelect *);
         ~ETEventLoop();
 
-        void select();
+        // accessor of select.
+        void setSelect(ETSelect *select) { select_ = select; }
+        ETSelect *getSelect() { return select_; }
+
+        void runOneLoop();
 
         void addWatcher(ETWatcher *w);
         void removeWatcher(ETWatcher *w);

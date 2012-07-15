@@ -11,7 +11,7 @@
 
 using namespace ET;
 
-ETEventLoop::ETEventLoop()
+ETEventLoop::ETEventLoop(ETSelect *select) : select_(select)
 {
 }
 
@@ -19,7 +19,7 @@ ETEventLoop::~ETEventLoop()
 {
 }
 
-void ETEventLoop::select()
+void ETEventLoop::runOneLoop()
 {
     int timeout = 0;
     std::vector<ETWatcher*>::iterator it;

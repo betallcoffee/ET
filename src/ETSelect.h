@@ -30,7 +30,7 @@ class ETEventLoop;
 
     // Demultiplexing the I/O events
     // Must be called in the loop thread.
-    virtual int select(int timeout, WatcherList *activeList);
+    virtual int select(int timeout, WatcherList *activeList) {}
 
     // add or update a watcher on a particular fd
     virtual int addWatcher(ETWatcher *w) = 0;

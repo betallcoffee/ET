@@ -20,7 +20,7 @@ namespace ET
     class ETHandleRequest
     {
     public:
-        ETHandleRequest(ETHandleFactory *);
+        ETHandleRequest(ETHandleFactory *, ETConnector *);
         virtual ~ETHandleRequest();
 
         virtual void handle(char *readData, int size);
