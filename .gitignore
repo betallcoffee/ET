@@ -10,6 +10,7 @@ stamp-h1
 missing
 configure.scan
 configure.in
+configure.ac
 config.h
 config.log
 config.status
