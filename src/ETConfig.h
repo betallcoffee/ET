@@ -11,17 +11,10 @@
 namespace ET
 {
 
-enum eventType 
-{
-    kNone   =   0,
-    kRead   =   1,
-    kWrite  =   2,
-    kClose  =   4,
-    kError  =   8
-};
-
 const int kInvalidFD = -1;
 const int kMaxConn = 128;
+
+typedef void(*EventCallback)(void *);
 
 } // end namespace ET
 

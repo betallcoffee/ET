@@ -168,8 +168,6 @@ libET_a_SOURCES = ETEventLoop.h \
 				 ETEpollSelect.h \
 				 ETAcceptor.h \
 				 ETConnector.h \
-				 ETHandleFactory.h \
-				 ETHandleRequest.h \
 				 ETEventLoop.cpp \
 				 ETWatcher.cpp \
 				 ETSelect.cpp \
@@ -177,7 +175,9 @@ libET_a_SOURCES = ETEventLoop.h \
 				 ETAcceptor.cpp \
 				 ETConnector.cpp \
 				 ETHandleFactory.cpp \
-				 ETHandleRequest.cpp 
+                 ETHandleRequest.cpp \
+                 ETHandleFactory.h \
+                 ETHandleRequest.h 
 
 all: all-am
 

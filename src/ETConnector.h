@@ -9,6 +9,7 @@
 #ifndef ETCONNECTOR_H
 #define ETCONNECTOR_H
 
+#include "ETConfig.h"
 #include "ETWatcher.h"
 
 namespace ET
@@ -19,27 +20,33 @@ namespace ET
 
 enum connStates
 {
-    kConnStatesConnected,
+    kConnStatesNone,
     kConnStatesConnecting,
-    kConnStatesDisconnected,
-    kConnStatesDisconnecting
+    kConnStatesConnected,
+    kConnStatesDisconnecting,
+    kConnStatesDisconnected
 };
 
     ///
     /// operator for new connector
     ///
-    class ETConnector : public ETWatcher
+    class ETConnector 
     {
     public:
-        ETConnector(ETEventLoop *eventLoop, int sockFD, ETAcceptor *acceptor);
-        virtual ~ETConnector();
+        ETConnector(ETEventLoop *eventLoop, ETAcceptor *acceptor);
+        ~ETConnector();
 
-        virtual void readHandle();
-        virtual void writeHandle();
-        virtual void closeHandle();
-        virtual void errorHandle();
+        static void readEvent(void *);
+        static void writeEvent(void *);
+        static void closeEvent(void *);
+        static void errorEvent(void *);
 
-        void connectEstablished();
+        void readHandle();
+        void writeHandle();
+        void closeHandle();
+        void errorHandle();
+
+        int connectEstablished(int fd);
         void connectDestroy();
 
         void setState(int state)
@@ -51,8 +58,11 @@ enum connStates
         int send(char *data, int size);
 
     private:
+        ETWatcher watcher_;
+        ETEventLoop *eventLoop_;
         ETAcceptor *acceptor_;
         ETHandleRequest *request_;
+        int fd_;
         int state_;
         char *writeData_;
         int writeSize_;

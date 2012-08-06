@@ -21,16 +21,21 @@ namespace ET
     //
     // class for operation of listenning socket fd
     //
-    class ETAcceptor : public ETWatcher
+    class ETAcceptor 
     {
     public:
         ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short port);
-        virtual ~ETAcceptor();
+        ~ETAcceptor();
 
-        virtual void readHandle();
-        virtual void writeHandle();
-        virtual void closeHandle();
-        virtual void errorHandle();
+        static void readEvent(void *);
+        static void writeEvent(void *);
+        static void closeEvent(void *);
+        static void errorEvent(void *);
+
+        void readHandle();
+        void writeHandle();
+        void closeHandle();
+        void errorHandle();
 
         // You must set ETHandleFactory object before calling listen();
         void setFactory(ETHandleFactory *factory) { factory_ = factory; }
@@ -51,10 +56,13 @@ namespace ET
         void cleanConn(ETConnector *);
 
     private:
-        ETConnector *newConnHandle(ETEventLoop *eventLoop, int newFD);
+        ETConnector *newConnHandle();
         void *freeConnHandle(ETConnector *);
 
+        ETWatcher watcher_;
+        ETEventLoop *eventLoop_;
         ETHandleFactory *factory_;
+        int fd_;
         int listenning_;
 
     }; // end class ETAcceptor

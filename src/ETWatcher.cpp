@@ -14,59 +14,46 @@
 using namespace ET;
 
 ETWatcher::ETWatcher(ETEventLoop *eventLoop, int fd)
-    : fd_(fd),
-      eventLoop_(eventLoop),
-      events_(kNone),
-      activeEvents_(kNone)
+    : eventLoop_(eventLoop),
+      fd_(fd),
+      events_(kNoneEvent),
+      activeEvents_(kNoneEvent)
 {
 }
 
 ETWatcher::~ETWatcher()
 {
-    close(fd_);
 }
 
 void ETWatcher::setFD(int fd) 
 { 
     disableAll();
-    activeEvents_ = kNone;
-    close(fd_);
+    activeEvents_ = kNoneEvent;
     fd_ = fd; 
-}
-
-void ETWatcher::readHandle()
-{
-}
-
-void ETWatcher::writeHandle()
-{
-}
-
-void ETWatcher::closeHandle()
-{
-}
-
-void ETWatcher::errorHandle()
-{
 }
 
 void ETWatcher::handleEvent()
 {
-    if (activeEvents_ & kClose)
+    if (observer_ == NULL)
     {
-        this->closeHandle();
+        return ;
     }
-    if (activeEvents_ & kError)
+
+    if (activeEvents_ & kCloseEvent)
     {
-        this->errorHandle();
+        if (closeEvent_) closeEvent_(observer_);
     }
-    if (activeEvents_ & kRead)
+    if (activeEvents_ & kErrorEvent)
     {
-        this->readHandle();
+        if (errorEvent_) errorEvent_(observer_);
     }
-    if (activeEvents_ & kWrite)
+    if (activeEvents_ & kReadEvent)
     {
-        this->writeHandle();
+        if (readEvent_) readEvent_(observer_);
+    }
+    if (activeEvents_ & kWriteEvent)
+    {
+        if (writeEvent_) writeEvent_(observer_);
     }
 }
 

@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
-#include "ETLoop.h"
 #include "ETAcceptor.h"
+#include "ETLoop.h"
 #include "ETConnector.h"
 #include "ETHandleRequest.h"
 #include "ETHandleFactory.h"
@@ -21,7 +21,8 @@
 using namespace ET;
 
 ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short port)
-    : ETWatcher(eventLoop, kInvalidFD),
+    : watcher_(eventLoop, kInvalidFD),
+      eventLoop_(eventLoop),
       factory_(NULL)
 {
     listenning_ = 0;
@@ -40,7 +41,7 @@ ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short po
             // printf error;
             close(fd_);
             fd_ = kInvalidFD;
-        }
+        } 
     }
 }
 
@@ -49,47 +50,28 @@ ETAcceptor::~ETAcceptor()
     close(fd_);
 }
 
-int ETAcceptor::listen()
+void ETAcceptor::readEvent(void *arg)
 {
-    listenning_ = 1;
-    int res = ::listen(fd_, kMaxConn);
-    if (res < 0) {
-        // print error
-        close(fd_);
-        fd_ = kInvalidFD;
-    } else {
-        // enable the read event for listen socket
-
-        eventLoop_->addWatcher(this);
-        res = enableRead();
-    }
-    return res;
+    ETAcceptor *self = static_cast<ETAcceptor *>(arg);
+    self->readHandle();
 }
 
-void ETAcceptor::cleanRequest(ETHandleRequest *request)
+void ETAcceptor::writeEvent(void *arg)
 {
-    ETConnector *conn = request->getConn();
-    if (conn) {
-        // Detach ETConnector from EThandleRequest; 
-        request->setConn(NULL);
-        // clean ETConnector object.
-        conn->connectDestroy();
-    }
+    ETAcceptor *self = static_cast<ETAcceptor *>(arg);
+    self->writeHandle();
 }
 
-void ETAcceptor::cleanConn(ETConnector *conn)
+void ETAcceptor::closeEvent(void *arg)
 {
-    freeConnHandle(conn);
+    ETAcceptor *self = static_cast<ETAcceptor *>(arg);
+    self->closeHandle();
 }
 
-ETConnector *ETAcceptor::newConnHandle(ETEventLoop *eventLoop, int newFD)
+void ETAcceptor::errorEvent(void *arg)
 {
-    return new ETConnector(eventLoop, newFD, this);
-}
-
-void *ETAcceptor::freeConnHandle(ETConnector *conn)
-{
-    free(conn);
+    ETAcceptor *self = static_cast<ETAcceptor *>(arg);
+    self->errorHandle();
 }
 
 void ETAcceptor::readHandle()
@@ -112,12 +94,11 @@ void ETAcceptor::readHandle()
         flags |= O_NONBLOCK;
         fcntl(newFD, F_SETFL, flags);
 
-        ETConnector *conn = newConnHandle(eventLoop_, newFD);
+        ETConnector *conn = newConnHandle();
         ETHandleRequest *request = factory_->makeRequest(conn);
         // Attach a ETHandleRequest object to ETConnector.
         conn->setRequest(request);
-        eventLoop_->addWatcher(conn);
-        conn->enableRead();
+        conn->connectEstablished(newFD);
     }
 }
 
@@ -132,3 +113,54 @@ void ETAcceptor::closeHandle()
 void ETAcceptor::errorHandle()
 {
 }
+
+int ETAcceptor::listen()
+{
+    listenning_ = 1;
+    int res = ::listen(fd_, kMaxConn);
+    if (res < 0) {
+        // print error
+        close(fd_);
+        fd_ = kInvalidFD;
+    } else {
+        // enable the read event for listen socket
+        watcher_.observer(this);
+        watcher_.setFD(fd_);
+        watcher_.setReadEventCallback(readEvent);
+        watcher_.setWriteEventCallback(writeEvent);
+        watcher_.setCloseEventCallback(closeEvent);
+        watcher_.setErrorEventCallback(errorEvent);
+
+        eventLoop_->addWatcher(&watcher_);
+        res = watcher_.enableRead();
+    }
+    return res;
+}
+
+void ETAcceptor::cleanRequest(ETHandleRequest *request)
+{
+    ETConnector *conn = request->getConn();
+    if (conn) {
+        // Detach ETConnector from EThandleRequest; 
+        request->setConn(NULL);
+        // clean ETConnector object.
+        conn->connectDestroy();
+    }
+}
+
+void ETAcceptor::cleanConn(ETConnector *conn)
+{
+    freeConnHandle(conn);
+}
+
+ETConnector *ETAcceptor::newConnHandle()
+{
+    return new ETConnector(eventLoop_, this);
+}
+
+void *ETAcceptor::freeConnHandle(ETConnector *conn)
+{
+    free(conn);
+}
+
+

@@ -16,6 +16,15 @@ namespace ET
 class ETEventLoop;
 class ETWatcher;
 
+enum eventType 
+{
+    kNoneEvent   =   0,
+    kReadEvent   =   1,
+    kWriteEvent  =   2,
+    kCloseEvent  =   4,
+    kErrorEvent  =   8
+};
+
 //
 // A selectable I/O Wathcer.
 //
@@ -28,13 +37,12 @@ class ETWatcher;
     public:
 
         ETWatcher(ETEventLoop *eventLoop, int fd);
-        virtual ~ETWatcher();
+        ~ETWatcher();
 
-        virtual void readHandle();
-        virtual void writeHandle();
-        virtual void closeHandle();
-        virtual void errorHandle();
-        
+        // observer.
+        void rmObserver() { observer_ = 0; }
+        void observer(void *observer) { observer_ = observer; }
+
         //  fd_ accessor.
         int getFD() { return fd_; }
         void setFD(int fd);
@@ -47,22 +55,35 @@ class ETWatcher;
         // Get events_
         int getEvents() { return events_; }
 
-        int enableRead() { events_ |= kRead; return update(); }
-        int enableWrite() { events_ |= kWrite; return update(); }
-        int disableWrite() { events_ &= ~kWrite; return update(); }
-        int disableAll() { events_ = kNone; return update(); }
-        bool isWriting() { return events_ & kWrite; }
-        
-    protected:
-        ETEventLoop *eventLoop_;
-        int fd_;
+        // set callback function.
+        void setReadEventCallback(EventCallback readEvent) 
+        { readEvent_ = readEvent; }
+        void  setWriteEventCallback(EventCallback writeEvent)
+        { writeEvent_ = writeEvent; }
+        void setCloseEventCallback(EventCallback closeEvent)
+        { closeEvent_ = closeEvent; }
+        void setErrorEventCallback(EventCallback errorEvent)
+        { errorEvent_ = errorEvent; }
 
-    private:
-        friend class ETEventLoop;
+        int enableRead() { events_ |= kReadEvent; return update(); }
+        int enableWrite() { events_ |= kWriteEvent; return update(); }
+        int disableWrite() { events_ &= ~kWriteEvent; return update(); }
+        int disableAll() { events_ = kNoneEvent; return update(); }
+        bool isWriting() { return events_ & kWriteEvent; }
 
         void handleEvent();
+
+    private:
         int update();
 
+        void *observer_;
+        EventCallback readEvent_;
+        EventCallback writeEvent_;
+        EventCallback closeEvent_;
+        EventCallback errorEvent_;
+
+        ETEventLoop *eventLoop_;
+        int fd_;
         int events_;
         int activeEvents_;
     };

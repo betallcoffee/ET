@@ -22,4 +22,5 @@ Makefile.am
 list
 *.vim
 *.viminfo
+*~
 

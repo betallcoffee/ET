@@ -73,19 +73,19 @@ int ETEpollSelect::select(int timeout, WatcherList *activeList)
 
         if (what & (EPOLLIN | EPOLLPRI)) 
         {
-            events |= kRead;
+            events |= kReadEvent;
         }
         if (what & EPOLLOUT)
         {
-            events |= kWrite;
+            events |= kWriteEvent;
         }
         if (what & EPOLLERR)
         {
-            events |= kError;
+            events |= kErrorEvent;
         }
         if (what & EPOLLHUP)
         {
-            events |= kClose;
+            events |= kCloseEvent;
         }
 
         w->setActiveEvents(events);
@@ -100,11 +100,11 @@ int ETEpollSelect::addWatcher(ETWatcher *w)
     struct epoll_event event;
     int events = w->getEvents();
      
-    if (events & kRead)
+    if (events & kReadEvent)
     {
         event.events |= EPOLLIN;
     }
-    if (events & kWrite)
+    if (events & kWriteEvent)
     {
         event.events |= EPOLLOUT;
     }
@@ -131,11 +131,11 @@ int ETEpollSelect::removeWatcher(ETWatcher *w)
     struct epoll_event event;
     int events = w->getEvents();
      
-    if (events & kRead)
+    if (events & kReadEvent)
     {
         event.events |= EPOLLIN;
     }
-    if (events & kWrite)
+    if (events & kWriteEvent)
     {
         event.events |= EPOLLOUT;
     }
@@ -159,11 +159,11 @@ int ETEpollSelect::updateWatcher(ETWatcher *w)
     struct epoll_event event;
     int events = w->getEvents();
      
-    if (events & kRead)
+    if (events & kReadEvent)
     {
         event.events |= EPOLLIN;
     }
-    if (events & kWrite)
+    if (events & kWriteEvent)
     {
         event.events |= EPOLLOUT;
     }
