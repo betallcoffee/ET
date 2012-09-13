@@ -94,71 +94,49 @@ int ETEpollSelect::select(int timeout, WatcherList *activeList)
     return 0;
 }
 
-// Add a watcher on a particular fd.
-int ETEpollSelect::addWatcher(ETWatcher *w)
-{
-    struct epoll_event event;
-    int events = w->getEvents();
-     
-    if (events & kReadEvent)
-    {
-        event.events |= EPOLLIN;
-    }
-    if (events & kWriteEvent)
-    {
-        event.events |= EPOLLOUT;
-    }
-    event.data.ptr = w;
-    
-    if (epoll_ctl(epollfd_, EPOLL_CTL_ADD, w->getFD(), &event) < 0)
-    {
-        //printf("epoll_ctl op=EPOLL_CTL_ADD error\n");
-        return -1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
 // Remove a watcher on a particular fd.
 int ETEpollSelect::removeWatcher(ETWatcher *w)
 {
-    // Since Linux 2.6.9, event can be specified as NULL 
-    // when using EPOLL_CTL_DEL. Applications that need
-    // to be portable to kernels before 2.6.9 shuold specify
-    // a non-NULL pointer in event.
-    struct epoll_event event;
-    int events = w->getEvents();
-     
-    if (events & kReadEvent)
+    int res = 0;
+    int index = w->getIndex();
+    if (index == kWatcherStatesAdded)
     {
-        event.events |= EPOLLIN;
+        res = update(EPOLL_CTL_DEL, w);
     }
-    if (events & kWriteEvent)
-    {
-        event.events |= EPOLLOUT;
-    }
-    event.data.ptr = w;
-
-    if (epoll_ctl(epollfd_, EPOLL_CTL_DEL, w->getFD(), &event) < 0)
-    {
-        // EEXIST the supplied file descriptor fd is already registered with this epoll instance.
-        //printf("epoll_ctl op=EPOLL_CTL_DEL error\n");
-        return -1;
-    }
-    else
-    {
-        return 0;
-    }
+    w->setIndex(kWatcherStatesNew);
+    return res;
 }
 
 // Update a watcher on a particular fd.
 int ETEpollSelect::updateWatcher(ETWatcher *w)
 {
+    int res = 0;
+    int index = w->getIndex();
+
+    if (index == kWatcherStatesNew ||
+        index == kWatcherStatesDeleted)
+    {
+        res = update(EPOLL_CTL_ADD, w);
+        w->setIndex(kWatcherStatesAdded);
+    } 
+    else if(index == kWatcherStatesAdded)
+    {
+        res = update(EPOLL_CTL_MOD, w);
+    }
+
+    return res;
+}
+
+int ETEpollSelect::update(int operation, ETWatcher *w)
+{
+    // Since Linux 2.6.9, event can be specified as NULL 
+    // when using EPOLL_CTL_DEL. Applications that need
+    // to be portable to kernels before 2.6.9 shuold specify
+    // a non-NULL pointer in event.
+
     struct epoll_event event;
     int events = w->getEvents();
-     
+
     if (events & kReadEvent)
     {
         event.events |= EPOLLIN;
@@ -169,10 +147,10 @@ int ETEpollSelect::updateWatcher(ETWatcher *w)
     }
     event.data.ptr = w;
 
-    if (epoll_ctl(epollfd_, EPOLL_CTL_MOD, w->getFD(), &event) < 0)
+    if (epoll_ctl(epollfd_, operation, w->getFD(), &event) < 0)
     {
+        // EEXIST the supplied file descriptor fd is already registered with this epoll instance.
         // ENOENT fd is not register with this epoll instance.
-        //printf("epoll_ctl op=EPOLL_CTL_DEL error\n");
         return -1;
     }
     else
@@ -180,3 +158,4 @@ int ETEpollSelect::updateWatcher(ETWatcher *w)
         return 0;
     }
 }
+

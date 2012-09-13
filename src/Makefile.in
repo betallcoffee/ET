@@ -50,7 +50,7 @@ libET_a_LIBADD =
 am_libET_a_OBJECTS = ETEventLoop.$(OBJEXT) ETWatcher.$(OBJEXT) \
 	ETSelect.$(OBJEXT) ETEpollSelect.$(OBJEXT) \
 	ETAcceptor.$(OBJEXT) ETConnector.$(OBJEXT) \
-	ETHandleFactory.$(OBJEXT) ETHandleRequest.$(OBJEXT)
+	ETConnection.$(OBJEXT) ETTCPServer.$(OBJEXT)
 libET_a_OBJECTS = $(am_libET_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -163,21 +163,21 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = libET.a
 libET_a_SOURCES = ETEventLoop.h \
-				 ETWatcher.h \
-				 ETSelect.h \
-				 ETEpollSelect.h \
-				 ETAcceptor.h \
-				 ETConnector.h \
 				 ETEventLoop.cpp \
+				 ETWatcher.h \
 				 ETWatcher.cpp \
+				 ETSelect.h \
 				 ETSelect.cpp \
+				 ETEpollSelect.h \
 				 ETEpollSelect.cpp \
+				 ETAcceptor.h \
 				 ETAcceptor.cpp \
+				 ETConnector.h \
 				 ETConnector.cpp \
-				 ETHandleFactory.cpp \
-                 ETHandleRequest.cpp \
-                 ETHandleFactory.h \
-                 ETHandleRequest.h 
+				 ETConnection.h \
+				 ETConnection.cpp \
+				 ETTCPServer.h \
+				 ETTCPServer.cpp 
 
 all: all-am
 
@@ -228,12 +228,12 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETAcceptor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETConnection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETConnector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEpollSelect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEventLoop.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETHandleFactory.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETHandleRequest.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETSelect.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETTCPServer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETWatcher.Po@am__quote@
 
 .cpp.o:

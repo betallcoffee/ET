@@ -9,24 +9,19 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include <stdlib.h>
 #include <arpa/inet.h>
 
 #include "ETAcceptor.h"
 #include "ETLoop.h"
-#include "ETConnector.h"
-#include "ETHandleRequest.h"
-#include "ETHandleFactory.h"
 
 using namespace ET;
 
 ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short port)
     : watcher_(eventLoop, kInvalidFD),
-      eventLoop_(eventLoop),
-      factory_(NULL)
+      eventLoop_(eventLoop)
 {
     listenning_ = 0;
-    fd_ = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    fd_ = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
     
     if (fd_ < 0) {
         // printf error;
@@ -36,7 +31,7 @@ ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short po
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
         addr.sin_addr.s_addr = inet_addr(ip);
-        int res = bind(fd_, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
+        int res = ::bind(fd_, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
         if (res < 0) {
             // printf error;
             close(fd_);
@@ -47,7 +42,7 @@ ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short po
 
 ETAcceptor::~ETAcceptor()
 {
-    close(fd_);
+    ::close(fd_);
 }
 
 void ETAcceptor::readEvent(void *arg)
@@ -80,25 +75,38 @@ void ETAcceptor::readHandle()
     struct sockaddr addr;
     socklen_t addrlen = sizeof(addr);
     newFD = ::accept(fd_, &addr, &addrlen);
-    if (newFD < 0) {
-        if (errno != EAGAIN 
-            && errno != EWOULDBLOCK 
-            && errno != ECONNABORTED 
-            && errno != EINTR) {
-            // invoke again
-        } else {
-            // printf error! close fd_;
-        }
-    } else {
+    if (newFD >= 0) {
         int flags = fcntl(newFD, F_GETFL, 0);
         flags |= O_NONBLOCK;
         fcntl(newFD, F_SETFL, flags);
 
-        ETConnector *conn = newConnHandle();
-        ETHandleRequest *request = factory_->makeRequest(conn);
-        // Attach a ETHandleRequest object to ETConnector.
-        conn->setRequest(request);
-        conn->connectEstablished(newFD);
+        if (newConnectionCallback_) {
+            newConnectionCallback_(ctx_, newFD);
+        } else {
+            ::close(newFD);
+        }
+    } else {
+        int saveErrno = errno;
+        switch (saveErrno) {
+            case EINTR:
+            case EAGAIN:
+            case ECONNABORTED:
+            case EFAULT:
+            case EINVAL:
+            case EMFILE:
+            case ENOBUFS:
+            case ENOMEM:
+                break;
+
+            case EBADF:
+            case ENOTSOCK:
+            case EOPNOTSUPP:
+            case EPROTO:
+                break;
+
+            default:
+                break;
+        }
     }
 }
 
@@ -130,37 +138,8 @@ int ETAcceptor::listen()
         watcher_.setWriteEventCallback(writeEvent);
         watcher_.setCloseEventCallback(closeEvent);
         watcher_.setErrorEventCallback(errorEvent);
-
-        eventLoop_->addWatcher(&watcher_);
         res = watcher_.enableRead();
     }
     return res;
 }
-
-void ETAcceptor::cleanRequest(ETHandleRequest *request)
-{
-    ETConnector *conn = request->getConn();
-    if (conn) {
-        // Detach ETConnector from EThandleRequest; 
-        request->setConn(NULL);
-        // clean ETConnector object.
-        conn->connectDestroy();
-    }
-}
-
-void ETAcceptor::cleanConn(ETConnector *conn)
-{
-    freeConnHandle(conn);
-}
-
-ETConnector *ETAcceptor::newConnHandle()
-{
-    return new ETConnector(eventLoop_, this);
-}
-
-void *ETAcceptor::freeConnHandle(ETConnector *conn)
-{
-    free(conn);
-}
-
 

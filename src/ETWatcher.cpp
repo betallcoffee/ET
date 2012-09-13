@@ -28,6 +28,7 @@ ETWatcher::~ETWatcher()
 void ETWatcher::setFD(int fd) 
 { 
     disableAll();
+    ::close(fd_);
     activeEvents_ = kNoneEvent;
     fd_ = fd; 
 }

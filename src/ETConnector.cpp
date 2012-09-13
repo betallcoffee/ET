@@ -4,7 +4,6 @@
 // Author: betallcoffee
 //
 
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
@@ -14,35 +13,25 @@
 #include "ETConnector.h"
 #include "ETEventLoop.h"
 #include "ETAcceptor.h"
-#include "ETHandleRequest.h"
 
 using namespace ET;
 
-ETConnector::ETConnector(ETEventLoop *eventLoop, ETAcceptor *acceptor)
-    : watcher_(eventLoop, kInvalidFD),
+ETConnector::ETConnector(ETEventLoop *eventLoop, const char *ip, short port)
+    : watcher_(NULL),
       eventLoop_(eventLoop),
-      acceptor_(acceptor),
-      request_(NULL),
-      fd_(kInvalidFD),
-      state_(kConnStatesNone),
-      writeData_(NULL),
-      writeSize_(0),
-      writeIndex_(0),
-      readData_(NULL),
-      readSize_(0)
+      state_(kConnStatesDisconnected)
 {
+    bzero(&serverAddr_, sizeof(serverAddr_));
+    serverAddr_.sin_family = AF_INET;
+    serverAddr_.sin_port = htons(port);
 }
 
 ETConnector::~ETConnector()
 {
-    if (writeData_) {
-        free(writeData_);
-    }
-    if (readData_) {
-        free(readData_);
-    }
-    if (fd_ != kInvalidFD) {
-        close(fd_);
+    bzero(&serverAddr_, sizeof(serverAddr_));
+    if (watcher_)
+    {
+        delete watcher_;
     }
 }
 
@@ -72,130 +61,97 @@ void ETConnector::errorEvent(void *arg)
 
 void ETConnector::readHandle()
 {
-    int size = 0;
-    int res = 0;
-    ioctl(fd_, FIONREAD, &size);
-    if (size > 0) {
-        readData_ = (char*)malloc(size * sizeof(char));
-        res = ::recv(fd_, readData_, size, 0);
-        if (res != size) {
-            // printf error
-        } else if (request_) {
-            request_->handle(readData_, size);
-            free(readData_);
-            readData_ = NULL;
-        }
-    } else {
-        // printf error
-    }
 }
 
 void ETConnector::writeHandle()
 {
-    int res = 0;
-    if (watcher_.isWriting()) {
-        res = ::send(fd_, writeData_ + writeIndex_, writeSize_, 0);
-        if (res < 0 ) {
-            if (errno != EWOULDBLOCK) {
-                // printf error!
-            }
-            res = 0;
-        }
-        
-        if (writeSize_ - res > 0) {
-            writeSize_ = writeSize_ - res;
-            writeIndex_ = writeIndex_ + res;
-        } else {
-            watcher_.disableWrite();
-            writeSize_ = 0;
-            writeIndex_ = 0;
-            if (writeData_) {
-                free(writeData_);
-                writeData_ = NULL;
-            }
-            // The ETConnector object has detached from ETHandelReqeust,
-            // so calling connectDestroy() to clean it.
-            if (state_ == kConnStatesDisconnecting) {
-               connectDestroy();
-            }
+    if (state_ == kConnStatesConnecting) {
+        watcher_->disableAll();
+        int fd = watcher_->getFD();
+        if (newConnectionCallback_) {
+            newConnectionCallback_(ctx_, fd);
         }
     }
 }
 
 void ETConnector::closeHandle()
 {
-    watcher_.disableAll();
-    setState(kConnStatesDisconnected);
 }
 
 void ETConnector::errorHandle()
 {
 }
 
-int ETConnector::connectEstablished(int fd)
+void ETConnector::connect()
 {
-    int res = -1;
-    if (fd != kInvalidFD && state_ == kConnStatesNone) {
-        fd_ = fd;
-        watcher_.observer(this);
-        watcher_.setFD(fd_);
-        watcher_.setReadEventCallback(readEvent);
-        watcher_.setWriteEventCallback(writeEvent);
-        watcher_.setCloseEventCallback(closeEvent);
-        watcher_.setErrorEventCallback(errorEvent);
-
-        eventLoop_->addWatcher(&watcher_);
-        res = watcher_.enableRead();
-        if (!res) {
-            setState(kConnStatesConnected);
-        }
-    }
-    return res;
-}
-
-void ETConnector::connectDestroy()
-{
-    if (state_ == kConnStatesConnecting) {
-        // If there is data that has not sent out,
-        // so just change state to |connStatesDisconnecting|.
-        // When the all data has sent out, calling the ETAcceptor::cleanConn;
-        // If not, close stocket and change state to |connStatesDisconnected|,
-        // calling the ETAcceptor::cleanConn.
-        if (writeSize_ > 0){
-            setState(kConnStatesDisconnecting);
-        } else {
-            watcher_.disableAll();
-            watcher_.setFD(kInvalidFD);
-            close(fd_);
-            fd_ = kInvalidFD;
+    if (state_ == kConnStatesNone ||
+        state_ == kConnStatesDisconnected) {
+        int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+        setState(kConnStatesConnect);
+        if (fd < 0) {
             setState(kConnStatesDisconnected);
-            acceptor_->cleanConn(this);
-        }
-    }
-}
+            return ;
+        } else {
+            int res = ::connect(fd, (struct sockaddr *)&serverAddr_, sizeof(struct sockaddr_in));
+            int saveErrno = errno;
+            switch(saveErrno) {
+                case EINPROGRESS:
+                case EINTR:
+                case EISCONN:
+                case EALREADY:
+                    connecting(fd);
+                    break;
+                    
+                case EAGAIN:
+                case EADDRINUSE:
+                case ECONNREFUSED:
+                case ENETUNREACH:
+                    reConnect(fd);
+                    break;
 
-int ETConnector::send(char *data, int size)
-{
-    int res = 0;
-    if (!watcher_.isWriting()) {
-        res = ::send(fd_, data, size, 0);
-        if (res < 0) {
-            if (errno != EWOULDBLOCK) {
-                // printf error!
+                case EACCES:
+                case EPERM:
+                case EAFNOSUPPORT:
+                case EBADF:
+                case EFAULT:
+                case ENOTSOCK:
+                    ::close(fd);
+                    setState(kConnStatesDisconnected);
+                    break;
+
+                default:
+                    ::close(fd);
+                    setState(kConnStatesDisconnected);
+                    break;
             }
-            res = 0;
         }
     }
-    if (size - res > 0) {
-        writeSize_ = size - res;
-        writeIndex_ = 0;
-        writeData_ = (char*)malloc(size * sizeof(char));
-        memcpy(writeData_, data + res, size);
-        if (!watcher_.isWriting()) {
-            watcher_.enableWrite();
-        }
-    }
-    return size;
 }
 
+void ETConnector::discard()
+{
+    setState(kConnStatesNone);
+}
+
+void ETConnector::connecting(int fd)
+{
+    if (state_ == kConnStatesConnect) {
+        if (watcher_) {
+            delete watcher_;
+            watcher_ = NULL;
+        }
+        watcher_ = new ETWatcher(eventLoop_, fd);
+        watcher_->observer(this);
+        watcher_->setWriteEventCallback(writeEvent);
+        watcher_->setErrorEventCallback(errorEvent);
+        watcher_->enableWrite();
+        setState(kConnStatesConnecting);
+    }
+}
+
+void ETConnector::reConnect(int fd)
+{
+    ::close(fd);
+    setState(kConnStatesDisconnected);
+}
 

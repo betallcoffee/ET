@@ -11,10 +11,23 @@
 namespace ET
 {
 
+class ETBuffer;
+
 const int kInvalidFD = -1;
 const int kMaxConn = 128;
 
 typedef void(*EventCallback)(void *);
+
+typedef void(*NewConnectionCallback)(void *ctx, int fd); 
+
+// ETConnction
+typedef void(*MessageCallback)(void *ctx, void *conn,  ETBuffer *msg);
+typedef void(*WriteCompleteCallback)(void *ctx, void *conn);
+typedef void(*CloseCallback)(void *ctx, void *conn);
+typedef void(*ConnectCallback)(void *ctx, void *conn);
+
+// ETTCPServer
+typedef void(*ConnectionCb)(void *ctx, void *conn);
 
 } // end namespace ET
 

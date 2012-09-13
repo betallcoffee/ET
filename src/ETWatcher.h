@@ -47,6 +47,10 @@ enum eventType
         int getFD() { return fd_; }
         void setFD(int fd);
 
+        // index_ accessor.
+        int getIndex() { return index_; }
+        void setIndex(int index) { index_ = index; }
+
         // Get owner eventLoop.
         ETEventLoop *ownerLoop() { return eventLoop_; }
 
@@ -86,6 +90,7 @@ enum eventType
         int fd_;
         int events_;
         int activeEvents_;
-    };
+        int index_;
+    }; // end class ETWatcher
 } // namespace ET
 #endif // ETWATCHER_H

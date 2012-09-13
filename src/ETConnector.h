@@ -9,23 +9,16 @@
 #ifndef ETCONNECTOR_H
 #define ETCONNECTOR_H
 
+#include <arpa/inet.h>
+
 #include "ETConfig.h"
 #include "ETWatcher.h"
 
 namespace ET
 {
     class ETEventLoop;
-    class ETAcceptor;
     class ETHandleRequest;
 
-enum connStates
-{
-    kConnStatesNone,
-    kConnStatesConnecting,
-    kConnStatesConnected,
-    kConnStatesDisconnecting,
-    kConnStatesDisconnected
-};
 
     ///
     /// operator for new connector
@@ -33,8 +26,26 @@ enum connStates
     class ETConnector 
     {
     public:
-        ETConnector(ETEventLoop *eventLoop, ETAcceptor *acceptor);
+        ETConnector(ETEventLoop *, const char *, short);
         ~ETConnector();
+
+        void setContext(void *ctx) { ctx_ = ctx; }
+        void setNewConnectionCallback(NewConnectionCallback callback)
+        { newConnectionCallback_ = callback; }
+
+        void connect();
+        void discard();
+
+    private:
+        enum connStates
+        {
+            kConnStatesNone,
+            kConnStatesConnect,
+            kConnStatesConnecting,
+            kConnStatesConnected,
+            kConnStatesDisconnecting,
+            kConnStatesDisconnected
+        };
 
         static void readEvent(void *);
         static void writeEvent(void *);
@@ -46,29 +57,20 @@ enum connStates
         void closeHandle();
         void errorHandle();
 
-        int connectEstablished(int fd);
-        void connectDestroy();
-
         void setState(int state)
         { state_ = state; }
 
-        void setRequest(ETHandleRequest *request) { request_ = request; }
-        ETHandleRequest *getRequest() { return request_; }
+        void connecting(int);
+        void reConnect(int);
 
-        int send(char *data, int size);
-
-    private:
-        ETWatcher watcher_;
+        struct sockaddr_in serverAddr_;
+        ETWatcher *watcher_;
         ETEventLoop *eventLoop_;
-        ETAcceptor *acceptor_;
-        ETHandleRequest *request_;
-        int fd_;
+        void *ctx_;
+        NewConnectionCallback newConnectionCallback_;
+
         int state_;
-        char *writeData_;
-        int writeSize_;
-        int writeIndex_;
-        char *readData_;
-        int readSize_;
+        int connect_;
 
     }; // end class ETConnector
 } // end namespace ET

@@ -31,7 +31,6 @@ class ETWathcer;
 
         void runOneLoop();
 
-        void addWatcher(ETWatcher *w);
         void removeWatcher(ETWatcher *w);
         int updateWatcher(ETWatcher *w);
 

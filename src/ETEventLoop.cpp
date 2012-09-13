@@ -33,11 +33,6 @@ void ETEventLoop::runOneLoop()
     }
 }
 
-void ETEventLoop::addWatcher(ETWatcher *w)
-{
-    select_->addWatcher(w);
-}
-
 void ETEventLoop::removeWatcher(ETWatcher *w)
 {
     select_->removeWatcher(w);

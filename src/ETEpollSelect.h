@@ -34,17 +34,24 @@ class ETWatcher;
 	// Must be called in the loop thread.
 	    virtual int select(int timeout, WatcherList *activeList);
 
-	// Add a watcher on a particular fd
-	    virtual int addWatcher(ETWatcher *w);
-
 	// Remove a watcher on a particular fd
 	    virtual int removeWatcher(ETWatcher *w);
 
-	// Update a watcher on a particular fd 
+	// Add/Update a watcher on a particular fd 
 	    virtual int updateWatcher(ETWatcher *w);
 
     private:
+        enum watcherStates
+        {
+            kWatcherStatesNone,
+            kWatcherStatesNew,
+            kWatcherStatesAdded,
+            kWatcherStatesDeleted
+        };
         static const int kEventsSize = 16;
+
+        int update(int, ETWatcher *);
+
         int epollfd_;
         struct epoll_event *events_;
         int evSize_;

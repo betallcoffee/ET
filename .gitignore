@@ -23,4 +23,5 @@ list
 *.vim
 *.viminfo
 *~
+build/
 

@@ -32,9 +32,6 @@ class ETEventLoop;
     // Must be called in the loop thread.
     virtual int select(int timeout, WatcherList *activeList) {}
 
-    // add or update a watcher on a particular fd
-    virtual int addWatcher(ETWatcher *w) = 0;
-
     // remove a watcher on a particular fd
     virtual int removeWatcher(ETWatcher *w) = 0;
 
