@@ -41,13 +41,6 @@ class ETWatcher;
 	    virtual int updateWatcher(ETWatcher *w);
 
     private:
-        enum watcherStates
-        {
-            kWatcherStatesNone,
-            kWatcherStatesNew,
-            kWatcherStatesAdded,
-            kWatcherStatesDeleted
-        };
         static const int kEventsSize = 16;
 
         int update(int, ETWatcher *);

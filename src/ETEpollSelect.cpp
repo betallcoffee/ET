@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ETEpollSelect.h"
 #include "ETWatcher.h"
@@ -98,12 +99,11 @@ int ETEpollSelect::select(int timeout, WatcherList *activeList)
 int ETEpollSelect::removeWatcher(ETWatcher *w)
 {
     int res = 0;
-    int index = w->getIndex();
-    if (index == kWatcherStatesAdded)
+    if (w->getState() == kWatcherStatesAdded)
     {
         res = update(EPOLL_CTL_DEL, w);
     }
-    w->setIndex(kWatcherStatesNew);
+    w->setState(kWatcherStatesNew);
     return res;
 }
 
@@ -111,15 +111,15 @@ int ETEpollSelect::removeWatcher(ETWatcher *w)
 int ETEpollSelect::updateWatcher(ETWatcher *w)
 {
     int res = 0;
-    int index = w->getIndex();
+    int state = w->getState();
 
-    if (index == kWatcherStatesNew ||
-        index == kWatcherStatesDeleted)
+    if (state == kWatcherStatesNew ||
+        state == kWatcherStatesDeleted)
     {
         res = update(EPOLL_CTL_ADD, w);
-        w->setIndex(kWatcherStatesAdded);
+        w->setState(kWatcherStatesAdded);
     } 
-    else if(index == kWatcherStatesAdded)
+    else if(state == kWatcherStatesAdded)
     {
         res = update(EPOLL_CTL_MOD, w);
     }
@@ -137,6 +137,7 @@ int ETEpollSelect::update(int operation, ETWatcher *w)
     struct epoll_event event;
     int events = w->getEvents();
 
+    bzero(&event, sizeof(event));
     if (events & kReadEvent)
     {
         event.events |= EPOLLIN;

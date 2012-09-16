@@ -25,6 +25,10 @@ namespace ET
         int run();
         int isRunning() { return state_ == kServerStatesRunning; }
 
+        void setContext(void *ctx) { ctx_ = ctx; }
+        void setConnectionCb(ConnectionCb connectionCb)
+        { connectionCb_ = connectionCb; }
+
     private:
         enum serverStates
         {

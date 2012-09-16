@@ -9,10 +9,11 @@
 #define ETACCEPTOR_H
 
 #include "ETConfig.h"
-#include "ETWatcher.h"
 
 namespace ET
 {
+    class ETEventLoop;
+    class ETWatcher;
 
     //
     // class for operation of listenning socket fd
@@ -42,7 +43,7 @@ namespace ET
         void closeHandle();
         void errorHandle();
 
-        ETWatcher watcher_;
+        ETWatcher *watcher_;
         ETEventLoop *eventLoop_;
         void *ctx_;
         NewConnectionCallback newConnectionCallback_;

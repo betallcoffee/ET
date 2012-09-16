@@ -25,7 +25,12 @@ namespace ET
 		int read(char *to, int size);
         // Move the readable position.
         void retrieve(int size);
+
 		int write(char *from, int size);
+        int write(ETBuffer *from);
+
+        // append the data node of b, and move some empty node to b.
+        int swap(ETBuffer *b);
 		int clear();
 
         int readableBytes() { return size_; }
@@ -36,10 +41,14 @@ namespace ET
 
 			char *start_;
 			char *end_;
-			char *pos_;
-			char *last_;
+			char *pos_; // read cursor
+			char *last_; // write cursor
 		}ETBufferChunk;
 
+        static const int kExpendSize = 64;
+        // remove first bufer chunk, and retrun.
+        ETBufferChunk *pop();
+        void push(ETBufferChunk *);
 		int expend(int size);
 
 		ETBufferChunk *first_;

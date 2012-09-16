@@ -17,20 +17,14 @@ ETWatcher::ETWatcher(ETEventLoop *eventLoop, int fd)
     : eventLoop_(eventLoop),
       fd_(fd),
       events_(kNoneEvent),
-      activeEvents_(kNoneEvent)
+      activeEvents_(kNoneEvent),
+      state_(kWatcherStatesNew)
 {
 }
 
 ETWatcher::~ETWatcher()
 {
-}
-
-void ETWatcher::setFD(int fd) 
-{ 
-    disableAll();
     ::close(fd_);
-    activeEvents_ = kNoneEvent;
-    fd_ = fd; 
 }
 
 void ETWatcher::handleEvent()

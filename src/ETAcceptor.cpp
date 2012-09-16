@@ -12,37 +12,44 @@
 #include <arpa/inet.h>
 
 #include "ETAcceptor.h"
+
 #include "ETLoop.h"
+#include "ETWatcher.h"
 
 using namespace ET;
 
 ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short port)
-    : watcher_(eventLoop, kInvalidFD),
+    : watcher_(NULL),
       eventLoop_(eventLoop)
 {
     listenning_ = 0;
-    fd_ = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
     
-    if (fd_ < 0) {
+    if (fd < 0) {
         // printf error;
     } else {
         struct sockaddr_in addr;
         memset(&addr, 0, sizeof(struct sockaddr_in));
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
-        addr.sin_addr.s_addr = inet_addr(ip);
-        int res = ::bind(fd_, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
+        if (ip == NULL) {
+            addr.sin_addr.s_addr = htonl(INADDR_ANY);
+        } else {
+            addr.sin_addr.s_addr = inet_addr(ip);
+        }
+        int res = ::bind(fd, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
         if (res < 0) {
             // printf error;
-            close(fd_);
-            fd_ = kInvalidFD;
-        } 
+            close(fd);
+            fd = kInvalidFD;
+        } else {
+            watcher_ = new ETWatcher(eventLoop_, fd);
+        }
     }
 }
 
 ETAcceptor::~ETAcceptor()
 {
-    ::close(fd_);
 }
 
 void ETAcceptor::readEvent(void *arg)
@@ -74,7 +81,7 @@ void ETAcceptor::readHandle()
     int newFD;
     struct sockaddr addr;
     socklen_t addrlen = sizeof(addr);
-    newFD = ::accept(fd_, &addr, &addrlen);
+    newFD = ::accept(watcher_->getFD(), &addr, &addrlen);
     if (newFD >= 0) {
         int flags = fcntl(newFD, F_GETFL, 0);
         flags |= O_NONBLOCK;
@@ -125,20 +132,17 @@ void ETAcceptor::errorHandle()
 int ETAcceptor::listen()
 {
     listenning_ = 1;
-    int res = ::listen(fd_, kMaxConn);
+    int res = ::listen(watcher_->getFD(), kMaxConn);
     if (res < 0) {
         // print error
-        close(fd_);
-        fd_ = kInvalidFD;
     } else {
         // enable the read event for listen socket
-        watcher_.observer(this);
-        watcher_.setFD(fd_);
-        watcher_.setReadEventCallback(readEvent);
-        watcher_.setWriteEventCallback(writeEvent);
-        watcher_.setCloseEventCallback(closeEvent);
-        watcher_.setErrorEventCallback(errorEvent);
-        res = watcher_.enableRead();
+        watcher_->observer(this);
+        watcher_->setReadEventCallback(readEvent);
+        watcher_->setWriteEventCallback(writeEvent);
+        watcher_->setCloseEventCallback(closeEvent);
+        watcher_->setErrorEventCallback(errorEvent);
+        res = watcher_->enableRead();
     }
     return res;
 }

@@ -14,7 +14,6 @@ namespace ET
 {
 
 class ETEventLoop;
-class ETWatcher;
 
 enum eventType 
 {
@@ -23,6 +22,14 @@ enum eventType
     kWriteEvent  =   2,
     kCloseEvent  =   4,
     kErrorEvent  =   8
+};
+
+enum watcherStates
+{
+    kWatcherStatesNone,
+    kWatcherStatesNew,
+    kWatcherStatesAdded,
+    kWatcherStatesDeleted
 };
 
 //
@@ -45,11 +52,10 @@ enum eventType
 
         //  fd_ accessor.
         int getFD() { return fd_; }
-        void setFD(int fd);
 
-        // index_ accessor.
-        int getIndex() { return index_; }
-        void setIndex(int index) { index_ = index; }
+        // state_ accessor.
+        int getState() { return state_; }
+        void setState(int state) { state_ = state; }
 
         // Get owner eventLoop.
         ETEventLoop *ownerLoop() { return eventLoop_; }
@@ -90,7 +96,7 @@ enum eventType
         int fd_;
         int events_;
         int activeEvents_;
-        int index_;
+        int state_;
     }; // end class ETWatcher
 } // namespace ET
 #endif // ETWATCHER_H

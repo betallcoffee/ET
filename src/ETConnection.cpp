@@ -53,10 +53,17 @@ int ETConnection::send(char *data, int size)
 
 int ETConnection::send(ETBuffer *data)
 {
+    outBuf_.swap(data);
+    writeHandle();
 }
 
 void ETConnection::connectEstablish()
 {
+    watcher_.observer(this);
+    watcher_.setReadEventCallback(readEvent);
+    watcher_.setWriteEventCallback(writeEvent);
+    watcher_.setCloseEventCallback(closeEvent);
+    watcher_.setErrorEventCallback(errorEvent);
     watcher_.enableRead();
     setState(kConnStatesConnected);
 
