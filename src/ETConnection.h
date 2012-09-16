@@ -9,12 +9,12 @@
 #define ETCONNECTION_H
 
 #include "ETConfig.h"
-#include "ETWatcher.h"
 #include "ETBuffer.h"
 
 namespace ET
 {
     class ETEventLoop;
+    class ETWatcher;
 
     //
     // TCP connection, for both client and server usage.
@@ -42,7 +42,7 @@ namespace ET
         int send(ETBuffer *);
 
         void connectEstablish();
-        void connectDestroy();
+        void connectClose();
         void shutdown();
         
     private:
@@ -66,8 +66,9 @@ namespace ET
         void errorHandle();
 
         void setState(int state) { state_ = state; }
+        void shutdownWrite();
 
-        ETWatcher watcher_;
+        ETWatcher *watcher_;
         ETEventLoop *eventLoop_;
         void *ctx_;
 

@@ -6,16 +6,18 @@
 //  This is an interal header file, you should not include this file.
 //
 
-#include  <unistd.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #include "ETEventLoop.h"
+#include "ETWatcher.h"
 #include "ETConnection.h"
-#include "ETBuffer.h"
 
 using namespace ET;
 
 ETConnection::ETConnection(ETEventLoop *eventLoop, int fd)
-    : watcher_(eventLoop, fd),
+    : watcher_(new ETWatcher(eventLoop, fd)),
     eventLoop_(eventLoop),
     inBuf_(kBufInitSize),
     outBuf_(kBufInitSize)
@@ -24,13 +26,20 @@ ETConnection::ETConnection(ETEventLoop *eventLoop, int fd)
 
 ETConnection::~ETConnection()
 {
+    if (watcher_  != NULL) {
+        free(watcher_);
+    }
 }
 
 int ETConnection::send(char *data, int size)
 {
     int res = 0;
-    if (!watcher_.isWriting()) {
-        res = ::write(watcher_.getFD(), data, size);
+    if (state_ != kConnStatesConnected) {
+        return -1;
+    }
+
+    if (!watcher_->isWriting()) {
+        res = ::write(watcher_->getFD(), data, size);
         if (res > 0) {
             if (res == size) {
                 if (writeCompleteCallback_) {
@@ -44,8 +53,8 @@ int ETConnection::send(char *data, int size)
     
     if (res < size) {
         outBuf_.write(data + res, size - res);
-        if (!watcher_.isWriting()) {
-            watcher_.enableWrite();
+        if (!watcher_->isWriting()) {
+            watcher_->enableWrite();
         }
     }
     return res;
@@ -53,18 +62,29 @@ int ETConnection::send(char *data, int size)
 
 int ETConnection::send(ETBuffer *data)
 {
+    int res = data->readableBytes();
+
+    if (state_ != kConnStatesConnected) {
+        return -1;
+    }
+
     outBuf_.swap(data);
+    if (!watcher_->isWriting()) {
+        watcher_->enableWrite();
+    }
     writeHandle();
+
+    return res;
 }
 
 void ETConnection::connectEstablish()
 {
-    watcher_.observer(this);
-    watcher_.setReadEventCallback(readEvent);
-    watcher_.setWriteEventCallback(writeEvent);
-    watcher_.setCloseEventCallback(closeEvent);
-    watcher_.setErrorEventCallback(errorEvent);
-    watcher_.enableRead();
+    watcher_->observer(this);
+    watcher_->setReadEventCallback(readEvent);
+    watcher_->setWriteEventCallback(writeEvent);
+    watcher_->setCloseEventCallback(closeEvent);
+    watcher_->setErrorEventCallback(errorEvent);
+    watcher_->enableRead();
     setState(kConnStatesConnected);
 
     if (connectCallback_) {
@@ -72,20 +92,15 @@ void ETConnection::connectEstablish()
     }
 }
 
-void ETConnection::connectDestroy()
+void ETConnection::connectClose()
 {
-    watcher_.disableAll();
-    int fd = watcher_.getFD();
-    ::close(fd);
-    setState(kConnStatesDisconnected);
-
-    if (closeCallback_) {
-        closeCallback_(ctx_, this);
-    }
+    closeHandle();
 }
 
 void ETConnection::shutdown()
 {
+    setState(kConnStatesDisconnecting);
+    shutdownWrite();
 }
 
 void ETConnection::readEvent(void *arg)
@@ -116,12 +131,18 @@ void ETConnection::readHandle()
 {
     char data[4 * 1024];
     int size = 0;
-    int fd = watcher_.getFD();
-    while ((size = ::read(fd, data, 4 * 1024)) > 0) {
-        inBuf_.write(data, size);
-    }
-    if (messageCallback_) {
-        messageCallback_(ctx_, this,  &inBuf_);
+    int fd = watcher_->getFD();
+    size = ::read(fd, data, 4 * 1024);
+    if (size == 0) {
+        // Read FIN.
+        closeHandle();
+    } else if (size > 0) {
+        do {
+            inBuf_.write(data, size);
+        } while ((size = ::read(fd, data, 4 * 1024)) > 0); 
+        if (messageCallback_) {
+            messageCallback_(ctx_, this,  &inBuf_);
+        }
     }
 }
 
@@ -130,7 +151,7 @@ void ETConnection::writeHandle()
     int res = 0;
     char data[4 * 1024];
     int size = 0;
-    int fd = watcher_.getFD();
+    int fd = watcher_->getFD();
 
     while ((size = outBuf_.read(data, 4 * 1024)) > 0) {
         res = ::write(fd, data, size);
@@ -142,15 +163,37 @@ void ETConnection::writeHandle()
     }
 
     if (outBuf_.readableBytes() == 0) {
-        watcher_.disableWrite();
+        watcher_->disableWrite();
+        if (writeCompleteCallback_) {
+            writeCompleteCallback_(ctx_, this);
+        }
+        if (state_ == kConnStatesDisconnecting) {
+            shutdownWrite();
+        }
     }
 }
 
 void ETConnection::closeHandle()
 {
+    watcher_->disableAll();
+    ::close(watcher_->getFD());
+    free(watcher_);
+    watcher_ = NULL;
+    setState(kConnStatesDisconnected);
+
+    if (closeCallback_) {
+        closeCallback_(ctx_, this);
+    }
 }
 
 void ETConnection::errorHandle()
 {
+}
+
+void ETConnection::shutdownWrite()
+{
+    if (!watcher_->isWriting()) {
+        ::shutdown(watcher_->getFD(), SHUT_WR);
+    }
 }
 

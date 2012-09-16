@@ -21,7 +21,7 @@ ETEventLoop::~ETEventLoop()
 
 void ETEventLoop::runOneLoop()
 {
-    int timeout = 0;
+    int timeout = 1000;
     std::vector<ETWatcher*>::iterator it;
 
     activeWatcherList_.clear();
