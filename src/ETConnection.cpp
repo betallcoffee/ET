@@ -20,18 +20,23 @@ ETConnection::ETConnection(ETEventLoop *eventLoop, int fd)
     : watcher_(new ETWatcher(eventLoop, fd)),
     eventLoop_(eventLoop),
     inBuf_(kBufInitSize),
-    outBuf_(kBufInitSize)
+    outBuf_(kBufInitSize),
+    ctx_(NULL),
+    messageCallback_(NULL),
+    writeCompleteCallback_(NULL),
+    closeCallback_(NULL),
+    connectCallback_(NULL)
 {
 }
 
 ETConnection::~ETConnection()
 {
     if (watcher_  != NULL) {
-        free(watcher_);
+        delete watcher_;
     }
 }
 
-int ETConnection::send(char *data, int size)
+int ETConnection::send(const char *data, int size)
 {
     int res = 0;
     if (state_ != kConnStatesConnected) {
@@ -142,6 +147,8 @@ void ETConnection::readHandle()
         } while ((size = ::read(fd, data, 4 * 1024)) > 0); 
         if (messageCallback_) {
             messageCallback_(ctx_, this,  &inBuf_);
+        } else {
+            defaultMessage(&inBuf_);
         }
     }
 }
@@ -177,7 +184,7 @@ void ETConnection::closeHandle()
 {
     watcher_->disableAll();
     ::close(watcher_->getFD());
-    free(watcher_);
+    delete watcher_;
     watcher_ = NULL;
     setState(kConnStatesDisconnected);
 
@@ -197,3 +204,7 @@ void ETConnection::shutdownWrite()
     }
 }
 
+void ETConnection::defaultMessage(ETBuffer *msg)
+{
+    msg->clear();
+}

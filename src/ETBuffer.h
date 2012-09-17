@@ -26,13 +26,14 @@ namespace ET
         // Move the readable position.
         void retrieve(int size);
 
-		int write(char *from, int size);
+		int write(const char *from, int size);
         int write(ETBuffer *from);
 
         // append the data node of b, and move some empty node to b.
         int swap(ETBuffer *b);
-		int clear();
 
+        int findCRLF();
+		int clear();
         int readableBytes() { return size_; }
 
 	private:
@@ -46,14 +47,15 @@ namespace ET
 		}ETBufferChunk;
 
         static const int kExpendSize = 64;
+        static const char kCRLF[];
         // remove first bufer chunk, and retrun.
         ETBufferChunk *pop();
         void push(ETBufferChunk *);
 		int expend(int size);
 
-		ETBufferChunk *first_;
+		ETBufferChunk *first_; // first readable chunk.
 		ETBufferChunk *last_;
-		ETBufferChunk *pos_;
+		ETBufferChunk *pos_; // first writeable chunk.
         int capacity_;
 		int size_;
 	}; // end class ETBuffer	

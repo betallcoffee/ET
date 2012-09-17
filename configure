@@ -2712,6 +2712,11 @@ ac_config_headers="$ac_config_headers config.h"
 
 
 # Checks for programs.
+# If CXXFLAGS was not already set,
+# set it to -g -O2 for the GNU C++ compiler.
+# If your package does not like this default,
+# then it is acceptable to insert the line '${CXXFLAGS=""}'
+# after AC_INIT and before AC_PROG_CXX to select an empty default instead.
 ${CXXFLAGS="-g"}
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
@@ -4781,7 +4786,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile examples/Makefile examples/simple/Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile examples/Makefile examples/simple/Makefile examples/finger/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5503,6 +5508,7 @@ do
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "examples/Makefile") CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
     "examples/simple/Makefile") CONFIG_FILES="$CONFIG_FILES examples/simple/Makefile" ;;
+    "examples/finger/Makefile") CONFIG_FILES="$CONFIG_FILES examples/finger/Makefile" ;;
 
   *) as_fn_error "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

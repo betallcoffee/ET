@@ -38,17 +38,17 @@ namespace ET
         };
 
         static void newConnectionCallback(void *, int);
+        void defaultConnection(ETConnection *);
         void newConnection(int);
-        void removeConnection(ETConnection *);
+        void removeConnection(ETConnection *) {}
         void setState(int state) { state_ = state; }
-
-        void *ctx_;
-        ConnectionCb connectionCb_;
 
         ETEventLoop *eventLoop_;
         ETAcceptor acceptor_;
 
         int state_;
+        void *ctx_;
+        ConnectionCb connectionCb_;
     }; // end class ETTCPServer
 } // end namespace ET
 

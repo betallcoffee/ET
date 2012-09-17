@@ -24,6 +24,8 @@ ETWatcher::ETWatcher(ETEventLoop *eventLoop, int fd)
 
 ETWatcher::~ETWatcher()
 {
+    activeEvents_ = kNoneEvent;
+    eventLoop_->removeWatcher(this);
     ::close(fd_);
 }
 

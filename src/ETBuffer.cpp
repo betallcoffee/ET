@@ -11,6 +11,8 @@
 
 using namespace ET;
 
+const char kCRLF[] = { "\r\n" };
+
 ETBuffer::ETBuffer(int capacity)
     : size_(0),
     capacity_(capacity)
@@ -94,7 +96,7 @@ void ETBuffer::retrieve(int size)
     }
 }
 
-int ETBuffer::write(char *from, int size)
+int ETBuffer::write(const char *from, int size)
 {
     int pos = 0;
 
@@ -185,8 +187,42 @@ int ETBuffer::swap(ETBuffer *b)
 
 }
 
+int ETBuffer::findCRLF()
+{
+    int res = 0;
+    ETBufferChunk *tmp = first_;
+    while (tmp) {
+        int offset = 0;
+        while (tmp->pos_ + offset < tmp->last_) {
+            if('\r' == *(tmp->pos_ + offset)) {
+                if (tmp->pos_ + offset + 1 < tmp->last_ &&
+                        '\n' == *(tmp->pos_ + offset + 1)) {
+                    res += offset;
+                    return res;
+                } else if (tmp->next_ &&
+                        tmp->next_->pos_ < tmp->next_->last_ &&
+                        '\n' == *(tmp->next_->pos_) ) {
+                    res += offset;
+                    return res;
+                } 
+            }
+
+            offset++;
+        }
+        res += offset;
+        tmp = tmp->next_;
+    }
+    return -1;
+}
+
 int ETBuffer::clear()
 {
+    ETBufferChunk *tmp = first_;
+    while(tmp != pos_->next_) {
+        tmp->last_ = tmp->pos_ = tmp->start_;
+        tmp = tmp->next_;
+    }
+    size_ = 0;
 }
 
 ETBuffer::ETBufferChunk *ETBuffer::pop()

@@ -45,7 +45,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_echo_OBJECTS = echo-Main.$(OBJEXT) echo-ETEchoServer.$(OBJEXT)
+am_echo_OBJECTS = Main.$(OBJEXT) ETEchoServer.$(OBJEXT)
 echo_OBJECTS = $(am_echo_OBJECTS)
 echo_LDADD = $(LDADD)
 echo_DEPENDENCIES = ../../src/libET.a
@@ -159,11 +159,11 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 LDADD = ../../src/libET.a
+AM_CPPFLAGS = -I$(top_srcdir)/src/
 echo_SOURCES = echo/Main.cpp \
 			   echo/ETEchoServer.h \
 			   echo/ETEchoServer.cpp 
 
-echo_CPPFLAGS = -I$(srcdir)/../../src/
 all: all-am
 
 .SUFFIXES:
@@ -245,8 +245,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/echo-ETEchoServer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/echo-Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEchoServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Main.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -262,33 +262,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-echo-Main.o: echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo-Main.o -MD -MP -MF $(DEPDIR)/echo-Main.Tpo -c -o echo-Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo-Main.Tpo $(DEPDIR)/echo-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='echo-Main.o' libtool=no @AMDEPBACKSLASH@
+Main.o: echo/Main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Main.o -MD -MP -MF $(DEPDIR)/Main.Tpo -c -o Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Main.Tpo $(DEPDIR)/Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='Main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo-Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
 
-echo-Main.obj: echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo-Main.obj -MD -MP -MF $(DEPDIR)/echo-Main.Tpo -c -o echo-Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo-Main.Tpo $(DEPDIR)/echo-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='echo-Main.obj' libtool=no @AMDEPBACKSLASH@
+Main.obj: echo/Main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Main.obj -MD -MP -MF $(DEPDIR)/Main.Tpo -c -o Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Main.Tpo $(DEPDIR)/Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='Main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo-Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
 
-echo-ETEchoServer.o: echo/ETEchoServer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo-ETEchoServer.o -MD -MP -MF $(DEPDIR)/echo-ETEchoServer.Tpo -c -o echo-ETEchoServer.o `test -f 'echo/ETEchoServer.cpp' || echo '$(srcdir)/'`echo/ETEchoServer.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo-ETEchoServer.Tpo $(DEPDIR)/echo-ETEchoServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/ETEchoServer.cpp' object='echo-ETEchoServer.o' libtool=no @AMDEPBACKSLASH@
+ETEchoServer.o: echo/ETEchoServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETEchoServer.o -MD -MP -MF $(DEPDIR)/ETEchoServer.Tpo -c -o ETEchoServer.o `test -f 'echo/ETEchoServer.cpp' || echo '$(srcdir)/'`echo/ETEchoServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETEchoServer.Tpo $(DEPDIR)/ETEchoServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/ETEchoServer.cpp' object='ETEchoServer.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo-ETEchoServer.o `test -f 'echo/ETEchoServer.cpp' || echo '$(srcdir)/'`echo/ETEchoServer.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETEchoServer.o `test -f 'echo/ETEchoServer.cpp' || echo '$(srcdir)/'`echo/ETEchoServer.cpp
 
-echo-ETEchoServer.obj: echo/ETEchoServer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo-ETEchoServer.obj -MD -MP -MF $(DEPDIR)/echo-ETEchoServer.Tpo -c -o echo-ETEchoServer.obj `if test -f 'echo/ETEchoServer.cpp'; then $(CYGPATH_W) 'echo/ETEchoServer.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/ETEchoServer.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo-ETEchoServer.Tpo $(DEPDIR)/echo-ETEchoServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/ETEchoServer.cpp' object='echo-ETEchoServer.obj' libtool=no @AMDEPBACKSLASH@
+ETEchoServer.obj: echo/ETEchoServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETEchoServer.obj -MD -MP -MF $(DEPDIR)/ETEchoServer.Tpo -c -o ETEchoServer.obj `if test -f 'echo/ETEchoServer.cpp'; then $(CYGPATH_W) 'echo/ETEchoServer.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/ETEchoServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETEchoServer.Tpo $(DEPDIR)/ETEchoServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/ETEchoServer.cpp' object='ETEchoServer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(echo_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo-ETEchoServer.obj `if test -f 'echo/ETEchoServer.cpp'; then $(CYGPATH_W) 'echo/ETEchoServer.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/ETEchoServer.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETEchoServer.obj `if test -f 'echo/ETEchoServer.cpp'; then $(CYGPATH_W) 'echo/ETEchoServer.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/ETEchoServer.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

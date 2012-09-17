@@ -38,7 +38,7 @@ namespace ET
         void setCloseCallback(CloseCallback closeCallback)
         { closeCallback_ = closeCallback; }
 
-        int send(char *, int);
+        int send(const char *, int);
         int send(ETBuffer *);
 
         void connectEstablish();
@@ -68,18 +68,20 @@ namespace ET
         void setState(int state) { state_ = state; }
         void shutdownWrite();
 
+        void defaultMessage(ETBuffer *msg);
+
         ETWatcher *watcher_;
         ETEventLoop *eventLoop_;
-        void *ctx_;
-
-        MessageCallback messageCallback_;
-        WriteCompleteCallback writeCompleteCallback_;
-        CloseCallback closeCallback_;
-        ConnectCallback connectCallback_;
         
         int state_;
         ETBuffer inBuf_;
         ETBuffer outBuf_;
+
+        void *ctx_;
+        MessageCallback messageCallback_;
+        WriteCompleteCallback writeCompleteCallback_;
+        CloseCallback closeCallback_;
+        ConnectCallback connectCallback_;
 
     }; // end class ETConnection
 } // end namespace ET
