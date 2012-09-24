@@ -190,6 +190,7 @@ void ETConnection::closeHandle()
 
     if (closeCallback_) {
         closeCallback_(ctx_, this);
+        delete this;
     }
 }
 

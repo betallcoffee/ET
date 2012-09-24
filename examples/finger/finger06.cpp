@@ -40,7 +40,6 @@ void onMessage(void *ctx, ETConnection *conn, ETBuffer *msg)
 void newConnection(void *ctx, ETConnection *conn)
 {
     conn->setMessageCallback(onMessage);
-    conn->connectEstablish();
 }
 
 int main()

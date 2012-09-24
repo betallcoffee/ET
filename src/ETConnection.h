@@ -28,6 +28,8 @@ namespace ET
 
         int isConnected() { return state_ == kConnStatesConnected; }
 
+        void setArg(void *arg) { arg_ = arg; }
+        void *getArg() { return arg_; }
         void setContext(void *ctx) { ctx_ = ctx; }
         void setConnectCallback(ConnectCallback connectCallback)
         { connectCallback_ = connectCallback; }
@@ -77,6 +79,7 @@ namespace ET
         ETBuffer inBuf_;
         ETBuffer outBuf_;
 
+        void *arg_;
         void *ctx_;
         MessageCallback messageCallback_;
         WriteCompleteCallback writeCompleteCallback_;

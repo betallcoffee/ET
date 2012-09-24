@@ -17,8 +17,10 @@ class ETConnection;
 const int kInvalidFD = -1;
 const int kMaxConn = 128;
 
+// ETWatcher
 typedef void(*EventCallback)(void *);
 
+// ETAcceptor/ETConnector
 typedef void(*NewConnectionCallback)(void *ctx, int fd); 
 
 // ETConnction

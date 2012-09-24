@@ -32,7 +32,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = echo$(EXEEXT)
+bin_PROGRAMS = echo$(EXEEXT) discard$(EXEEXT) daytime$(EXEEXT) \
+	time$(EXEEXT) chargen$(EXEEXT)
 subdir = examples/simple
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -45,10 +46,26 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_echo_OBJECTS = Main.$(OBJEXT) ETEchoServer.$(OBJEXT)
+am_chargen_OBJECTS = chargen.$(OBJEXT) ETChargenServer.$(OBJEXT)
+chargen_OBJECTS = $(am_chargen_OBJECTS)
+chargen_LDADD = $(LDADD)
+chargen_DEPENDENCIES = ../../src/libET.a
+am_daytime_OBJECTS = daytime.$(OBJEXT) ETDaytimeServer.$(OBJEXT)
+daytime_OBJECTS = $(am_daytime_OBJECTS)
+daytime_LDADD = $(LDADD)
+daytime_DEPENDENCIES = ../../src/libET.a
+am_discard_OBJECTS = discard.$(OBJEXT) ETDiscardServer.$(OBJEXT)
+discard_OBJECTS = $(am_discard_OBJECTS)
+discard_LDADD = $(LDADD)
+discard_DEPENDENCIES = ../../src/libET.a
+am_echo_OBJECTS = echo.$(OBJEXT) ETEchoServer.$(OBJEXT)
 echo_OBJECTS = $(am_echo_OBJECTS)
 echo_LDADD = $(LDADD)
 echo_DEPENDENCIES = ../../src/libET.a
+am_time_OBJECTS = time.$(OBJEXT) ETTimeServer.$(OBJEXT)
+time_OBJECTS = $(am_time_OBJECTS)
+time_LDADD = $(LDADD)
+time_DEPENDENCIES = ../../src/libET.a
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +79,10 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(echo_SOURCES)
-DIST_SOURCES = $(echo_SOURCES)
+SOURCES = $(chargen_SOURCES) $(daytime_SOURCES) $(discard_SOURCES) \
+	$(echo_SOURCES) $(time_SOURCES)
+DIST_SOURCES = $(chargen_SOURCES) $(daytime_SOURCES) \
+	$(discard_SOURCES) $(echo_SOURCES) $(time_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -160,9 +179,25 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 LDADD = ../../src/libET.a
 AM_CPPFLAGS = -I$(top_srcdir)/src/
-echo_SOURCES = echo/Main.cpp \
+echo_SOURCES = echo/echo.cpp \
 			   echo/ETEchoServer.h \
 			   echo/ETEchoServer.cpp 
+
+discard_SOURCES = discard/discard.cpp \
+				  discard/ETDiscardServer.h \
+				  discard/ETDiscardServer.cpp
+
+daytime_SOURCES = daytime/daytime.cpp \
+				  daytime/ETDaytimeServer.h \
+				  daytime/ETDaytimeServer.cpp
+
+time_SOURCES = time/time.cpp \
+			   time/ETTimeServer.h \
+			   time/ETTimeServer.cpp
+
+chargen_SOURCES = chargen/chargen.cpp \
+				  chargen/ETChargenServer.h \
+				  chargen/ETChargenServer.cpp 
 
 all: all-am
 
@@ -235,9 +270,21 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+chargen$(EXEEXT): $(chargen_OBJECTS) $(chargen_DEPENDENCIES) 
+	@rm -f chargen$(EXEEXT)
+	$(CXXLINK) $(chargen_OBJECTS) $(chargen_LDADD) $(LIBS)
+daytime$(EXEEXT): $(daytime_OBJECTS) $(daytime_DEPENDENCIES) 
+	@rm -f daytime$(EXEEXT)
+	$(CXXLINK) $(daytime_OBJECTS) $(daytime_LDADD) $(LIBS)
+discard$(EXEEXT): $(discard_OBJECTS) $(discard_DEPENDENCIES) 
+	@rm -f discard$(EXEEXT)
+	$(CXXLINK) $(discard_OBJECTS) $(discard_LDADD) $(LIBS)
 echo$(EXEEXT): $(echo_OBJECTS) $(echo_DEPENDENCIES) 
 	@rm -f echo$(EXEEXT)
 	$(CXXLINK) $(echo_OBJECTS) $(echo_LDADD) $(LIBS)
+time$(EXEEXT): $(time_OBJECTS) $(time_DEPENDENCIES) 
+	@rm -f time$(EXEEXT)
+	$(CXXLINK) $(time_OBJECTS) $(time_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -245,8 +292,16 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETChargenServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETDaytimeServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETDiscardServer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETEchoServer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ETTimeServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chargen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/daytime.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/discard.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/echo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/time.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -262,19 +317,103 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-Main.o: echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Main.o -MD -MP -MF $(DEPDIR)/Main.Tpo -c -o Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Main.Tpo $(DEPDIR)/Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='Main.o' libtool=no @AMDEPBACKSLASH@
+chargen.o: chargen/chargen.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT chargen.o -MD -MP -MF $(DEPDIR)/chargen.Tpo -c -o chargen.o `test -f 'chargen/chargen.cpp' || echo '$(srcdir)/'`chargen/chargen.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/chargen.Tpo $(DEPDIR)/chargen.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='chargen/chargen.cpp' object='chargen.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Main.o `test -f 'echo/Main.cpp' || echo '$(srcdir)/'`echo/Main.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o chargen.o `test -f 'chargen/chargen.cpp' || echo '$(srcdir)/'`chargen/chargen.cpp
 
-Main.obj: echo/Main.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Main.obj -MD -MP -MF $(DEPDIR)/Main.Tpo -c -o Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Main.Tpo $(DEPDIR)/Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/Main.cpp' object='Main.obj' libtool=no @AMDEPBACKSLASH@
+chargen.obj: chargen/chargen.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT chargen.obj -MD -MP -MF $(DEPDIR)/chargen.Tpo -c -o chargen.obj `if test -f 'chargen/chargen.cpp'; then $(CYGPATH_W) 'chargen/chargen.cpp'; else $(CYGPATH_W) '$(srcdir)/chargen/chargen.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/chargen.Tpo $(DEPDIR)/chargen.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='chargen/chargen.cpp' object='chargen.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Main.obj `if test -f 'echo/Main.cpp'; then $(CYGPATH_W) 'echo/Main.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/Main.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o chargen.obj `if test -f 'chargen/chargen.cpp'; then $(CYGPATH_W) 'chargen/chargen.cpp'; else $(CYGPATH_W) '$(srcdir)/chargen/chargen.cpp'; fi`
+
+ETChargenServer.o: chargen/ETChargenServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETChargenServer.o -MD -MP -MF $(DEPDIR)/ETChargenServer.Tpo -c -o ETChargenServer.o `test -f 'chargen/ETChargenServer.cpp' || echo '$(srcdir)/'`chargen/ETChargenServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETChargenServer.Tpo $(DEPDIR)/ETChargenServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='chargen/ETChargenServer.cpp' object='ETChargenServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETChargenServer.o `test -f 'chargen/ETChargenServer.cpp' || echo '$(srcdir)/'`chargen/ETChargenServer.cpp
+
+ETChargenServer.obj: chargen/ETChargenServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETChargenServer.obj -MD -MP -MF $(DEPDIR)/ETChargenServer.Tpo -c -o ETChargenServer.obj `if test -f 'chargen/ETChargenServer.cpp'; then $(CYGPATH_W) 'chargen/ETChargenServer.cpp'; else $(CYGPATH_W) '$(srcdir)/chargen/ETChargenServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETChargenServer.Tpo $(DEPDIR)/ETChargenServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='chargen/ETChargenServer.cpp' object='ETChargenServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETChargenServer.obj `if test -f 'chargen/ETChargenServer.cpp'; then $(CYGPATH_W) 'chargen/ETChargenServer.cpp'; else $(CYGPATH_W) '$(srcdir)/chargen/ETChargenServer.cpp'; fi`
+
+daytime.o: daytime/daytime.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT daytime.o -MD -MP -MF $(DEPDIR)/daytime.Tpo -c -o daytime.o `test -f 'daytime/daytime.cpp' || echo '$(srcdir)/'`daytime/daytime.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/daytime.Tpo $(DEPDIR)/daytime.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='daytime/daytime.cpp' object='daytime.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o daytime.o `test -f 'daytime/daytime.cpp' || echo '$(srcdir)/'`daytime/daytime.cpp
+
+daytime.obj: daytime/daytime.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT daytime.obj -MD -MP -MF $(DEPDIR)/daytime.Tpo -c -o daytime.obj `if test -f 'daytime/daytime.cpp'; then $(CYGPATH_W) 'daytime/daytime.cpp'; else $(CYGPATH_W) '$(srcdir)/daytime/daytime.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/daytime.Tpo $(DEPDIR)/daytime.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='daytime/daytime.cpp' object='daytime.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o daytime.obj `if test -f 'daytime/daytime.cpp'; then $(CYGPATH_W) 'daytime/daytime.cpp'; else $(CYGPATH_W) '$(srcdir)/daytime/daytime.cpp'; fi`
+
+ETDaytimeServer.o: daytime/ETDaytimeServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETDaytimeServer.o -MD -MP -MF $(DEPDIR)/ETDaytimeServer.Tpo -c -o ETDaytimeServer.o `test -f 'daytime/ETDaytimeServer.cpp' || echo '$(srcdir)/'`daytime/ETDaytimeServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETDaytimeServer.Tpo $(DEPDIR)/ETDaytimeServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='daytime/ETDaytimeServer.cpp' object='ETDaytimeServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETDaytimeServer.o `test -f 'daytime/ETDaytimeServer.cpp' || echo '$(srcdir)/'`daytime/ETDaytimeServer.cpp
+
+ETDaytimeServer.obj: daytime/ETDaytimeServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETDaytimeServer.obj -MD -MP -MF $(DEPDIR)/ETDaytimeServer.Tpo -c -o ETDaytimeServer.obj `if test -f 'daytime/ETDaytimeServer.cpp'; then $(CYGPATH_W) 'daytime/ETDaytimeServer.cpp'; else $(CYGPATH_W) '$(srcdir)/daytime/ETDaytimeServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETDaytimeServer.Tpo $(DEPDIR)/ETDaytimeServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='daytime/ETDaytimeServer.cpp' object='ETDaytimeServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETDaytimeServer.obj `if test -f 'daytime/ETDaytimeServer.cpp'; then $(CYGPATH_W) 'daytime/ETDaytimeServer.cpp'; else $(CYGPATH_W) '$(srcdir)/daytime/ETDaytimeServer.cpp'; fi`
+
+discard.o: discard/discard.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT discard.o -MD -MP -MF $(DEPDIR)/discard.Tpo -c -o discard.o `test -f 'discard/discard.cpp' || echo '$(srcdir)/'`discard/discard.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/discard.Tpo $(DEPDIR)/discard.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='discard/discard.cpp' object='discard.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o discard.o `test -f 'discard/discard.cpp' || echo '$(srcdir)/'`discard/discard.cpp
+
+discard.obj: discard/discard.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT discard.obj -MD -MP -MF $(DEPDIR)/discard.Tpo -c -o discard.obj `if test -f 'discard/discard.cpp'; then $(CYGPATH_W) 'discard/discard.cpp'; else $(CYGPATH_W) '$(srcdir)/discard/discard.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/discard.Tpo $(DEPDIR)/discard.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='discard/discard.cpp' object='discard.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o discard.obj `if test -f 'discard/discard.cpp'; then $(CYGPATH_W) 'discard/discard.cpp'; else $(CYGPATH_W) '$(srcdir)/discard/discard.cpp'; fi`
+
+ETDiscardServer.o: discard/ETDiscardServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETDiscardServer.o -MD -MP -MF $(DEPDIR)/ETDiscardServer.Tpo -c -o ETDiscardServer.o `test -f 'discard/ETDiscardServer.cpp' || echo '$(srcdir)/'`discard/ETDiscardServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETDiscardServer.Tpo $(DEPDIR)/ETDiscardServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='discard/ETDiscardServer.cpp' object='ETDiscardServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETDiscardServer.o `test -f 'discard/ETDiscardServer.cpp' || echo '$(srcdir)/'`discard/ETDiscardServer.cpp
+
+ETDiscardServer.obj: discard/ETDiscardServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETDiscardServer.obj -MD -MP -MF $(DEPDIR)/ETDiscardServer.Tpo -c -o ETDiscardServer.obj `if test -f 'discard/ETDiscardServer.cpp'; then $(CYGPATH_W) 'discard/ETDiscardServer.cpp'; else $(CYGPATH_W) '$(srcdir)/discard/ETDiscardServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETDiscardServer.Tpo $(DEPDIR)/ETDiscardServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='discard/ETDiscardServer.cpp' object='ETDiscardServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETDiscardServer.obj `if test -f 'discard/ETDiscardServer.cpp'; then $(CYGPATH_W) 'discard/ETDiscardServer.cpp'; else $(CYGPATH_W) '$(srcdir)/discard/ETDiscardServer.cpp'; fi`
+
+echo.o: echo/echo.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo.o -MD -MP -MF $(DEPDIR)/echo.Tpo -c -o echo.o `test -f 'echo/echo.cpp' || echo '$(srcdir)/'`echo/echo.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo.Tpo $(DEPDIR)/echo.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/echo.cpp' object='echo.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo.o `test -f 'echo/echo.cpp' || echo '$(srcdir)/'`echo/echo.cpp
+
+echo.obj: echo/echo.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT echo.obj -MD -MP -MF $(DEPDIR)/echo.Tpo -c -o echo.obj `if test -f 'echo/echo.cpp'; then $(CYGPATH_W) 'echo/echo.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/echo.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/echo.Tpo $(DEPDIR)/echo.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/echo.cpp' object='echo.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o echo.obj `if test -f 'echo/echo.cpp'; then $(CYGPATH_W) 'echo/echo.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/echo.cpp'; fi`
 
 ETEchoServer.o: echo/ETEchoServer.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETEchoServer.o -MD -MP -MF $(DEPDIR)/ETEchoServer.Tpo -c -o ETEchoServer.o `test -f 'echo/ETEchoServer.cpp' || echo '$(srcdir)/'`echo/ETEchoServer.cpp
@@ -289,6 +428,34 @@ ETEchoServer.obj: echo/ETEchoServer.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='echo/ETEchoServer.cpp' object='ETEchoServer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETEchoServer.obj `if test -f 'echo/ETEchoServer.cpp'; then $(CYGPATH_W) 'echo/ETEchoServer.cpp'; else $(CYGPATH_W) '$(srcdir)/echo/ETEchoServer.cpp'; fi`
+
+time.o: time/time.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT time.o -MD -MP -MF $(DEPDIR)/time.Tpo -c -o time.o `test -f 'time/time.cpp' || echo '$(srcdir)/'`time/time.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/time.Tpo $(DEPDIR)/time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='time/time.cpp' object='time.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o time.o `test -f 'time/time.cpp' || echo '$(srcdir)/'`time/time.cpp
+
+time.obj: time/time.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT time.obj -MD -MP -MF $(DEPDIR)/time.Tpo -c -o time.obj `if test -f 'time/time.cpp'; then $(CYGPATH_W) 'time/time.cpp'; else $(CYGPATH_W) '$(srcdir)/time/time.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/time.Tpo $(DEPDIR)/time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='time/time.cpp' object='time.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o time.obj `if test -f 'time/time.cpp'; then $(CYGPATH_W) 'time/time.cpp'; else $(CYGPATH_W) '$(srcdir)/time/time.cpp'; fi`
+
+ETTimeServer.o: time/ETTimeServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETTimeServer.o -MD -MP -MF $(DEPDIR)/ETTimeServer.Tpo -c -o ETTimeServer.o `test -f 'time/ETTimeServer.cpp' || echo '$(srcdir)/'`time/ETTimeServer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETTimeServer.Tpo $(DEPDIR)/ETTimeServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='time/ETTimeServer.cpp' object='ETTimeServer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETTimeServer.o `test -f 'time/ETTimeServer.cpp' || echo '$(srcdir)/'`time/ETTimeServer.cpp
+
+ETTimeServer.obj: time/ETTimeServer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ETTimeServer.obj -MD -MP -MF $(DEPDIR)/ETTimeServer.Tpo -c -o ETTimeServer.obj `if test -f 'time/ETTimeServer.cpp'; then $(CYGPATH_W) 'time/ETTimeServer.cpp'; else $(CYGPATH_W) '$(srcdir)/time/ETTimeServer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ETTimeServer.Tpo $(DEPDIR)/ETTimeServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='time/ETTimeServer.cpp' object='ETTimeServer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ETTimeServer.obj `if test -f 'time/ETTimeServer.cpp'; then $(CYGPATH_W) 'time/ETTimeServer.cpp'; else $(CYGPATH_W) '$(srcdir)/time/ETTimeServer.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
