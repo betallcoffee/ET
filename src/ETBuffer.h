@@ -12,53 +12,60 @@
 namespace ET
 {
 
-	//
-	// A buffer class
-	//
-	class ETBuffer
-	{
-	public:
-		ETBuffer(int capacity);
-		~ETBuffer();
+    //
+    // A buffer class
+    //
+    class ETBuffer
+    {
+    public:
+        ETBuffer(int capacity);
+        ~ETBuffer();
 
         // Only read data, don't move the readable position.
-		int read(char *to, int size);
+        int read(char *to, int size);
         // Move the readable position.
         void retrieve(int size);
 
-		int write(const char *from, int size);
+        int write(const char *from, int size);
         int write(ETBuffer *from);
 
-        // append the data node of b, and move some empty node to b.
+        // Read the data of buffer, and write to FD.
+        int readToFD(int fd, int size);
+        // Write the data which is read from FD to buffer.
+        int writeFromFD(int fd);
+
+        // Append the data node of b, and move some empty node to b.
         int swap(ETBuffer *b);
 
         int findCRLF();
-		int clear();
+        int clear();
         int readableBytes() { return size_; }
 
-	private:
-		typedef struct ETBufferChunk {
-			struct ETBufferChunk *next_;
+    private:
+        typedef struct ETBufferChunk {
+            struct ETBufferChunk *next_;
 
-			char *start_;
-			char *end_;
-			char *pos_; // read cursor
-			char *last_; // write cursor
-		}ETBufferChunk;
+            char *start_;
+            char *end_;
+            char *pos_; // read cursor
+            char *last_; // write cursor
+        }ETBufferChunk;
 
         static const int kExpendSize = 64;
         static const char kCRLF[];
-        // remove first bufer chunk, and retrun.
+        // Pop first buffer chunk, and retrun.
         ETBufferChunk *pop();
+        // Push a empty buffer chunk to buffer.
         void push(ETBufferChunk *);
-		int expend(int size);
+        // Expend the room of buffer.
+        int expend(int size);
 
-		ETBufferChunk *first_; // first readable chunk.
-		ETBufferChunk *last_;
-		ETBufferChunk *pos_; // first writeable chunk.
+        ETBufferChunk *first_; // first readable chunk.
+        ETBufferChunk *last_;
+        ETBufferChunk *pos_; // first writeable chunk.
         int capacity_;
-		int size_;
-	}; // end class ETBuffer	
+        int size_;
+    }; // end class ETBuffer
 } // end namespace ET
 
 #endif // ETBUFFER_H

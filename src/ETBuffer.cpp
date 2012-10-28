@@ -146,6 +146,16 @@ int ETBuffer::write(ETBuffer *from)
     return res;
 }
 
+int ETBuffer::readToFD(int fd, int size)
+{
+    return 0;
+}
+
+int ETBuffer::writeFromFD(int fd)
+{
+    return 0;
+}
+
 int ETBuffer::swap(ETBuffer *b)
 {
     int res = 0;
