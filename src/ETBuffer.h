@@ -12,6 +12,8 @@
 namespace ET
 {
 
+    class ETAlloc;
+
     //
     // A buffer class
     //
@@ -60,6 +62,7 @@ namespace ET
         // Expend the room of buffer.
         int expend(int size);
 
+        ETAlloc *alloc_;
         ETBufferChunk *first_; // first readable chunk.
         ETBufferChunk *last_;
         ETBufferChunk *pos_; // first writeable chunk.

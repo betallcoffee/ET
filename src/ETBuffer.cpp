@@ -8,21 +8,27 @@
 #include <string.h>
 
 #include "ETBuffer.h"
+#include "ETAlloc.h"
 
 using namespace ET;
 
 const char kCRLF[] = { "\r\n" };
 
 ETBuffer::ETBuffer(int capacity)
-    : size_(0),
-    capacity_(capacity)
+    : alloc_(NULL),
+    first_(NULL),
+    last_(NULL),
+    pos_(NULL),
+    capacity_(capacity),
+    size_(0)
 {
-    first_ = (ETBufferChunk *)malloc(sizeof(ETBufferChunk));
+    alloc_ = ETAlloc::sharedInstance();
+    first_ = (ETBufferChunk *)alloc_->allocate(sizeof(ETBufferChunk));
     if (first_ != NULL) {
         first_->next_ = NULL;
-        first_->start_ = (char *)malloc(capacity_);
+        first_->start_ = (char *)alloc_->allocate(capacity_);
         if (first_->start_ == NULL) {
-            free(first_);
+            alloc_->deallocate(first_);
             first_ = NULL;
         } else {
             first_->end_ = first_->start_ + capacity_;
@@ -39,8 +45,8 @@ ETBuffer::~ETBuffer()
     while (first_ != NULL) {
         temp = first_;
         first_ = first_->next_;
-        free(temp->start_);
-        free(temp);
+        alloc_->deallocate(temp->start_);
+        alloc_->deallocate(temp);
     }
 }
 
@@ -67,6 +73,7 @@ int ETBuffer::read(char *to, int size)
 void ETBuffer::retrieve(int size)
 {
     int pos = 0;
+    if (first_ == NULL) return ;
     while (size > 0 && size_ > 0) {
         if (size - pos <= first_->last_ - first_->pos_) {
             first_->pos_ += size - pos;
@@ -291,15 +298,15 @@ int ETBuffer::expend(int size)
 {
     size = size > kExpendSize ? size : kExpendSize;
     if (pos_ == NULL) {
-        pos_ = (ETBufferChunk *)malloc(sizeof(ETBufferChunk));
+        pos_ = (ETBufferChunk *)alloc_->allocate(sizeof(ETBufferChunk));
         if (pos_ == NULL) {
             pos_ = last_;
             return -1;
         } else {
             pos_->next_ = NULL;
-            pos_->start_ = (char *)malloc(size);
+            pos_->start_ = (char *)alloc_->allocate(size);
             if (pos_->start_ == NULL) {
-                free(pos_);
+                alloc_->deallocate(pos_);
                 pos_ = last_;
                 return -1;
             } else {

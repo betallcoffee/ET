@@ -44,7 +44,7 @@ ETTimestamp ETTimestamp::now()
 std::string ETTimestamp::toString() const
 {
     char buf[32] = {0};
-    snprintf(buf, sizeof(buf) - 1, "%d, %ld", timeSinceEpoch_.tv_sec, timeSinceEpoch_.tv_usec);
+    snprintf(buf, sizeof(buf) - 1, "%ld, %ld", timeSinceEpoch_.tv_sec, timeSinceEpoch_.tv_usec);
     return buf;
 }
 
