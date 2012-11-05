@@ -51,7 +51,8 @@ am__objects_1 = libET_a-ETEventLoop.$(OBJEXT) \
 	libET_a-ETWatcher.$(OBJEXT) libET_a-ETSelect.$(OBJEXT) \
 	libET_a-ETEpollSelect.$(OBJEXT) libET_a-ETAcceptor.$(OBJEXT) \
 	libET_a-ETConnector.$(OBJEXT) libET_a-ETBuffer.$(OBJEXT) \
-	libET_a-ETConnection.$(OBJEXT) libET_a-ETTCPServer.$(OBJEXT)
+	libET_a-ETBufferV.$(OBJEXT) libET_a-ETConnection.$(OBJEXT) \
+	libET_a-ETTCPServer.$(OBJEXT)
 am__objects_2 = libET_a-ETTimestamp.$(OBJEXT) \
 	libET_a-ETAlloc.$(OBJEXT)
 am_libET_a_OBJECTS = $(am__objects_1) $(am__objects_2)
@@ -179,6 +180,8 @@ src = ETEventLoop.h \
       ETConnector.cpp \
       ETBuffer.h \
       ETBuffer.cpp \
+	  ETBufferV.h \
+	  ETBufferV.cpp \
       ETConnection.h \
       ETConnection.cpp \
       ETTCPServer.h \
@@ -243,6 +246,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETAcceptor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETAlloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETBuffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETBufferV.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETConnection.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETConnector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libET_a-ETEpollSelect.Po@am__quote@
@@ -363,6 +367,20 @@ libET_a-ETBuffer.obj: ETBuffer.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ETBuffer.cpp' object='libET_a-ETBuffer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libET_a-ETBuffer.obj `if test -f 'ETBuffer.cpp'; then $(CYGPATH_W) 'ETBuffer.cpp'; else $(CYGPATH_W) '$(srcdir)/ETBuffer.cpp'; fi`
+
+libET_a-ETBufferV.o: ETBufferV.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libET_a-ETBufferV.o -MD -MP -MF $(DEPDIR)/libET_a-ETBufferV.Tpo -c -o libET_a-ETBufferV.o `test -f 'ETBufferV.cpp' || echo '$(srcdir)/'`ETBufferV.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libET_a-ETBufferV.Tpo $(DEPDIR)/libET_a-ETBufferV.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ETBufferV.cpp' object='libET_a-ETBufferV.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libET_a-ETBufferV.o `test -f 'ETBufferV.cpp' || echo '$(srcdir)/'`ETBufferV.cpp
+
+libET_a-ETBufferV.obj: ETBufferV.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libET_a-ETBufferV.obj -MD -MP -MF $(DEPDIR)/libET_a-ETBufferV.Tpo -c -o libET_a-ETBufferV.obj `if test -f 'ETBufferV.cpp'; then $(CYGPATH_W) 'ETBufferV.cpp'; else $(CYGPATH_W) '$(srcdir)/ETBufferV.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libET_a-ETBufferV.Tpo $(DEPDIR)/libET_a-ETBufferV.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ETBufferV.cpp' object='libET_a-ETBufferV.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libET_a-ETBufferV.obj `if test -f 'ETBufferV.cpp'; then $(CYGPATH_W) 'ETBufferV.cpp'; else $(CYGPATH_W) '$(srcdir)/ETBufferV.cpp'; fi`
 
 libET_a-ETConnection.o: ETConnection.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libET_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libET_a-ETConnection.o -MD -MP -MF $(DEPDIR)/libET_a-ETConnection.Tpo -c -o libET_a-ETConnection.o `test -f 'ETConnection.cpp' || echo '$(srcdir)/'`ETConnection.cpp
