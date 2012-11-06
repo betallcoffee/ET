@@ -5,7 +5,7 @@
 #include "ETEventLoop.h"
 #include "ETEpollSelect.h"
 #include "ETConnection.h"
-#include "ETBuffer.h"
+#include "ETBufferV.h"
 #include "ETTCPServer.h"
 
 using namespace ET;
@@ -23,17 +23,13 @@ std::string getUser(const std::string &user)
     return res;
 }
 
-void onMessage(void *ctx, ETConnection *conn, ETBuffer *msg)
+void onMessage(void *ctx, ETConnection *conn, ETBufferV *msg)
 {
-    int res = 0;
-    if ((res = msg->findCRLF()) >= 0) {
-        char *user = (char *)malloc(res);
-        msg->read(user, res);
-        std::string str(user, res);
+    if ( msg->findCRLF()) {
+        std::string str(msg->beginRead(), msg->readableBytes());
         std::string data = getUser(str);
         conn->send(data.c_str(), data.length());
         conn->shutdown();
-        free(user);
     }
 }
 

@@ -9,7 +9,7 @@
 #define ETCONNECTION_H
 
 #include "ETConfig.h"
-#include "ETBuffer.h"
+#include "ETBufferV.h"
 
 namespace ET
 {
@@ -41,7 +41,7 @@ namespace ET
         { closeCallback_ = closeCallback; }
 
         int send(const char *, int);
-        int send(ETBuffer *);
+        int send(ETBufferV *);
 
         void connectEstablish();
         void connectClose();
@@ -70,14 +70,14 @@ namespace ET
         void setState(int state) { state_ = state; }
         void shutdownWrite();
 
-        void defaultMessage(ETBuffer *msg);
+        void defaultMessage(ETBufferV *msg);
 
         ETWatcher *watcher_;
         ETEventLoop *eventLoop_;
         
         int state_;
-        ETBuffer inBuf_;
-        ETBuffer outBuf_;
+        ETBufferV inBuf_;
+        ETBufferV outBuf_;
 
         void *arg_;
         void *ctx_;

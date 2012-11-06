@@ -40,13 +40,13 @@ void ETDiscardServer::connection(ETConnection *conn)
     conn->setMessageCallback(messageCallback);
 }
 
-void ETDiscardServer::messageCallback(void *ctx, ETConnection *conn, ETBuffer *msg)
+void ETDiscardServer::messageCallback(void *ctx, ETConnection *conn, ETBufferV *msg)
 {
     ETDiscardServer *self = static_cast<ETDiscardServer *>(ctx);
     self->message(conn, msg);
 }
 
-void ETDiscardServer::message(ETConnection *conn, ETBuffer *msg)
+void ETDiscardServer::message(ETConnection *conn, ETBufferV *msg)
 {
     msg->clear();
 }

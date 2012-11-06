@@ -11,7 +11,7 @@
 namespace ET
 {
 
-class ETBuffer;
+class ETBufferV;
 class ETConnection;
 
 const int kInvalidFD = -1;
@@ -24,7 +24,7 @@ typedef void(*EventCallback)(void *);
 typedef void(*NewConnectionCallback)(void *ctx, int fd); 
 
 // ETConnction
-typedef void(*MessageCallback)(void *ctx, ETConnection *conn, ETBuffer *msg);
+typedef void(*MessageCallback)(void *ctx, ETConnection *conn, ETBufferV *msg);
 typedef void(*WriteCompleteCallback)(void *ctx, ETConnection *conn);
 typedef void(*CloseCallback)(void *ctx, ETConnection *conn);
 typedef void(*ConnectCallback)(void *ctx, ETConnection *conn);

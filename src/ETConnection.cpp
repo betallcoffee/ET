@@ -19,8 +19,6 @@ using namespace ET;
 ETConnection::ETConnection(ETEventLoop *eventLoop, int fd)
     : watcher_(new ETWatcher(eventLoop, fd)),
     eventLoop_(eventLoop),
-    inBuf_(kBufInitSize),
-    outBuf_(kBufInitSize),
     ctx_(NULL),
     messageCallback_(NULL),
     writeCompleteCallback_(NULL),
@@ -57,7 +55,7 @@ int ETConnection::send(const char *data, int size)
     }
     
     if (res < size) {
-        outBuf_.write(data + res, size - res);
+        outBuf_.append(data + res, size - res);
         if (!watcher_->isWriting()) {
             watcher_->enableWrite();
         }
@@ -65,19 +63,13 @@ int ETConnection::send(const char *data, int size)
     return res;
 }
 
-int ETConnection::send(ETBuffer *data)
+int ETConnection::send(ETBufferV *data)
 {
-    int res = data->readableBytes();
-
     if (state_ != kConnStatesConnected) {
         return -1;
     }
-
-    outBuf_.swap(data);
-    if (!watcher_->isWriting()) {
-        watcher_->enableWrite();
-    }
-    writeHandle();
+    
+    int res = send(data->beginRead(), data->readableBytes());
 
     return res;
 }
@@ -143,7 +135,7 @@ void ETConnection::readHandle()
         closeHandle();
     } else if (size > 0) {
         do {
-            inBuf_.write(data, size);
+            inBuf_.append(data, size);
         } while ((size = ::read(fd, data, 4 * 1024)) > 0); 
         if (messageCallback_) {
             messageCallback_(ctx_, this,  &inBuf_);
@@ -156,26 +148,24 @@ void ETConnection::readHandle()
 void ETConnection::writeHandle()
 {
     int res = 0;
-    char data[4 * 1024];
-    int size = 0;
     int fd = watcher_->getFD();
+    int size = outBuf_.readableBytes();;
+    char *data = outBuf_.beginRead();
 
-    while ((size = outBuf_.read(data, 4 * 1024)) > 0) {
-        res = ::write(fd, data, size);
+    if (watcher_->isWriting()) {
+        res = ::write(fd, data, size); 
         if (res > 0) {
             outBuf_.retrieve(res);
+            if (outBuf_.readableBytes() == 0) {
+                watcher_->disableWrite();
+                if (writeCompleteCallback_) {
+                    writeCompleteCallback_(ctx_, this);
+                }
+                if (state_ == kConnStatesDisconnecting) {
+                    shutdownWrite();
+                }
+            }
         } else {
-            break;
-        }
-    }
-
-    if (outBuf_.readableBytes() == 0) {
-        watcher_->disableWrite();
-        if (writeCompleteCallback_) {
-            writeCompleteCallback_(ctx_, this);
-        }
-        if (state_ == kConnStatesDisconnecting) {
-            shutdownWrite();
         }
     }
 }
@@ -205,7 +195,7 @@ void ETConnection::shutdownWrite()
     }
 }
 
-void ETConnection::defaultMessage(ETBuffer *msg)
+void ETConnection::defaultMessage(ETBufferV *msg)
 {
     msg->clear();
 }

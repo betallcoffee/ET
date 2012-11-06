@@ -7,7 +7,7 @@ namespace ET
     class ETEventLoop;
     class ETConnection;
     class ETTCPServer;
-    class ETBuffer;
+    class ETBufferV;
     
 namespace EXAMPLES
 {
@@ -26,8 +26,8 @@ namespace EXAMPLES
         void connection(ETConnection *conn);
 
         // ETConnection callback.
-        static void messageCallback(void *ctx, ETConnection *conn, ETBuffer *msg);
-        void message(ETConnection *conn, ETBuffer *msg);
+        static void messageCallback(void *ctx, ETConnection *conn, ETBufferV *msg);
+        void message(ETConnection *conn, ETBufferV *msg);
 
         ETTCPServer *tcpServer_;
 

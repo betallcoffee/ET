@@ -40,13 +40,13 @@ void ETEchoServer::connection(ETConnection *conn)
     conn->setMessageCallback(messageCallback);
 }
 
-void ETEchoServer::messageCallback(void *ctx, ETConnection *conn, ETBuffer *msg)
+void ETEchoServer::messageCallback(void *ctx, ETConnection *conn, ETBufferV *msg)
 {
     ETEchoServer *self = static_cast<ETEchoServer *>(ctx);
     self->message(conn, msg);
 }
 
-void ETEchoServer::message(ETConnection *conn, ETBuffer *msg)
+void ETEchoServer::message(ETConnection *conn, ETBufferV *msg)
 {
     conn->send(msg);
 }

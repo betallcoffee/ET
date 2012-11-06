@@ -31,6 +31,9 @@ namespace ET
         const char *findCRLF();
         const char *findCRLF(char *start);
 
+        void retrieve(size_t n) { readIndex_ += n; }
+        void clear() { readIndex_ = writeIndex_ = 0; }
+
     private:
         static const char kCRLF[];
 

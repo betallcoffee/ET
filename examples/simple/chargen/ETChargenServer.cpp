@@ -56,13 +56,13 @@ void ETChargenServer::connect(ETConnection *conn)
     }
 }
 
-void ETChargenServer::messageCallback(void *ctx, ETConnection *conn, ETBuffer *msg)
+void ETChargenServer::messageCallback(void *ctx, ETConnection *conn, ETBufferV *msg)
 {
     ETChargenServer *self = static_cast<ETChargenServer *>(ctx);
     self->message(conn, msg);
 }
 
-void ETChargenServer::message(ETConnection *conn, ETBuffer *msg)
+void ETChargenServer::message(ETConnection *conn, ETBufferV *msg)
 {
     msg->clear();
 }
