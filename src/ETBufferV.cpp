@@ -26,6 +26,7 @@ size_t ETBufferV::append(const char *data, size_t n)
     ensureWriteable(n);
     std::copy(data, data + n, beginWrite());
     writeIndex_ += n;
+    return n;
 }
 
 const char *ETBufferV::findCRLF()

@@ -42,7 +42,12 @@ ETEpollSelect::ETEpollSelect()
 ETEpollSelect::~ETEpollSelect()
 {
     // Not checking the return value of close is common but nevertheless serious programming error
-    close(epollfd_);
+    if (epollfd_) {
+        close(epollfd_);
+    }
+    if (events_ != NULL) {
+        free(events_);
+    }
 }
 
 // Demultiplexing the I/O events

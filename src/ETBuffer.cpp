@@ -232,7 +232,7 @@ int ETBuffer::findCRLF()
     return -1;
 }
 
-int ETBuffer::clear()
+void ETBuffer::clear()
 {
     ETBufferChunk *tmp = first_;
     while(tmp != pos_->next_) {

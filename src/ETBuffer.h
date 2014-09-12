@@ -40,7 +40,7 @@ namespace ET
         int swap(ETBuffer *b);
 
         int findCRLF();
-        int clear();
+        void clear();
         int readableBytes() { return size_; }
 
     private:

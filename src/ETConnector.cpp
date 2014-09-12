@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/socket.h>
-#include <sys/ioctl.h>
+#include <fcntl.h>
 
 #include "ETConnector.h"
 #include "ETEventLoop.h"
@@ -86,13 +86,27 @@ void ETConnector::connect()
 {
     if (state_ == kConnStatesNone ||
         state_ == kConnStatesDisconnected) {
-        int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+        int fd = ::socket(AF_INET, SOCK_STREAM, 0);
+        int flags = ::fcntl(fd, F_GETFL, 0);
+        if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) {
+            ::close(fd);
+            return;
+        }
+
         setState(kConnStatesConnect);
         if (fd < 0) {
             setState(kConnStatesDisconnected);
             return ;
         } else {
-            int res = ::connect(fd, (struct sockaddr *)&serverAddr_, sizeof(struct sockaddr_in));
+            int ret = ::connect(fd, (struct sockaddr *)&serverAddr_, sizeof(struct sockaddr_in));
+            if (ret == 0) {
+                setState(kConnStatesConnected);
+                int fd = watcher_->getFD();
+                if (newConnectionCallback_) {
+                    newConnectionCallback_(ctx_, fd);
+                }
+                return;
+            }
             int saveErrno = errno;
             switch(saveErrno) {
                 case EINPROGRESS:
@@ -151,6 +165,7 @@ void ETConnector::connecting(int fd)
 
 void ETConnector::reConnect(int fd)
 {
+    // TODO retry connect
     ::close(fd);
     setState(kConnStatesDisconnected);
 }

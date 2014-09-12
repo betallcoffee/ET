@@ -23,7 +23,12 @@ ETAcceptor::ETAcceptor(ETEventLoop *eventLoop, const char *ip, unsigned short po
       eventLoop_(eventLoop)
 {
     listenning_ = 0;
-    int fd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    int fd = ::socket(AF_INET, SOCK_STREAM, 0);
+    int flags = ::fcntl(fd, F_GETFL, 0);
+    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) {
+        ::close(fd);
+        return;
+    }
     
     if (fd < 0) {
         // printf error;

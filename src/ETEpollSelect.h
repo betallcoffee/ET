@@ -28,7 +28,7 @@ class ETWatcher;
     {
     public:
         ETEpollSelect();
-	    virtual ~ETEpollSelect();
+        ~ETEpollSelect();
 
 	// Demultiplexing the I/O events
 	// Must be called in the loop thread.
@@ -41,7 +41,7 @@ class ETWatcher;
 	    virtual int updateWatcher(ETWatcher *w);
 
     private:
-        static const int kEventsSize = 16;
+        static const int kEventsSize = 1024;
 
         int update(int, ETWatcher *);
 
