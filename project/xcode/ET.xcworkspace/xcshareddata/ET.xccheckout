@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>37E52629-0E8F-4D3B-9BBA-930668322003</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ET</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>89C9AF18-6A59-4F14-A99A-A148433F0887</key>
+		<string>ssh://github.com/betallcoffee/ET.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>project/xcode/ET.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>89C9AF18-6A59-4F14-A99A-A148433F0887</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/betallcoffee/ET.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>89C9AF18-6A59-4F14-A99A-A148433F0887</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>89C9AF18-6A59-4F14-A99A-A148433F0887</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ET</string>
+		</dict>
+	</array>
+</dict>
+</plist>
