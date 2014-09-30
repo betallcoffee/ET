@@ -19,7 +19,8 @@ namespace ET {
      * @class KqueueSelect KqueueSelect.h "KqueueSelect.h"
      * @brief IO Multiplexing with kqueue(2)
      */
-    class KqueueSelect : Select {
+    class KqueueSelect : public Select {
+    public:
         KqueueSelect();
         ~KqueueSelect();
         

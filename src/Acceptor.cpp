@@ -139,6 +139,7 @@ int Acceptor::listen()
     listenning_ = 1;
     int res = ::listen(watcher_->getFD(), kMaxConn);
     if (res < 0) {
+        printf("listen errorno: %s\n", strerror(errno));
         // print error
     } else {
         // enable the read event for listen socket
@@ -148,6 +149,9 @@ int Acceptor::listen()
         watcher_->setCloseEventCallback(closeEvent);
         watcher_->setErrorEventCallback(errorEvent);
         res = watcher_->enableRead();
+        if (res < 0) {
+            printf("listen socket enable read error: %s\n", strerror(errno));
+        }
     }
     return res;
 }

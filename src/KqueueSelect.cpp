@@ -138,7 +138,7 @@ int KqueueSelect::update(int operation, Watcher *w)
         filter = EVFILT_WRITE;
     }
     
-    EV_SET(&ke, w->getFD(), EVFILT_WRITE, filter, 0, 0, w);
+    EV_SET(&ke, w->getFD(), filter, operation, 0, 0, w);
     if (kevent(_kqueuefd, &ke, 1, NULL, 0, NULL) < 0)
     {
         return -1;

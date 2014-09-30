@@ -36,7 +36,7 @@ Connection::~Connection()
 
 size_t Connection::send(const char *data, size_t size)
 {
-    size_t res = 0;
+    ssize_t res = 0;
     if (state_ != kConnStatesConnected) {
         return -1;
     }
@@ -127,7 +127,7 @@ void Connection::errorEvent(void *arg)
 void Connection::readHandle()
 {
     char data[4 * 1024];
-    size_t size = 0;
+    ssize_t size = 0;
     int fd = watcher_->getFD();
     size = ::read(fd, data, 4 * 1024);
     if (size == 0) {
@@ -136,7 +136,7 @@ void Connection::readHandle()
     } else if (size > 0) {
         do {
             inBuf_.append(data, size);
-        } while ((size = ::read(fd, data, 4 * 1024)) > 0); 
+        } while ((size = ::read(fd, data, 4 * 1024)) > 0);
         if (messageCallback_) {
             messageCallback_(ctx_, this,  &inBuf_);
         } else {
@@ -147,7 +147,7 @@ void Connection::readHandle()
 
 void Connection::writeHandle()
 {
-    size_t res = 0;
+    ssize_t res = 0;
     int fd = watcher_->getFD();
     size_t size = outBuf_.readableBytes();;
     char *data = outBuf_.beginRead();
