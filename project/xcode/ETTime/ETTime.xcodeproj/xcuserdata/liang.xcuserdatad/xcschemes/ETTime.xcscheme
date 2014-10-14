@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ECE7AC7E19DA994D000118A3"
-               BuildableName = "ETExample"
-               BlueprintName = "ETExample"
-               ReferencedContainer = "container:ETExample.xcodeproj">
+               BlueprintIdentifier = "ECE6168919DE4E99006333C8"
+               BuildableName = "ETTime"
+               BlueprintName = "ETTime"
+               ReferencedContainer = "container:ETTime.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECE7AC7E19DA994D000118A3"
-            BuildableName = "ETExample"
-            BlueprintName = "ETExample"
-            ReferencedContainer = "container:ETExample.xcodeproj">
+            BlueprintIdentifier = "ECE6168919DE4E99006333C8"
+            BuildableName = "ETTime"
+            BlueprintName = "ETTime"
+            ReferencedContainer = "container:ETTime.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECE7AC7E19DA994D000118A3"
-            BuildableName = "ETExample"
-            BlueprintName = "ETExample"
-            ReferencedContainer = "container:ETExample.xcodeproj">
+            BlueprintIdentifier = "ECE6168919DE4E99006333C8"
+            BuildableName = "ETTime"
+            BlueprintName = "ETTime"
+            ReferencedContainer = "container:ETTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ECE7AC7E19DA994D000118A3"
-            BuildableName = "ETExample"
-            BlueprintName = "ETExample"
-            ReferencedContainer = "container:ETExample.xcodeproj">
+            BlueprintIdentifier = "ECE6168919DE4E99006333C8"
+            BuildableName = "ETTime"
+            BlueprintName = "ETTime"
+            ReferencedContainer = "container:ETTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

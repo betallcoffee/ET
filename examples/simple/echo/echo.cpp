@@ -11,8 +11,8 @@ int main()
 {
     KqueueSelect select;
     EventLoop eventLoop(&select);
-    EchoServer echoServer(&eventLoop, NULL, 8888);
-    printf("echo server init\n");
+    EchoServer echoServer(&eventLoop, NULL, 8080);
+    printf("echo server init 8080\n");
     int res = echoServer.run();
     if (res == 0) {
         printf("echo server run begin\n");
