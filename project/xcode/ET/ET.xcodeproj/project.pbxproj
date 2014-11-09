@@ -95,6 +95,7 @@
 		ECA3D02B19C163AE003C02DE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				ECF48B471A0F0C4B0076A7D4 /* http */,
 				ECE7AC6619DA9709000118A3 /* KqueueSelect.cpp */,
 				ECE7AC6719DA9709000118A3 /* KqueueSelect.h */,
 				ECE7AC6219DA96C1000118A3 /* EventLoop.cpp */,
@@ -132,6 +133,13 @@
 				ECE7AC6B19DA9769000118A3 /* Alloc.h */,
 			);
 			path = utility;
+			sourceTree = "<group>";
+		};
+		ECF48B471A0F0C4B0076A7D4 /* http */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = http;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

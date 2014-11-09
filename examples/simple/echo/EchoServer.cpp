@@ -37,7 +37,7 @@ void EchoServer::connectionCallback(void *ctx, Connection *conn)
 void EchoServer::connection(Connection *conn)
 {
     conn->setContext(this);
-    conn->setMessageCallback(messageCallback);
+    conn->setReadDataCallback(messageCallback);
 }
 
 void EchoServer::messageCallback(void *ctx, Connection *conn, BufferV *msg)

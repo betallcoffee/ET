@@ -20,7 +20,7 @@ Connection::Connection(EventLoop *eventLoop, int fd)
     : watcher_(new Watcher(eventLoop, fd)),
     eventLoop_(eventLoop),
     ctx_(NULL),
-    messageCallback_(NULL),
+    readDataCallback_(NULL),
     writeCompleteCallback_(NULL),
     closeCallback_(NULL),
     connectCallback_(NULL)
@@ -137,10 +137,10 @@ void Connection::readHandle()
         do {
             inBuf_.append(data, size);
         } while ((size = ::read(fd, data, 4 * 1024)) > 0);
-        if (messageCallback_) {
-            messageCallback_(ctx_, this,  &inBuf_);
+        if (readDataCallback_) {
+            readDataCallback_(ctx_, this,  &inBuf_);
         } else {
-            defaultMessage(&inBuf_);
+            defaultReadData(&inBuf_);
         }
     }
 }
@@ -195,7 +195,7 @@ void Connection::shutdownWrite()
     }
 }
 
-void Connection::defaultMessage(BufferV *msg)
+void Connection::defaultReadData(BufferV *buf)
 {
-    msg->clear();
+    buf->clear();
 }

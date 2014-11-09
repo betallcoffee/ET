@@ -33,8 +33,8 @@ namespace ET
         void setContext(void *ctx) { ctx_ = ctx; }
         void setConnectCallback(ConnectCallback connectCallback)
         { connectCallback_ = connectCallback; }
-        void setMessageCallback(MessageCallback messageCallback)
-        { messageCallback_ = messageCallback; }
+        void setReadDataCallback(ReadDataCallback readDataCallback)
+        { readDataCallback_ = readDataCallback; }
         void setWriteCompleteCallback(WriteCompleteCallback writeCompleteCallback)
         { writeCompleteCallback_ = writeCompleteCallback; }
         void setCloseCallback(CloseCallback closeCallback)
@@ -70,7 +70,7 @@ namespace ET
         void setState(int state) { state_ = state; }
         void shutdownWrite();
 
-        void defaultMessage(BufferV *msg);
+        void defaultReadData(BufferV *buf);
 
         Watcher *watcher_;
         EventLoop *eventLoop_;
@@ -81,7 +81,7 @@ namespace ET
 
         void *arg_;
         void *ctx_;
-        MessageCallback messageCallback_;
+        ReadDataCallback readDataCallback_;
         WriteCompleteCallback writeCompleteCallback_;
         CloseCallback closeCallback_;
         ConnectCallback connectCallback_;
