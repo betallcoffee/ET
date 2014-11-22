@@ -63,6 +63,11 @@
 		ECE7AC6B19DA9769000118A3 /* Alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alloc.h; sourceTree = "<group>"; };
 		ECE7AC6E19DA97B6000118A3 /* Timestamp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timestamp.cpp; sourceTree = "<group>"; };
 		ECE7AC6F19DA97B6000118A3 /* Timestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timestamp.h; sourceTree = "<group>"; };
+		ECF48B481A0F541D0076A7D4 /* Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		ECF48B491A0F542A0076A7D4 /* Response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
+		ECF48B4A1A0F54530076A7D4 /* HTTPServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
+		ECF48B4B1A0F545D0076A7D4 /* HTTPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPClient.h; sourceTree = "<group>"; };
+		ECF48B4C1A0F5D9A0076A7D4 /* BaseMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseMessage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +143,11 @@
 		ECF48B471A0F0C4B0076A7D4 /* http */ = {
 			isa = PBXGroup;
 			children = (
+				ECF48B481A0F541D0076A7D4 /* Request.h */,
+				ECF48B491A0F542A0076A7D4 /* Response.h */,
+				ECF48B4A1A0F54530076A7D4 /* HTTPServer.h */,
+				ECF48B4B1A0F545D0076A7D4 /* HTTPClient.h */,
+				ECF48B4C1A0F5D9A0076A7D4 /* BaseMessage.h */,
 			);
 			path = http;
 			sourceTree = "<group>";
