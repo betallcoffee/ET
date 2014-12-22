@@ -37,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		EC97832C1A480627000848C5 /* Router.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
+		EC97832D1A4810CB000848C5 /* Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
 		ECA3D02419C1627C003C02DE /* libET.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libET.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECE7AC3619DA8F5B000118A3 /* Acceptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Acceptor.cpp; sourceTree = "<group>"; };
 		ECE7AC3719DA8F5B000118A3 /* Acceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Acceptor.h; sourceTree = "<group>"; };
@@ -147,6 +148,7 @@
 				ECF48B481A0F541D0076A7D4 /* Request.h */,
 				ECF48B491A0F542A0076A7D4 /* Response.h */,
 				EC97832C1A480627000848C5 /* Router.h */,
+				EC97832D1A4810CB000848C5 /* Session.h */,
 				ECF48B4A1A0F54530076A7D4 /* Server.h */,
 				ECF48B4B1A0F545D0076A7D4 /* Client.h */,
 				ECF48B4C1A0F5D9A0076A7D4 /* BaseMessage.h */,

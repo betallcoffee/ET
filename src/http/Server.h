@@ -13,11 +13,12 @@
 #include <map>
 #include "Request.h"
 #include "Response.h"
+#include "Router.h"
+#include "Session.h"
 
 namespace ET {
     
 namespace HTTP {
-    typedef void (*ServeHandle)(Reqeust *req, Response *res);
     
     class Server {
     public:
@@ -32,7 +33,8 @@ namespace HTTP {
         void setConnectionCb(ConnectionCb connectionCb)
         { connectionCb_ = connectionCb; }
         
-        void handle(const std::string *path, ServeHandle handle);
+        void registerHandle(const std::string *path, Handle handle);
+        void destroy(Session *session);
         
     private:
         enum serverStates
@@ -54,10 +56,12 @@ namespace HTTP {
         int state_;
         void *ctx_;
         ConnectionCb connectionCb_;
+        std::map<std::string, Session *> _sessions;
         
         std::string _host;
         short _port;
-        std::map<std::string, ServeHandle> _router;
+        
+        Router *_router;
         
     };
 } // end namespace HTTP

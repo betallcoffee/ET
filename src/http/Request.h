@@ -19,8 +19,15 @@ namespace HTTP {
     
     class Request : public BaseMessage {
     public:
-        
+        Request(const std::string &url);
         int parse(BufferV *buf);
+        
+        const std::string *method() { return &_method; }
+        eStatus status() { return _status; }
+        void setMethod(const std::string *method) { _method = *method }
+        const std::string *url() { return &_url; }
+        void setURL(const std::string *url) { _url = *url; } // TODO: parse path from url;
+        const std::string *path() { return &_path; }
         
         typedef enum eMethod {
             GET = 1,
@@ -32,15 +39,19 @@ namespace HTTP {
             DELETE
         }eMethod;
         
-        const std::string *method() { return &_method; }
-        void setMethod(const std::string *method) { _method = *method }
-        const std::string *URL() { return &_URL; }
-        void setURL(const std::string *url) { _URL = *url; }
+        typedef enum eStatus {
+            PARSEHEAD = 1,
+            READBODY = 2,
+            COMPLETE = 3
+        }eStatus;
         
     private:
         eMethod _m;
+        eStatus _status;
         std::string _method;
-        std::string _URL;
+        std::string _url;
+        std::string _path;
+        BufferV *_body;
         
         std::string _clientIP;
         std::string _from;
