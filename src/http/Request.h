@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 liangliang. All rights reserved.
 //
 
-#ifndef ET_REQUEST_H
-#define ET_REQUEST_H
+#ifndef ET_HTTP_REQUEST_H
+#define ET_HTTP_REQUEST_H
 
 #include <string>
 #include "BaseMessage.h"

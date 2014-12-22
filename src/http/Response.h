@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 liangliang. All rights reserved.
 //
 
-#ifndef ET_RESPONSE_H
-#define ET_RESPONSE_H
+#ifndef ET_HTTP_RESPONSE_H
+#define ET_HTTP_RESPONSE_H
 
 #include <string>
 #include "BaseMessage.h"

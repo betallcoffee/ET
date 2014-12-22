@@ -1,5 +1,5 @@
 //
-//  HTTPServer.h
+//  Server.h
 //  ET
 //
 //  Created by liang on 11/9/14.
@@ -19,10 +19,10 @@ namespace ET {
 namespace HTTP {
     typedef void (*ServeHandle)(Reqeust *req, Response *res);
     
-    class HTTPServer {
+    class Server {
     public:
-        HTTPServer(const std::string *host, short port);
-        ~HTTPServer();
+        Server(const std::string *host, short port);
+        ~Server();
         
         bool run();
         void stop();

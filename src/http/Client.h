@@ -1,5 +1,5 @@
 //
-//  HTTPClient.h
+//  Client.h
 //  ET
 //
 //  Created by liang on 11/9/14.
@@ -22,10 +22,10 @@ namespace ET {
     namespace HTTP {
         typedef void (*ClientHandle)(Response *res);
         
-        class HTTPClient {
+        class Client {
         public:
-            HTTPClient();
-            ~HTTPClient();
+            Client();
+            ~Client();
             
             void send(Request *req, BufferV *body);
             

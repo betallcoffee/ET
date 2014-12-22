@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 liangliang. All rights reserved.
 //
 
-#ifndef ET_BASE_MESSAGE_H
-#define ET_BASE_MESSAGE_H
+#ifndef ET_HTTP_BASE_MESSAGE_H
+#define ET_HTTP_BASE_MESSAGE_H
 
 #include <string>
 
