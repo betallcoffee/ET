@@ -11,6 +11,10 @@
 
 #include <string>
 #include <map>
+
+#include "EventLoop.h"
+#include "Acceptor.h"
+
 #include "Request.h"
 #include "Response.h"
 #include "Router.h"
@@ -22,40 +26,33 @@ namespace HTTP {
     
     class Server {
     public:
-        Server(const std::string *host, short port);
+        Server(const std::string &host, short port);
         ~Server();
         
         bool run();
         void stop();
-        int isRunning() { return state_ == kServerStatesRunning; }
-        
-        void setContext(void *ctx) { ctx_ = ctx; }
-        void setConnectionCb(ConnectionCb connectionCb)
-        { connectionCb_ = connectionCb; }
+        int isRunning() { return _status == RUNNING; }
         
         void registerHandle(const std::string *path, Handle handle);
         void destroy(Session *session);
         
     private:
-        enum serverStates
+        typedef enum eStatus
         {
-            kServerStatesNone,
-            kServerStatesRunning,
-            kServerStatesStopped
-        };
+            NONE,
+            RUNNING,
+            STOPPED
+        }eStatus;
         
-        static void newConnectionCallback(void *, int);
-        void defaultConnection(Connection *);
-        void newConnection(int);
-        void removeConnection(Connection *) {}
-        void setState(int state) { state_ = state; }
+        static void newConnectionCallback(void *ctx, int fd);
+        void newConnection(int fd);
         
-        EventLoop *eventLoop_;
-        Acceptor acceptor_;
+        void setStatus(eStatus status) { _status = status; }
         
-        int state_;
-        void *ctx_;
-        ConnectionCb connectionCb_;
+        EventLoop *_eventLoop;
+        Acceptor *_acceptor;
+        
+        eStatus _status;
         std::map<std::string, Session *> _sessions;
         
         std::string _host;

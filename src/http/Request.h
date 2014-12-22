@@ -22,13 +22,6 @@ namespace HTTP {
         Request(const std::string &url);
         int parse(BufferV *buf);
         
-        const std::string *method() { return &_method; }
-        eStatus status() { return _status; }
-        void setMethod(const std::string *method) { _method = *method }
-        const std::string *url() { return &_url; }
-        void setURL(const std::string *url) { _url = *url; } // TODO: parse path from url;
-        const std::string *path() { return &_path; }
-        
         typedef enum eMethod {
             GET = 1,
             HEAD,
@@ -44,6 +37,13 @@ namespace HTTP {
             READBODY = 2,
             COMPLETE = 3
         }eStatus;
+        
+        const std::string *method() { return &_method; }
+        eStatus status() { return _status; }
+        void setMethod(const std::string *method) { _method = *method; }
+        const std::string *url() { return &_url; }
+        void setURL(const std::string *url) { _url = *url; } // TODO: parse path from url;
+        const std::string *path() { return &_path; }
         
     private:
         eMethod _m;

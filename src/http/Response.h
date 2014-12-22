@@ -18,9 +18,9 @@ namespace ET {
 namespace HTTP {
     class Response : public BaseMessage {
     public:
-        int parse(BufferV *buf);
+        int parse(BufferV &buf);
         int statusCode() { return _statusCode; }
-        const std::string *phrase() { return *_phrase; }
+        const std::string &phrase() { return _phrase; }
         
     private:
         int _statusCode;

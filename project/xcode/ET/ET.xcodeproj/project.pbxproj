@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC9783301A483BC2000848C5 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC97832F1A483BC2000848C5 /* Server.cpp */; };
 		ECE7AC3819DA8F5B000118A3 /* Acceptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE7AC3619DA8F5B000118A3 /* Acceptor.cpp */; };
 		ECE7AC3919DA8F5B000118A3 /* Acceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE7AC3719DA8F5B000118A3 /* Acceptor.h */; };
 		ECE7AC4419DA9137000118A3 /* Connector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE7AC4219DA9137000118A3 /* Connector.cpp */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		EC97832C1A480627000848C5 /* Router.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		EC97832D1A4810CB000848C5 /* Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		EC97832F1A483BC2000848C5 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
 		ECA3D02419C1627C003C02DE /* libET.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libET.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECE7AC3619DA8F5B000118A3 /* Acceptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Acceptor.cpp; sourceTree = "<group>"; };
 		ECE7AC3719DA8F5B000118A3 /* Acceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Acceptor.h; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				EC97832C1A480627000848C5 /* Router.h */,
 				EC97832D1A4810CB000848C5 /* Session.h */,
 				ECF48B4A1A0F54530076A7D4 /* Server.h */,
+				EC97832F1A483BC2000848C5 /* Server.cpp */,
 				ECF48B4B1A0F545D0076A7D4 /* Client.h */,
 				ECF48B4C1A0F5D9A0076A7D4 /* BaseMessage.h */,
 			);
@@ -239,6 +242,7 @@
 				ECE7AC6819DA9709000118A3 /* KqueueSelect.cpp in Sources */,
 				ECE7AC4E19DA9458000118A3 /* Buffer.cpp in Sources */,
 				ECE7AC4419DA9137000118A3 /* Connector.cpp in Sources */,
+				EC9783301A483BC2000848C5 /* Server.cpp in Sources */,
 				ECE7AC5019DA9458000118A3 /* BufferV.cpp in Sources */,
 				ECE7AC5619DA956A000118A3 /* TCPServer.cpp in Sources */,
 				ECE7AC6C19DA9769000118A3 /* Alloc.cpp in Sources */,

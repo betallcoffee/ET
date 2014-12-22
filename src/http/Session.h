@@ -9,7 +9,6 @@
 #ifndef ET_HTTP_SESSION_H
 #define ET_HTTP_SESSION_H
 
-#include "Server.h"
 #include "Router.h"
 #include "Connection.h"
 #include "Request.h"
@@ -18,6 +17,8 @@
 namespace ET {
     
 namespace HTTP {
+    
+    class Server;
     
     class Session {
     public:
