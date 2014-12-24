@@ -23,7 +23,7 @@ namespace HTTP {
     class Context {
     public:
         Context(Server *server, Router *router, Connection *connection);
-        Context();
+        ~Context();
         
         void go();
         

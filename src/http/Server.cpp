@@ -18,7 +18,7 @@
 #include "Context.h"
 
 using namespace ET;
-using namespace ET::HTTP;
+using namespace HTTP;
 
 
 Server::Server(const std::string &host, short port) : _host(host), _port(port) {

@@ -21,6 +21,10 @@ namespace ET {
     
 namespace HTTP {
 
+    /**
+     * @brief 初始化网络，与路由表
+     */
+    // TODO 配置文件加载
     class Server {
     public:
         Server(const std::string &host, short port);

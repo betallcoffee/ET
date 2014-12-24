@@ -29,6 +29,7 @@ Connection::Connection(EventLoop *eventLoop, int fd)
 
 Connection::~Connection()
 {
+    shutdown();
     if (watcher_  != NULL) {
         delete watcher_;
     }
