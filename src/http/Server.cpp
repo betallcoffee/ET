@@ -64,5 +64,4 @@ void Server::newConnectionCallback(void *ctx, int fd) {
 void Server::newConnection(int fd) {
     Connection *conn = new Connection(_eventLoop, fd);
     Context *context = new Context(this, _router, conn);
-    context->go();
 }

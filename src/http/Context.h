@@ -12,6 +12,7 @@
 namespace ET {
     
     class Connection;
+    class BufferV;
     
 namespace HTTP {
     
@@ -25,9 +26,14 @@ namespace HTTP {
         Context(Server *server, Router *router, Connection *connection);
         ~Context();
         
-        void go();
+        // Connection callback
+        static void readDataCallback(void *ctx, Connection *conn, BufferV *data);
+        static void closeCallback(void *ctx, Connection *conn);
         
     private:
+        void readData(Connection *conn, BufferV *data);
+        void closeConn(Connection *conn);
+        
         Server *_server;
         Router *_router;
         Connection *_connection;

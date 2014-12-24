@@ -20,6 +20,7 @@ namespace HTTP {
     
     class Request : public BaseMessage {
     public:
+        Request() {}
         Request(const std::string &url);
         int parse(BufferV *buf);
         

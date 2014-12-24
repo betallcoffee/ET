@@ -50,7 +50,6 @@ void TCPServer::newConnection(int fd)
     Connection *conn = new Connection(eventLoop_, fd);
     if (connectionCb_) {
         connectionCb_(ctx_, conn);
-        conn->setContext(ctx_);
     }
     conn->connectEstablish();
 }
