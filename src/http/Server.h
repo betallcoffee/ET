@@ -16,8 +16,9 @@
 
 namespace ET {
     
+    class TCPServer;
     class EventLoop;
-    class Acceptor;
+    class Connection;
     
 namespace HTTP {
 
@@ -27,32 +28,21 @@ namespace HTTP {
     // TODO 配置文件加载
     class Server {
     public:
-        Server(const std::string &host, short port);
+        Server(EventLoop *eventLoop, const std::string &host, short port);
         ~Server();
         
         bool run();
         void stop();
-        int isRunning() { return _status == RUNNING; }
+        bool isRunning();
         
         void registerHandle(const std::string *path, Handle handle);
         
     private:
-        typedef enum eStatus
-        {
-            NONE,
-            RUNNING,
-            STOPPED
-        }eStatus;
         
-        static void newConnectionCallback(void *ctx, int fd);
-        void newConnection(int fd);
+        static void connectionCallback(void *ctx, Connection *conn);
+        void connection(Connection *conn);
         
-        void setStatus(eStatus status) { _status = status; }
-        
-        EventLoop *_eventLoop;
-        Acceptor *_acceptor;
-        
-        eStatus _status;
+        TCPServer *_tcpServer;
         
         std::string _host;
         short _port;
