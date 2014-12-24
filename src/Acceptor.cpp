@@ -55,6 +55,9 @@ Acceptor::Acceptor(EventLoop *eventLoop, const char *ip, unsigned short port)
 
 Acceptor::~Acceptor()
 {
+    if (watcher_ != NULL) {
+        delete watcher_;
+    }
 }
 
 void Acceptor::readEvent(void *arg)

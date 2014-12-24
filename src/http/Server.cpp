@@ -57,7 +57,6 @@ void Server::destroy(ET::HTTP::Session *session) {
             _sessions.erase(key);
             delete session;
         }
-
     }
 }
 
