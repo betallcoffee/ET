@@ -1,5 +1,5 @@
 //
-//  Session.h
+//  Context.h
 //  ET
 //
 //  Created by liang on 12/22/14.
@@ -9,21 +9,23 @@
 #ifndef ET_HTTP_SESSION_H
 #define ET_HTTP_SESSION_H
 
-#include "Router.h"
-#include "Connection.h"
-#include "Request.h"
-#include "Response.h"
-
 namespace ET {
+    
+    class Connection;
     
 namespace HTTP {
     
     class Server;
+    class Router;
+    class Request;
+    class Response;
     
-    class Session {
+    class Context {
     public:
-        Session(Server *server, Router *router, Connection *connection);
-        ~Session();
+        Context(Server *server, Router *router, Connection *connection);
+        Context();
+        
+        void go();
         
     private:
         Server *_server;

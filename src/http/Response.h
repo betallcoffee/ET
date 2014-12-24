@@ -11,11 +11,13 @@
 
 #include <string>
 #include "BaseMessage.h"
-#include "BufferV.h"
 
 namespace ET {
+    
+    class BufferV;
 
 namespace HTTP {
+    
     class Response : public BaseMessage {
     public:
         int parse(BufferV &buf);

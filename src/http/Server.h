@@ -12,18 +12,15 @@
 #include <string>
 #include <map>
 
-#include "EventLoop.h"
-#include "Acceptor.h"
-
-#include "Request.h"
-#include "Response.h"
 #include "Router.h"
-#include "Session.h"
 
 namespace ET {
     
-namespace HTTP {
+    class EventLoop;
+    class Acceptor;
     
+namespace HTTP {
+
     class Server {
     public:
         Server(const std::string &host, short port);
@@ -34,7 +31,6 @@ namespace HTTP {
         int isRunning() { return _status == RUNNING; }
         
         void registerHandle(const std::string *path, Handle handle);
-        void destroy(Session *session);
         
     private:
         typedef enum eStatus
@@ -53,7 +49,6 @@ namespace HTTP {
         Acceptor *_acceptor;
         
         eStatus _status;
-        std::map<std::string, Session *> _sessions;
         
         std::string _host;
         short _port;

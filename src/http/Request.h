@@ -11,9 +11,10 @@
 
 #include <string>
 #include "BaseMessage.h"
-#include "BufferV.h"
 
 namespace ET {
+    
+    class BufferV;
     
 namespace HTTP {
     

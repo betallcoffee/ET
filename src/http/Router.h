@@ -16,6 +16,9 @@ namespace ET {
 
 namespace HTTP{
     
+    class Request;
+    class Response;
+    
     typedef void (*Handle)(Request *req, Response *res);
     
     class Router {

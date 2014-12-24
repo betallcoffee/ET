@@ -26,3 +26,4 @@ list
 build/
 *impl
 .idea/
+xcuserdata

@@ -7,7 +7,15 @@
 //
 
 #include "KqueueSelect.h"
+#include "EventLoop.h"
+#include "Acceptor.h"
+#include "Connection.h"
+
 #include "Server.h"
+
+#include "Request.h"
+#include "Response.h"
+#include "Context.h"
 
 using namespace ET;
 using namespace ET::HTTP;
@@ -48,18 +56,6 @@ void Server::registerHandle(const std::string *path, Handle handle) {
     _router->registerHandle(path, handle);
 }
 
-void Server::destroy(ET::HTTP::Session *session) {
-    if (session != nullptr) {
-        char pointer[20];
-        sprintf(pointer, "%p", session);
-        std::string key(pointer);
-        if (_sessions[key] != nullptr) {
-            _sessions.erase(key);
-            delete session;
-        }
-    }
-}
-
 void Server::newConnectionCallback(void *ctx, int fd) {
     Server *server = (Server *)ctx;
     server->newConnection(fd);
@@ -67,9 +63,6 @@ void Server::newConnectionCallback(void *ctx, int fd) {
 
 void Server::newConnection(int fd) {
     Connection *conn = new Connection(_eventLoop, fd);
-    Session *session = new Session(this, _router, conn);
-    char pointer[20];
-    sprintf(pointer, "%p", session);
-    std::string key(pointer);
-    _sessions[key] = session;
+    Context *context = new Context(this, _router, conn);
+    context->go();
 }
