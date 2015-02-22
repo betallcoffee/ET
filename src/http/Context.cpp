@@ -38,13 +38,21 @@ Context::~Context() {
     }
 }
 
-void Context::readDataCallback(void *ctx, ET::Connection *conn, ET::BufferV *data) {
+void Context::readDataCallback(void *ctx, ET::Connection *conn) {
     Context *self = static_cast<Context *>(ctx);
-    self->readData(conn, data);
+    self->readData(conn);
 }
 
-void Context::readData(ET::Connection *conn, ET::BufferV *data) {
-    
+void Context::readData(ET::Connection *conn) {
+    _request->parse(conn->readBuf());
+    if (_request->status() == Request::COMPLETE) {
+        
+    }
+}
+
+void Context::writeDataCallback(void *ctx, ET::Connection *conn) {
+	Context *self = static_cast<Context *>(ctx);
+	self->writeData(conn);
 }
 
 void Context::closeCallback(void *ctx, ET::Connection *conn) {

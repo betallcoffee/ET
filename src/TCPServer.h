@@ -38,7 +38,6 @@ namespace ET
         };
 
         static void newConnectionCallback(void *, int);
-        void defaultConnection(Connection *);
         void newConnection(int);
         void removeConnection(Connection *) {}
         void setState(int state) { state_ = state; }

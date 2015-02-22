@@ -24,7 +24,7 @@ typedef void(*EventCallback)(void *);
 typedef void(*NewConnectionCallback)(void *ctx, int fd); 
 
 // ETConnction
-typedef void(*ReadDataCallback)(void *ctx, Connection *conn, BufferV *data);
+typedef void(*ReadDataCallback)(void *ctx, Connection *conn);
 typedef void(*WriteCompleteCallback)(void *ctx, Connection *conn);
 typedef void(*CloseCallback)(void *ctx, Connection *conn);
 typedef void(*ConnectCallback)(void *ctx, Connection *conn);

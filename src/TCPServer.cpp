@@ -41,10 +41,6 @@ void TCPServer::newConnectionCallback(void *ctx, int fd)
     self->newConnection(fd);
 }
 
-void TCPServer::defaultConnection(Connection *conn)
-{
-}
-
 void TCPServer::newConnection(int fd)
 {
     Connection *conn = new Connection(eventLoop_, fd);

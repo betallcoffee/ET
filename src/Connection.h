@@ -42,6 +42,7 @@ namespace ET
 
         size_t send(const char *, size_t);
         size_t send(BufferV *);
+        BufferV &readBuf() { return inBuf_; }
 
         void connectEstablish();
         void connectClose();
@@ -70,7 +71,7 @@ namespace ET
         void setState(int state) { state_ = state; }
         void shutdownWrite();
 
-        void defaultReadData(BufferV *buf);
+        void defaultReadData();
 
         Watcher *watcher_;
         EventLoop *eventLoop_;

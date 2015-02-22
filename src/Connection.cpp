@@ -17,8 +17,10 @@
 using namespace ET;
 
 Connection::Connection(EventLoop *eventLoop, int fd)
-    : watcher_(new Watcher(eventLoop, fd)),
+    : state_(kConnStatesNone),
+    watcher_(new Watcher(eventLoop, fd)),
     eventLoop_(eventLoop),
+    arg_(NULL),
     ctx_(NULL),
     readDataCallback_(NULL),
     writeCompleteCallback_(NULL),
@@ -139,9 +141,9 @@ void Connection::readHandle()
             inBuf_.append(data, size);
         } while ((size = ::read(fd, data, 4 * 1024)) > 0);
         if (readDataCallback_) {
-            readDataCallback_(ctx_, this,  &inBuf_);
+            readDataCallback_(ctx_, this);
         } else {
-            defaultReadData(&inBuf_);
+            defaultReadData();
         }
     }
 }
@@ -196,7 +198,7 @@ void Connection::shutdownWrite()
     }
 }
 
-void Connection::defaultReadData(BufferV *buf)
+void Connection::defaultReadData()
 {
-    buf->clear();
+    inBuf_.clear();
 }

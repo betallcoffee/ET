@@ -22,7 +22,7 @@ namespace HTTP {
     public:
         Request() {}
         Request(const std::string &url);
-        int parse(BufferV *buf);
+        int parse(BufferV &buf);
         
         typedef enum eMethod {
             GET = 1,

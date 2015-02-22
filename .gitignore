@@ -27,3 +27,5 @@ build/
 *impl
 .idea/
 xcuserdata
+
+/Default
