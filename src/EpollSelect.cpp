@@ -3,6 +3,7 @@
 
 // Author: betallcoffee
 
+#ifdef EPOLL
 #include <sys/epoll.h>
 #include <errno.h>
 #include <unistd.h>
@@ -164,4 +165,4 @@ int EpollSelect::update(int operation, ETWatcher *w)
         return 0;
     }
 }
-
+#endif

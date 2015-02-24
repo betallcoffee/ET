@@ -40,14 +40,14 @@ void EchoServer::connection(Connection *conn)
     conn->setReadDataCallback(messageCallback);
 }
 
-void EchoServer::messageCallback(void *ctx, Connection *conn, BufferV *msg)
+void EchoServer::messageCallback(void *ctx, Connection *conn)
 {
     EchoServer *self = static_cast<EchoServer *>(ctx);
-    self->message(conn, msg);
+    self->message(conn);
 }
 
-void EchoServer::message(Connection *conn, BufferV *msg)
+void EchoServer::message(Connection *conn)
 {
-    conn->send(msg);
+    conn->send(conn->readBuf());
 }
 

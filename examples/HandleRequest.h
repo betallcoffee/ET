@@ -11,26 +11,26 @@
 
 namespace ET
 {
-    class ETHandleFactory;
-    class ETConnector;
+    class HandleFactory;
+    class Connector;
     
     //
     // class for handle the data
     //
-    class ETHandleRequest
+    class HandleRequest
     {
     public:
-        ETHandleRequest(ETHandleFactory *, ETConnector *);
-        virtual ~ETHandleRequest();
+        HandleRequest(HandleFactory *, Connector *);
+        virtual ~HandleRequest();
 
         virtual void handle(char *readData, int size);
 
-        void setConn(ETConnector *conn) { conn_ = conn; }
-        ETConnector *getConn() { return conn_; }
+        void setConn(Connector *conn) { conn_ = conn; }
+        Connector *getConn() { return conn_; }
 
     private:
-        ETHandleFactory *factory_;
-        ETConnector *conn_;
+        HandleFactory *factory_;
+        Connector *conn_;
 
     }; // end class ETHandleRequest
 } // end namespace ET

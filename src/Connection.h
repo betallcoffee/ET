@@ -41,7 +41,7 @@ namespace ET
         { closeCallback_ = closeCallback; }
 
         size_t send(const char *, size_t);
-        size_t send(BufferV *);
+        size_t send(BufferV &);
         BufferV &readBuf() { return inBuf_; }
 
         void connectEstablish();

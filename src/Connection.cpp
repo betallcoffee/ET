@@ -66,13 +66,13 @@ size_t Connection::send(const char *data, size_t size)
     return res;
 }
 
-size_t Connection::send(BufferV *data)
+size_t Connection::send(BufferV &data)
 {
     if (state_ != kConnStatesConnected) {
         return -1;
     }
     
-    size_t res = send(data->beginRead(), data->readableBytes());
+    size_t res = send(data.beginRead(), data.readableBytes());
 
     return res;
 }

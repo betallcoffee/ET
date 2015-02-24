@@ -8,6 +8,7 @@
 #ifndef ETEPOLLSELECT_H
 #define ETEPOLLSELECT_H
 
+#ifdef EPOLL
 #include <sys/epoll.h>
 
 #include <map>
@@ -51,3 +52,4 @@ class ETWatcher;
     };
 }
 #endif // ETEPOLLSELECT_H
+#endif

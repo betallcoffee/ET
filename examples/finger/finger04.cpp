@@ -1,28 +1,36 @@
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
-#include "ETConnection.h"
-#include "ETBufferV.h"
-#include "ETTCPServer.h"
+#include "EventLoop.h"
+#include "Connection.h"
+#include "BufferV.h"
+#include "TCPServer.h"
+#ifdef EPOLL
+#include "EpollSelect.h"
+#else
+#include "KqueueSelect.h"
+#endif
 
 using namespace ET;
 
-void onMessage(void *ctx, ETConnection *conn, ETBufferV *msg)
+void onMessage(void *ctx, Connection *conn)
 {
-    if (msg->findCRLF() >= 0) {
+    if (conn->readBuf().findCRLF() >= 0) {
         conn->shutdown();
     }
 }
 
-void newConnection(void *ctx, ETConnection *conn)
+void newConnection(void *ctx, Connection *conn)
 {
-    conn->setMessageCallback(onMessage);
+    conn->setReadDataCallback(onMessage);
 }
 
 int main()
 {
-    ETEpollSelect select;
-    ETEventLoop eventLoop(&select);
-    ETTCPServer tcpServer(&eventLoop, NULL, 8080);
+#ifdef EPOLL
+    EpollSelect select;
+#else
+    KqueueSelect select;
+#endif
+    EventLoop eventLoop(&select);
+    TCPServer tcpServer(&eventLoop, NULL, 8080);
     tcpServer.setConnectionCb(newConnection);
     tcpServer.run();
     while (true) {

@@ -17,7 +17,7 @@
 namespace ET
 {
     class EventLoop;
-    class ETHandleRequest;
+    class HandleRequest;
 
 
     ///

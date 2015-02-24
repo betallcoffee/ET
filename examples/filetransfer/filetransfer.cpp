@@ -1,22 +1,26 @@
 #include <stdio.h>
 
 // ET lib headers
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
-#include "ETConnection.h"
-#include "ETBuffer.h"
-#include "ETTCPServer.h"
+#include "EventLoop.h"
+#include "Connection.h"
+#include "Buffer.h"
+#include "TCPServer.h"
+#ifdef EPOLL
+#include "EpollSelect.h"
+#else
+#include "KqueueSelect.h"
+#endif
 
 using namespace ET;
 
 const int kBufSize = 1024 * 40;
 const char *gFile = NULL;
 
-void onMessage(void *ctx, ETConnection *conn, ETBuffer *msg)
+void onMessage(void *ctx, Connection *conn)
 {
 }
 
-void onWriteComplete(void *ctx, ETConnection *conn)
+void onWriteComplete(void *ctx, Connection *conn)
 {
     FILE *file = static_cast<FILE *>(conn->getArg());
     if (file) {
@@ -33,11 +37,11 @@ void onWriteComplete(void *ctx, ETConnection *conn)
     }
 }
 
-void onClose(void *ctx, ETConnection *conn)
+void onClose(void *ctx, Connection *conn)
 {
 }
 
-void onConnect(void *ctx, ETConnection *conn)
+void onConnect(void *ctx, Connection *conn)
 {
     if (conn->isConnected()) {
         FILE *file = ::fopen(gFile, "rb");
@@ -52,7 +56,7 @@ void onConnect(void *ctx, ETConnection *conn)
     }
 }
 
-void newConnection(void *ctx, ETConnection *conn)
+void newConnection(void *ctx, Connection *conn)
 {
 //    conn->setMessageCallback(onMessage);
     conn->setWriteCompleteCallback(onWriteComplete);
@@ -63,9 +67,13 @@ int main(int argc, char *argv[])
 {
     if (argc > 1) {
         gFile = argv[1];
-        ETEpollSelect select;
-        ETEventLoop eventLoop(&select);
-        ETTCPServer tcpServer(&eventLoop, NULL, 8080);
+#ifdef EPOLL
+    EpollSelect select;
+#else
+    KqueueSelect select;
+#endif
+        EventLoop eventLoop(&select);
+        TCPServer tcpServer(&eventLoop, NULL, 8080);
         tcpServer.setConnectionCb(newConnection);
         tcpServer.run();
         while(true) {

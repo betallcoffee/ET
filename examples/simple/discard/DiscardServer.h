@@ -1,5 +1,5 @@
-#ifndef ETECHOSERVER_H
-#define ETECHOSERVER_H
+#ifndef ETDISCARDSERVER_H
+#define ETDISCARDSERVER_H
 
 namespace ET
 {
@@ -11,11 +11,11 @@ namespace ET
     
 namespace EXAMPLES
 {
-    class EchoServer 
+    class DiscardServer 
     {
     public:
-        EchoServer(EventLoop *eventLoop, const char *ip, unsigned short port);
-        ~EchoServer();
+        DiscardServer(EventLoop *eventLoop, const char *ip, unsigned short port);
+        ~DiscardServer();
 
         int run();
         int isRunning();
@@ -31,11 +31,11 @@ namespace EXAMPLES
 
         TCPServer *tcpServer_;
 
-    }; // end class EchoServer
+    }; // end class ETDiscardServer
 
 } // end namespace ET::EXAMPLES
 
 } // end namespace ET
 
-#endif // end ETECHOSERVER_H
+#endif // end ETDISCARDSERVER_H
 

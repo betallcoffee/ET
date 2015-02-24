@@ -1,17 +1,17 @@
-#include "ETChargenServer.h"
+#include "ChargenServer.h"
 
 // ET lib headers
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
+#include "EventLoop.h"
+#include "KqueueSelect.h"
 
 using namespace ET;
 using namespace EXAMPLES;
 
 int main()
 {
-    ETEpollSelect select;
-    ETEventLoop eventLoop(&select);
-    ETChargenServer echoServer(&eventLoop, NULL, 8080);
+    KqueueSelect select;
+    EventLoop eventLoop(&select);
+    ChargenServer echoServer(&eventLoop, NULL, 8080);
     echoServer.run();
     while(true) {
         eventLoop.runOneLoop();

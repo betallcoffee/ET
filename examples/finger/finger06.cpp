@@ -2,11 +2,15 @@
 #include <string>
 #include <stdlib.h>
 
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
-#include "ETConnection.h"
-#include "ETBufferV.h"
-#include "ETTCPServer.h"
+#include "EventLoop.h"
+#include "Connection.h"
+#include "BufferV.h"
+#include "TCPServer.h"
+#ifdef EPOLL
+#include "EpollSelect.h"
+#else
+#include "KqueueSelect.h"
+#endif
 
 using namespace ET;
 
@@ -23,27 +27,31 @@ std::string getUser(const std::string &user)
     return res;
 }
 
-void onMessage(void *ctx, ETConnection *conn, ETBufferV *msg)
+void onMessage(void *ctx, Connection *conn)
 {
-    if ( msg->findCRLF()) {
-        std::string str(msg->beginRead(), msg->readableBytes());
+    if (conn->readBuf().findCRLF()) {
+        std::string str(conn->readBuf().beginRead(), conn->readBuf().readableBytes());
         std::string data = getUser(str);
         conn->send(data.c_str(), data.length());
         conn->shutdown();
     }
 }
 
-void newConnection(void *ctx, ETConnection *conn)
+void newConnection(void *ctx, Connection *conn)
 {
-    conn->setMessageCallback(onMessage);
+    conn->setReadDataCallback(onMessage);
 }
 
 int main()
 {
     userMap["liangliang"] = std::string("Welcom here!");
-    ETEpollSelect select;
-    ETEventLoop eventLoop(&select);
-    ETTCPServer tcpServer(&eventLoop, NULL, 8080);
+#ifdef EPOLL
+    EpollSelect select;
+#else
+    KqueueSelect select;
+#endif
+    EventLoop eventLoop(&select);
+    TCPServer tcpServer(&eventLoop, NULL, 8080);
     tcpServer.setConnectionCb(newConnection);
     tcpServer.run();
     while (true) {

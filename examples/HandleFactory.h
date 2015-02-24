@@ -11,22 +11,22 @@
 
 namespace ET
 {
-    class ETAcceptor;
-    class ETConnector;
-    class ETHandleRequest;
+    class Acceptor;
+    class Connector;
+    class HandleRequest;
     //
     // class for ETHandleRequest factory method
     //
-    class ETHandleFactory
+    class HandleFactory
     {
     public:
-        ETHandleFactory(ETAcceptor *);
-        virtual ~ETHandleFactory() {}
+        HandleFactory(Acceptor *);
+        virtual ~HandleFactory() {}
 
-        virtual ETHandleRequest *makeRequest(ETConnector *);
-        virtual void cleanRequest(ETHandleRequest *);
+        virtual HandleRequest *makeRequest(Connector *);
+        virtual void cleanRequest(HandleRequest *);
     private:
-        ETAcceptor *acceptor_;
+        Acceptor *acceptor_;
 
     }; // end class ETHandleFactory
 } // end namespace ET

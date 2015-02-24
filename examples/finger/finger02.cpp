@@ -1,14 +1,22 @@
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
-#include "ETTCPServer.h"
+#include "EventLoop.h"
+#include "TCPServer.h"
+#ifdef EPOLL
+#include "EpollSelect.h"
+#else
+#include "KqueueSelect.h"
+#endif
 
 using namespace ET;
 
-int main() 
+int main()
 {
-    ETEpollSelect select;
-    ETEventLoop eventLoop(&select);
-    ETTCPServer tcpServer(&eventLoop, NULL, 8080);
+#ifdef EPOLL
+    EpollSelect select;
+#else
+    KqueueSelect select;
+#endif
+    EventLoop eventLoop(&select);
+    TCPServer tcpServer(&eventLoop, NULL, 8080);
     tcpServer.run();
     while (true) {
         eventLoop.runOneLoop();

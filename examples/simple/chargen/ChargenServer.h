@@ -7,31 +7,37 @@ namespace ET
     class EventLoop;
     class Connection;
     class TCPServer;
-    class BufferV;
+    class ETBufferV;
     
 namespace EXAMPLES
 {
-    class EchoServer 
+    class ChargenServer 
     {
     public:
-        EchoServer(EventLoop *eventLoop, const char *ip, unsigned short port);
-        ~EchoServer();
+        ChargenServer(EventLoop *eventLoop, const char *ip, unsigned short port);
+        ~ChargenServer();
 
         int run();
         int isRunning();
 
     private:
-        // TCPServer callback.
+        // ETTCPServer callback.
         static void connectionCallback(void *ctx, Connection *conn);
         void connection(Connection *conn);
 
-        // Connection callback.
+        // ETConnection callback.
+        static void connectCallback(void *ctx, Connection *conn);
+        void connect(Connection *conn);
+
         static void messageCallback(void *ctx, Connection *conn);
         void message(Connection *conn);
 
+        static void writeCompleteCallback(void *ctx, Connection *conn);
+        void writeComplete(Connection *conn);
+
         TCPServer *tcpServer_;
 
-    }; // end class EchoServer
+    }; // end class ETChargenServer
 
 } // end namespace ET::EXAMPLES
 

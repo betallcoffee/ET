@@ -1,12 +1,21 @@
-#include "ETEventLoop.h"
-#include "ETEpollSelect.h"
+#include "EventLoop.h"
+#ifdef EPOLL
+#include "EpollSelect.h"
+#else
+#include "KqueueSelect.h"
+#endif
 
 using namespace ET;
 
 int main()
 {
-    ETEpollSelect select;
-    ETEventLoop eventLoop(&select);
+#ifdef EPOLL
+    EpollSelect select;
+#else
+    KqueueSelect select;
+#endif
+
+    EventLoop eventLoop(&select);
     while(true) {
         eventLoop.runOneLoop();
     }
