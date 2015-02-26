@@ -1,5 +1,5 @@
 //
-//  Context.h
+//  Transport.h
 //  ET
 //
 //  Created by liang on 12/22/14.
@@ -9,6 +9,8 @@
 #ifndef ET_HTTP_SESSION_H
 #define ET_HTTP_SESSION_H
 
+#include "Request.h"
+
 namespace ET {
 
 class Connection;
@@ -17,14 +19,11 @@ class BufferV;
 namespace HTTP {
 
 class Server;
-class Router;
-class Request;
-class Response;
 
-class Context {
+class Transport {
 public:
-	Context(Server *server, Router *router, Connection *connection);
-	~Context();
+	Transport(Server *server, Connection *connection);
+	~Transport();
 
 private:
 	// Connection callback
@@ -37,11 +36,8 @@ private:
 	void closeConn(Connection *conn);
 
 	Server *_server;
-	Router *_router;
 	Connection *_connection;
-	Request *_request;
-	Response *_response;
-
+	Request _request;
 };
 
 } // end HTTP

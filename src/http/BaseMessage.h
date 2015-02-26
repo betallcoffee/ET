@@ -18,15 +18,15 @@ namespace ET {
         class BaseMessage {
         public:
             
-            typedef struct sVersion {
+            typedef struct Version {
                 int major;
                 int minor;
             }sVersion;
             
-        private:
-            
+        protected:
+            sVersion stringToVersion(std::string const &str);
             sVersion _version;
-            
+
             std::string _connection;
             std::string _date;
             std::string _mine;

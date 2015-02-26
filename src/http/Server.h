@@ -12,8 +12,6 @@
 #include <string>
 #include <map>
 
-#include "Router.h"
-
 namespace ET {
     
     class TCPServer;
@@ -35,20 +33,14 @@ namespace HTTP {
         void stop();
         bool isRunning();
         
-        void registerHandle(const std::string *path, Handle handle);
-        
     private:
         
         static void connectionCallback(void *ctx, Connection *conn);
         void connection(Connection *conn);
         
         TCPServer *_tcpServer;
-        
         std::string _host;
         short _port;
-        
-        Router *_router;
-        
     };
 } // end namespace HTTP
     

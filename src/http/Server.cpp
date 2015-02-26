@@ -7,21 +7,17 @@
 //
 
 #include "Server.h"
-
 #include "TCPServer.h"
-
-#include "Request.h"
-#include "Response.h"
-#include "Context.h"
+#include "Transport.h"
 
 using namespace ET;
 using namespace HTTP;
 
 
 Server::Server(EventLoop *eventLoop, const std::string &host, short port)
-  : _host(host), _port(port), _tcpServer(new TCPServer(eventLoop, host.c_str(), port)) {
+  : _host(host), _port(port) {
+	_tcpServer = new TCPServer(eventLoop, _host.c_str(), _port);
     _tcpServer->setContext(this);
-    _router = new Router();
 }
 
 Server::~Server() {
@@ -47,15 +43,11 @@ bool Server::isRunning() {
     return false;
 }
 
-void Server::registerHandle(const std::string *path, Handle handle) {
-    _router->registerHandle(path, handle);
-}
-
 void Server::connectionCallback(void *ctx, Connection *conn) {
     Server *server = (Server *)ctx;
     server->connection(conn);
 }
 
 void Server::connection(Connection *conn) {
-    Context *context = new Context(this, _router, conn);
+    Transport *context = new Transport(this, conn);
 }

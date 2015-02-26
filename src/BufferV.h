@@ -34,6 +34,8 @@ namespace ET
         void retrieve(size_t n) { readIndex_ += n; }
         void clear() { readIndex_ = writeIndex_ = 0; }
 
+        std::string getLine();
+
     private:
         static const char kCRLF[];
 

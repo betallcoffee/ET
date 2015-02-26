@@ -5,6 +5,7 @@
 //
 
 #include <algorithm>
+#include <string>
 #include "BufferV.h"
 
 using namespace ET;
@@ -38,6 +39,15 @@ const char *BufferV::findCRLF(char *start)
 {
     const char *res = std::search(start, beginWrite(), kCRLF + 0, kCRLF + 2);
     return res == beginWrite() ? NULL : res;
+}
+
+std::string BufferV::getLine() {
+	const char *begin = beginRead();
+	const char *end = findCRLF();
+	if (end == NULL) return std::string();
+	std::string line(begin, end + 2);
+	retrieve(line.size() + 2);
+	return line;
 }
 
 void BufferV::ensureWriteable(size_t n)
