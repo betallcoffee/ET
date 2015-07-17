@@ -21,7 +21,7 @@ const int kMaxConn = 128;
 typedef void(*EventCallback)(void *);
 
 // Acceptor/Connector
-typedef void(*NewConnectionCallback)(void *ctx, int fd); 
+typedef void(*NewSocketCallback)(void *ctx, int fd);
 
 // ETConnction
 typedef void(*ReadDataCallback)(void *ctx, Connection *conn);

@@ -24,7 +24,7 @@ class Transport {
 public:
 	Transport(Server *server, Connection *connection);
 	~Transport();
-
+    
 private:
 	// Connection callback
 	static void readDataCallback(void *ctx, Connection *conn);

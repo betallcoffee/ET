@@ -10,29 +10,29 @@
 	<string>ET</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>89C9AF18-6A59-4F14-A99A-A148433F0887</key>
+		<key>3FB051C597174FCAFEE3C2B46E9099C9BBD1874A</key>
 		<string>ssh://github.com/betallcoffee/ET.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>project/xcode/ET.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>89C9AF18-6A59-4F14-A99A-A148433F0887</key>
+		<key>3FB051C597174FCAFEE3C2B46E9099C9BBD1874A</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/betallcoffee/ET.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>89C9AF18-6A59-4F14-A99A-A148433F0887</string>
+	<string>3FB051C597174FCAFEE3C2B46E9099C9BBD1874A</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>89C9AF18-6A59-4F14-A99A-A148433F0887</string>
+			<string>3FB051C597174FCAFEE3C2B46E9099C9BBD1874A</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ET</string>
 		</dict>

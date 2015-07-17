@@ -30,8 +30,8 @@ namespace ET
         ~Connector();
 
         void setContext(void *ctx) { ctx_ = ctx; }
-        void setNewConnectionCallback(NewConnectionCallback callback)
-        { newConnectionCallback_ = callback; }
+        void setNewSocketCallback(NewSocketCallback callback)
+        { newSocketCallback_ = callback; }
 
         void connect();
         void discard();
@@ -67,7 +67,7 @@ namespace ET
         Watcher *watcher_;
         EventLoop *eventLoop_;
         void *ctx_;
-        NewConnectionCallback newConnectionCallback_;
+        NewSocketCallback newSocketCallback_;
 
         int state_;
         int connect_;

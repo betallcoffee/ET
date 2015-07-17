@@ -18,8 +18,10 @@ namespace ET {
     class EventLoop;
     class Connection;
     
+    
 namespace HTTP {
 
+    class Transport;
     /**
      * @brief 初始化网络，与路由表
      */
@@ -33,6 +35,8 @@ namespace HTTP {
         void stop();
         bool isRunning();
         
+        void removeTransport(Transport *transport);
+        
     private:
         
         static void connectionCallback(void *ctx, Connection *conn);
@@ -41,6 +45,7 @@ namespace HTTP {
         TCPServer *_tcpServer;
         std::string _host;
         short _port;
+        std::map<Transport *, Transport *> _transports;
     };
 } // end namespace HTTP
     

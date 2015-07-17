@@ -54,3 +54,12 @@ Request::eMethod Request::stringToMethod(std::string const &method) {
 	}
 	return METHOD_NONE;
 }
+
+void Request::parseHeaders(BufferV &data) {
+	std::string line = data.getLine();
+	if (line.size() > 2) {
+
+	} else if (line.size() == 2) {
+		_status = READ_BODY;
+	}
+}

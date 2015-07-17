@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 liangliang. All rights reserved.
 //
 
+#include "Server.h"
+
 #include "Connection.h"
 #include "Transport.h"
 #include "Request.h"
@@ -24,7 +26,6 @@ Transport::Transport(Server *server, Connection *connection) :
 
 Transport::~Transport() {
     if (_connection) {
-        _connection->shutdown();
         delete _connection;
     }
 }
@@ -54,5 +55,6 @@ void Transport::closeCallback(void *ctx, ET::Connection *conn) {
 
 void Transport::closeConn(ET::Connection *conn) {
     delete this;
+    _server->removeTransport(this);
 }
 

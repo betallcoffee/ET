@@ -26,8 +26,8 @@ namespace ET
         ~Acceptor();
 
         void setContext(void *ctx) { ctx_ = ctx; }
-        void setNewConnectionCallback(NewConnectionCallback callback)
-        { newConnectionCallback_ = callback; }
+        void setNewSocketCallback(NewSocketCallback callback)
+        { newSocketCallback_ = callback; }
 
         // the server begin to listen ip:port, and running.
         int listen();
@@ -46,7 +46,7 @@ namespace ET
         Watcher *watcher_;
         EventLoop *eventLoop_;
         void *ctx_;
-        NewConnectionCallback newConnectionCallback_;
+        NewSocketCallback newSocketCallback_;
 
         int fd_;
         int listenning_;

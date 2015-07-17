@@ -19,7 +19,7 @@ TCPServer::TCPServer(EventLoop *eventLoop, const char *ip, unsigned short port)
       connectionCb_(NULL)
 {
     acceptor_.setContext(this);
-    acceptor_.setNewConnectionCallback(newConnectionCallback);
+    acceptor_.setNewSocketCallback(newSocketCallback);
 }
 
 TCPServer::~TCPServer()
@@ -35,7 +35,7 @@ int TCPServer::run()
     return res;
 }
 
-void TCPServer::newConnectionCallback(void *ctx, int fd)
+void TCPServer::newSocketCallback(void *ctx, int fd)
 {
     TCPServer *self = static_cast<TCPServer *>(ctx);
     self->newConnection(fd);

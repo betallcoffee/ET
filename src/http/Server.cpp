@@ -34,6 +34,11 @@ bool Server::run() {
 }
 
 void Server::stop() {
+    std::for_each(_transports.begin(), _transports.end(), [=](std::pair<Transport *, Transport*> pair) {
+        Transport *transport = pair.second;
+        delete transport;
+    });
+    _transports.clear();
 }
 
 bool Server::isRunning() {
@@ -43,11 +48,17 @@ bool Server::isRunning() {
     return false;
 }
 
+void Server::removeTransport(Transport *transport)
+{
+    _transports.erase(transport);
+}
+
 void Server::connectionCallback(void *ctx, Connection *conn) {
     Server *server = (Server *)ctx;
     server->connection(conn);
 }
 
 void Server::connection(Connection *conn) {
-    Transport *context = new Transport(this, conn);
+    Transport *transport = new Transport(this, conn);
+    _transports[transport] = transport;
 }

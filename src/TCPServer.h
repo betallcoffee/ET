@@ -37,7 +37,7 @@ namespace ET
             kServerStatesStopped
         };
 
-        static void newConnectionCallback(void *, int);
+        static void newSocketCallback(void *, int);
         void newConnection(int);
         void removeConnection(Connection *) {}
         void setState(int state) { state_ = state; }

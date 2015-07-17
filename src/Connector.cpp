@@ -68,8 +68,8 @@ void Connector::writeHandle()
     if (state_ == kConnStatesConnecting) {
         watcher_->disableAll();
         int fd = watcher_->getFD();
-        if (newConnectionCallback_) {
-            newConnectionCallback_(ctx_, fd);
+        if (newSocketCallback_) {
+            newSocketCallback_(ctx_, fd);
         }
     }
 }
@@ -102,8 +102,8 @@ void Connector::connect()
             if (ret == 0) {
                 setState(kConnStatesConnected);
                 int fd = watcher_->getFD();
-                if (newConnectionCallback_) {
-                    newConnectionCallback_(ctx_, fd);
+                if (newSocketCallback_) {
+                    newSocketCallback_(ctx_, fd);
                 }
                 return;
             }

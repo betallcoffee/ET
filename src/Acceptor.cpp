@@ -95,8 +95,8 @@ void Acceptor::readHandle()
         flags |= O_NONBLOCK;
         fcntl(newFD, F_SETFL, flags);
 
-        if (newConnectionCallback_) {
-            newConnectionCallback_(ctx_, newFD);
+        if (newSocketCallback_) {
+            newSocketCallback_(ctx_, newFD);
         } else {
             ::close(newFD);
         }
