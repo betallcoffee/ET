@@ -41,13 +41,13 @@ const char *BufferV::findCRLF(char *start)
     return res == beginWrite() ? NULL : res;
 }
 
-std::string BufferV::getLine() {
+bool BufferV::getLine(std::string &line) {
 	const char *begin = beginRead();
 	const char *end = findCRLF();
-	if (end == NULL) return std::string();
-	std::string line(begin, end + 2);
-	retrieve(line.size() + 2);
-	return line;
+	if (end == NULL) return false;
+    line.assign(begin, end - begin + 2);
+	retrieve(line.size());
+	return true;
 }
 
 void BufferV::ensureWriteable(size_t n)

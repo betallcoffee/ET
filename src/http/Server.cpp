@@ -14,10 +14,11 @@ using namespace ET;
 using namespace HTTP;
 
 
-Server::Server(EventLoop *eventLoop, const std::string &host, short port)
-  : _host(host), _port(port) {
-	_tcpServer = new TCPServer(eventLoop, _host.c_str(), _port);
+Server::Server(EventLoop *eventLoop, const char *ip, short port) : _port(port) {
+    _ip = ip ? std::string(ip) : "";
+    _tcpServer = new TCPServer(eventLoop, ip, _port);
     _tcpServer->setContext(this);
+    _tcpServer->setConnectionCb(connectionCallback);
 }
 
 Server::~Server() {

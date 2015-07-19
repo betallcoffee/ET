@@ -5,19 +5,27 @@
  *      Author: liang
  */
 
+#include <algorithm>
 #include "StringUtility.h"
 
-using namespace ET::STRING;
-
-std::vector<std::string> splite(std::string const &str, std::string const &sep) {
+std::vector<std::string> ET::STRING::splite(const std::string &str, const std::string &sep, bool isLoop) {
 	std::vector<std::string> res;
 	std::string::size_type begin = 0;
-	do {
-		std::string::size_type end = str.find(sep);
-		std::string substr = str.substr(begin, end);
-		res.push_back(substr);
-		begin = end;
-	} while(begin != std::string::npos);
-	return res;
+    std::string::size_type end = std::string::npos;
+    do {
+        end = str.find(sep, begin);
+        res.push_back(str.substr(begin, end - begin));
+        begin = end + 1;
+        if (!isLoop) {
+            res.push_back(str.substr(begin, std::string::npos));
+            break;
+        }
+    } while(end != std::string::npos);
+    return res;
+}
+
+void ET::STRING::trim(std::string &str) {
+    std::string res;
+    str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
 }
 

@@ -28,7 +28,7 @@ namespace HTTP {
     // TODO 配置文件加载
     class Server {
     public:
-        Server(EventLoop *eventLoop, const std::string &host, short port);
+        Server(EventLoop *eventLoop, const char *ip, short port);
         ~Server();
         
         bool run();
@@ -43,7 +43,7 @@ namespace HTTP {
         void connection(Connection *conn);
         
         TCPServer *_tcpServer;
-        std::string _host;
+        std::string _ip;
         short _port;
         std::map<Transport *, Transport *> _transports;
     };

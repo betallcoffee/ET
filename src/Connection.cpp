@@ -31,7 +31,6 @@ Connection::Connection(EventLoop *eventLoop, int fd)
 
 Connection::~Connection()
 {
-    shutdown();
     if (watcher_  != NULL) {
         delete watcher_;
     }
@@ -183,7 +182,6 @@ void Connection::closeHandle()
 
     if (closeCallback_) {
         closeCallback_(ctx_, this);
-        delete this;
     }
 }
 

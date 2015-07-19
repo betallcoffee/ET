@@ -10,7 +10,7 @@
 #define ET_HTTP_RESPONSE_H
 
 #include <string>
-#include "BaseMessage.h"
+#include "BaseHeader.h"
 
 namespace ET {
     
@@ -18,7 +18,7 @@ namespace ET {
 
 namespace HTTP {
     
-    class Response : public BaseMessage {
+    class Response {
     public:
         int parse(BufferV &buf);
         int statusCode() { return _statusCode; }

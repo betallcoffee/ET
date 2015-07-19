@@ -13,53 +13,91 @@
 using namespace ET;
 using namespace HTTP;
 
+
+
 Request::eStatus Request::parse(BufferV &data) {
-	switch (_status) {
-	case FIRST_LINE:
-		parseFirstLine(data);
-		break;
-	case PARSE_HEADER:
-		parseHeaders(data);
-		break;
-	case READ_BODY:
-		readBody(data);
-		break;
-	case COMPLETE:
-		break;
-	}
-	return status();
+    bool loop = false;
+    do {
+        switch (_status) {
+            case FIRST_LINE:
+                loop = parseFirstLine(data);
+                break;
+            case PARSE_HEADER:
+                loop = parseHeaders(data);
+                break;
+            case FIRST_SPACE:
+                loop = parseHeaders(data);
+                break;
+            case READ_BODY:
+                loop = readBody(data);
+                break;
+            case COMPLETE:
+                break;
+        }
+    } while(loop);
+    
+    return status();
 }
 
-void Request::parseFirstLine(BufferV &data) {
-	std::string line = data.getLine();
-	if (line.size() > 0) {
-		std::vector<std::string> strs = STRING::splite(line);
-		_method = strs[0];
-		_m = stringToMethod(_method);
-		_path = strs[1];
-		_version = stringToVersion(strs[2]);
+
+RequestHeader::eMethod Request::stringToMethod(const std::string &method) {
+    if (method == "GET") {
+        return RequestHeader::GET;
+    } else if (method == "HEAD") {
+        return RequestHeader::HEAD;
+    } else if (method == "POST") {
+        return RequestHeader::POST;
+    } else if (method == "PUT") {
+        return RequestHeader::PUT;
+    }
+    return RequestHeader::METHOD_NONE;
+}
+
+bool Request::parseFirstLine(BufferV &data) {
+    std::string line;
+    bool ret = data.getLine(line);
+	if (ret && line.size() > 0) {
+        printf("a request first line:%s", line.c_str());
+		std::vector<std::string> strs = STRING::splite(line.substr(0, line.size() - 2));
+        if (strs.size() > 0) {
+            _requestHeader._method = strs[0];
+            _requestHeader._m = stringToMethod(_requestHeader._method);
+        }
+        if (strs.size() > 1) {
+            _requestHeader._path = strs[1];
+        }
+        if (strs.size() > 2) {
+            _requestHeader._version = _requestHeader.stringToVersion(strs[2]);
+        } else {
+            _requestHeader._version.minor = 0;
+            _requestHeader._version.major = 1;
+        }
+		
 		_status = PARSE_HEADER;
 	}
+    return ret;
 }
 
-Request::eMethod Request::stringToMethod(std::string const &method) {
-	if (method == "GET") {
-		return GET;
-	} else if (method == "HEAD") {
-		return HEAD;
-	} else if (method == "POST") {
-		return POST;
-	} else if (method == "PUT") {
-		return PUT;
-	}
-	return METHOD_NONE;
+bool Request::parseHeaders(BufferV &data) {
+    std::string line;
+    bool ret = data.getLine(line);
+	if (ret && line.size() > 2 && _status == PARSE_HEADER) {
+        STRING::trim(line);
+        std::vector<std::string> strs = STRING::splite(line, ":", false);
+        if (strs.size() >= 2) {
+            _headers[strs[0]] = strs[1];
+            _requestHeader.parseAHeaderKeyValue(strs[0], strs[1]);
+        }
+	} else if (ret && line.size() == 2) {
+        if (_status == FIRST_SPACE) {
+            _status = READ_BODY;
+        } else {
+            _status = FIRST_SPACE;
+        }
+    }
+    return ret;
 }
 
-void Request::parseHeaders(BufferV &data) {
-	std::string line = data.getLine();
-	if (line.size() > 2) {
-
-	} else if (line.size() == 2) {
-		_status = READ_BODY;
-	}
+bool Request::readBody(ET::BufferV &data) {
+    return false;
 }

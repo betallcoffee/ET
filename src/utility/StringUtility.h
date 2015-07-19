@@ -15,7 +15,9 @@ namespace ET {
 
 namespace STRING {
 
-std::vector<std::string> splite(std::string const &str, std::string const &sep = " ");
+std::vector<std::string> splite(const std::string &str, const std::string &sep = " ", bool isLoop = true);
+    
+    void trim(std::string &str);
 
 }
 

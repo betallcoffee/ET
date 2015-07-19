@@ -1,0 +1,264 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ECD7ADB31B5BDD36005E8574 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7ADB21B5BDD36005E8574 /* main.cpp */; };
+		ECD7ADB51B5BDD9E005E8574 /* libET.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD7ADB41B5BDD9E005E8574 /* libET.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ECD7ADA61B5BDCE2005E8574 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ECD7ADA81B5BDCE2005E8574 /* EThttp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EThttp; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECD7ADB21B5BDD36005E8574 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../../../examples/http/main.cpp; sourceTree = "<group>"; };
+		ECD7ADB41B5BDD9E005E8574 /* libET.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libET.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/ET-bgqgfhzlfttlwrbeepmikczzixcy/Build/Products/Debug/libET.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ECD7ADA51B5BDCE2005E8574 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECD7ADB51B5BDD9E005E8574 /* libET.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ECD7AD9F1B5BDCE2005E8574 = {
+			isa = PBXGroup;
+			children = (
+				ECD7ADB41B5BDD9E005E8574 /* libET.a */,
+				ECD7ADAA1B5BDCE2005E8574 /* EThttp */,
+				ECD7ADA91B5BDCE2005E8574 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ECD7ADA91B5BDCE2005E8574 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ECD7ADA81B5BDCE2005E8574 /* EThttp */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ECD7ADAA1B5BDCE2005E8574 /* EThttp */ = {
+			isa = PBXGroup;
+			children = (
+				ECD7ADB21B5BDD36005E8574 /* main.cpp */,
+			);
+			path = EThttp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ECD7ADA71B5BDCE2005E8574 /* EThttp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECD7ADAF1B5BDCE2005E8574 /* Build configuration list for PBXNativeTarget "EThttp" */;
+			buildPhases = (
+				ECD7ADA41B5BDCE2005E8574 /* Sources */,
+				ECD7ADA51B5BDCE2005E8574 /* Frameworks */,
+				ECD7ADA61B5BDCE2005E8574 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EThttp;
+			productName = EThttp;
+			productReference = ECD7ADA81B5BDCE2005E8574 /* EThttp */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ECD7ADA01B5BDCE2005E8574 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = tina;
+				TargetAttributes = {
+					ECD7ADA71B5BDCE2005E8574 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = ECD7ADA31B5BDCE2005E8574 /* Build configuration list for PBXProject "EThttp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ECD7AD9F1B5BDCE2005E8574;
+			productRefGroup = ECD7ADA91B5BDCE2005E8574 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ECD7ADA71B5BDCE2005E8574 /* EThttp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ECD7ADA41B5BDCE2005E8574 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECD7ADB31B5BDD36005E8574 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ECD7ADAD1B5BDCE2005E8574 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		ECD7ADAE1B5BDCE2005E8574 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ECD7ADB01B5BDCE2005E8574 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${SRCROOT}/../../../src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/ET-bgqgfhzlfttlwrbeepmikczzixcy/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ECD7ADB11B5BDCE2005E8574 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${SRCROOT}/../../../src",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/ET-bgqgfhzlfttlwrbeepmikczzixcy/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ECD7ADA31B5BDCE2005E8574 /* Build configuration list for PBXProject "EThttp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECD7ADAD1B5BDCE2005E8574 /* Debug */,
+				ECD7ADAE1B5BDCE2005E8574 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ECD7ADAF1B5BDCE2005E8574 /* Build configuration list for PBXNativeTarget "EThttp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECD7ADB01B5BDCE2005E8574 /* Debug */,
+				ECD7ADB11B5BDCE2005E8574 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ECD7ADA01B5BDCE2005E8574 /* Project object */;
+}

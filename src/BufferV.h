@@ -26,6 +26,7 @@ namespace ET
         size_t readableBytes() { return writeIndex_ - readIndex_; }
         size_t writeableBytes() { return buffer_.size() - writeIndex_; }
         size_t prependableBytes() { return readIndex_; }
+        bool empty() { return readIndex_ == writeIndex_; }
 
         size_t append(const char *data, size_t n);
         const char *findCRLF();
@@ -34,7 +35,7 @@ namespace ET
         void retrieve(size_t n) { readIndex_ += n; }
         void clear() { readIndex_ = writeIndex_ = 0; }
 
-        std::string getLine();
+        bool getLine(std::string &line);
 
     private:
         static const char kCRLF[];

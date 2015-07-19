@@ -37,7 +37,7 @@ void Transport::readDataCallback(void *ctx, ET::Connection *conn) {
 
 void Transport::readData(ET::Connection *conn) {
 	BufferV &data = conn->readBuf();
-	_request.parse(data);
+    _request.parse(data);
 }
 
 void Transport::writeDataCallback(void *ctx, ET::Connection *conn) {

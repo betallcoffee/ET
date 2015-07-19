@@ -140,6 +140,9 @@ void Acceptor::errorHandle()
 int Acceptor::listen()
 {
     listenning_ = 1;
+    if (watcher_ == nullptr) {
+        return kInvalidFD;
+    }
     int res = ::listen(watcher_->getFD(), kMaxConn);
     if (res < 0) {
         printf("listen errorno: %s\n", strerror(errno));
