@@ -29,6 +29,7 @@ namespace ET
         bool empty() { return readIndex_ == writeIndex_; }
 
         size_t append(const char *data, size_t n);
+        size_t appendBuffer(BufferV &buffer);
         const char *findCRLF();
         const char *findCRLF(char *start);
 

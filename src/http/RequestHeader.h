@@ -21,13 +21,13 @@ namespace ET {
             
             typedef enum Method {
                 METHOD_NONE = 0,
-                GET = 1,
-                HEAD,
-                POST,
-                PUT,
-                TRACE,
-                OPTIONS,
-                DELETE
+                GET = 1, //从服务器获取一份文档， 无 body
+                HEAD,  // 只从服务器获取文档的首部， 无 body
+                POST, // 向服务器发送需要处理的数据， 有 body
+                PUT, // 将请求的主体部分存储在服务器上， 有 body
+                TRACE, // 对可能经过代理服务器传送到服务器上去的报文进行追踪， 无 body
+                OPTIONS, // 决定可以在服务器上招待哪些方法
+                DELETE // 从服务器上删除一份文档
             }eMethod;
             
             friend class Request;

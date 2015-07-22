@@ -30,6 +30,13 @@ size_t BufferV::append(const char *data, size_t n)
     return n;
 }
 
+size_t BufferV::appendBuffer(BufferV &buffer)
+{
+    char *data = buffer.beginRead();
+    size_t size = buffer.readableBytes();
+    return append(data, size);
+}
+
 const char *BufferV::findCRLF()
 {
     return findCRLF(beginRead());

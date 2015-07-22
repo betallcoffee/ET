@@ -13,8 +13,6 @@
 using namespace ET;
 using namespace HTTP;
 
-
-
 Request::eStatus Request::parse(BufferV &data) {
     bool loop = false;
     do {
@@ -23,9 +21,6 @@ Request::eStatus Request::parse(BufferV &data) {
                 loop = parseFirstLine(data);
                 break;
             case PARSE_HEADER:
-                loop = parseHeaders(data);
-                break;
-            case FIRST_SPACE:
                 loop = parseHeaders(data);
                 break;
             case READ_BODY:
@@ -89,15 +84,26 @@ bool Request::parseHeaders(BufferV &data) {
             _requestHeader.parseAHeaderKeyValue(strs[0], strs[1]);
         }
 	} else if (ret && line.size() == 2) {
-        if (_status == FIRST_SPACE) {
+        if (_requestHeader._m == RequestHeader::POST ||
+            _requestHeader._m == RequestHeader::PUT) {
             _status = READ_BODY;
         } else {
-            _status = FIRST_SPACE;
+            _status = COMPLETE;
         }
     }
     return ret;
 }
 
 bool Request::readBody(ET::BufferV &data) {
-    return false;
+    if (_body == nullptr) {
+        _body = new BufferV;
+    }
+    size_t n = _body->appendBuffer(data);
+    data.retrieve(n);
+    
+    if (data.empty()) {
+        return false;
+    } else {
+        return true;
+    }
 }

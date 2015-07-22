@@ -27,7 +27,6 @@ namespace HTTP {
         typedef enum Status {
         	FIRST_LINE = 1,
             PARSE_HEADER,
-            FIRST_SPACE,
             READ_BODY,
             COMPLETE
         }eStatus;
