@@ -16,6 +16,10 @@
 		ECD7AD971B594214005E8574 /* StringUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = ECD7AD951B594214005E8574 /* StringUtility.h */; };
 		ECD7AD9D1B5BC970005E8574 /* RequestHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7AD9B1B5BC970005E8574 /* RequestHeader.cpp */; };
 		ECD7AD9E1B5BC970005E8574 /* RequestHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = ECD7AD9C1B5BC970005E8574 /* RequestHeader.h */; };
+		ECD9D6921B611EAD00D1FB74 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD9D6901B611EAD00D1FB74 /* File.cpp */; };
+		ECD9D6931B611EAD00D1FB74 /* File.h in Headers */ = {isa = PBXBuildFile; fileRef = ECD9D6911B611EAD00D1FB74 /* File.h */; };
+		ECD9D6A01B690D7F00D1FB74 /* Dir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD9D69E1B690D7F00D1FB74 /* Dir.cpp */; };
+		ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */ = {isa = PBXBuildFile; fileRef = ECD9D69F1B690D7F00D1FB74 /* Dir.h */; };
 		ECE7AC3819DA8F5B000118A3 /* Acceptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE7AC3619DA8F5B000118A3 /* Acceptor.cpp */; };
 		ECE7AC3919DA8F5B000118A3 /* Acceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE7AC3719DA8F5B000118A3 /* Acceptor.h */; };
 		ECE7AC4419DA9137000118A3 /* Connector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE7AC4219DA9137000118A3 /* Connector.cpp */; };
@@ -56,6 +60,10 @@
 		ECD7AD951B594214005E8574 /* StringUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtility.h; sourceTree = "<group>"; };
 		ECD7AD9B1B5BC970005E8574 /* RequestHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestHeader.cpp; sourceTree = "<group>"; };
 		ECD7AD9C1B5BC970005E8574 /* RequestHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestHeader.h; sourceTree = "<group>"; };
+		ECD9D6901B611EAD00D1FB74 /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
+		ECD9D6911B611EAD00D1FB74 /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
+		ECD9D69E1B690D7F00D1FB74 /* Dir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dir.cpp; sourceTree = "<group>"; };
+		ECD9D69F1B690D7F00D1FB74 /* Dir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dir.h; sourceTree = "<group>"; };
 		ECE7AC3619DA8F5B000118A3 /* Acceptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Acceptor.cpp; sourceTree = "<group>"; };
 		ECE7AC3719DA8F5B000118A3 /* Acceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Acceptor.h; sourceTree = "<group>"; };
 		ECE7AC4219DA9137000118A3 /* Connector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Connector.cpp; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 		ECA3D02B19C163AE003C02DE /* src */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9D68F1B611E9400D1FB74 /* system */,
 				ECF48B471A0F0C4B0076A7D4 /* http */,
 				ECE7AC6619DA9709000118A3 /* KqueueSelect.cpp */,
 				ECE7AC6719DA9709000118A3 /* KqueueSelect.h */,
@@ -161,6 +170,17 @@
 			path = utility;
 			sourceTree = "<group>";
 		};
+		ECD9D68F1B611E9400D1FB74 /* system */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9D6901B611EAD00D1FB74 /* File.cpp */,
+				ECD9D6911B611EAD00D1FB74 /* File.h */,
+				ECD9D69E1B690D7F00D1FB74 /* Dir.cpp */,
+				ECD9D69F1B690D7F00D1FB74 /* Dir.h */,
+			);
+			path = system;
+			sourceTree = "<group>";
+		};
 		ECF48B471A0F0C4B0076A7D4 /* http */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,10 +220,12 @@
 				ECE7AC4519DA9137000118A3 /* Connector.h in Headers */,
 				ECD7AD9E1B5BC970005E8574 /* RequestHeader.h in Headers */,
 				ECD7AD931B59419C005E8574 /* Transport.h in Headers */,
+				ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */,
 				ECE7AC5319DA94E2000118A3 /* Config.h in Headers */,
 				ECE7AC4919DA9382000118A3 /* Connection.h in Headers */,
 				ECE7AC4F19DA9458000118A3 /* Buffer.h in Headers */,
 				ECE7AC3919DA8F5B000118A3 /* Acceptor.h in Headers */,
+				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
 				ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +292,7 @@
 				ECE7AC4E19DA9458000118A3 /* Buffer.cpp in Sources */,
 				ECE7AC4419DA9137000118A3 /* Connector.cpp in Sources */,
 				EC9783301A483BC2000848C5 /* Server.cpp in Sources */,
+				ECD9D6921B611EAD00D1FB74 /* File.cpp in Sources */,
 				ECD7AD921B59419C005E8574 /* Transport.cpp in Sources */,
 				ECD7AD9D1B5BC970005E8574 /* RequestHeader.cpp in Sources */,
 				ECE7AC5019DA9458000118A3 /* BufferV.cpp in Sources */,
@@ -277,6 +300,7 @@
 				ECE7AC5619DA956A000118A3 /* TCPServer.cpp in Sources */,
 				ECE7AC6C19DA9769000118A3 /* Alloc.cpp in Sources */,
 				ECE7AC5A19DA95BD000118A3 /* Watcher.cpp in Sources */,
+				ECD9D6A01B690D7F00D1FB74 /* Dir.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

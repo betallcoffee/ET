@@ -33,6 +33,7 @@ namespace ET
         const char *findCRLF();
         const char *findCRLF(char *start);
 
+        void ensureWriteable(size_t n);
         void retrieve(size_t n) { readIndex_ += n; }
         void clear() { readIndex_ = writeIndex_ = 0; }
 
@@ -43,7 +44,6 @@ namespace ET
 
         char *begin() { return &*buffer_.begin(); }
         //const char *begin() { return &*buffer_.begin(); }
-        void ensureWriteable(size_t n);
         void expend(size_t size);
         
         std::vector<char> buffer_;
