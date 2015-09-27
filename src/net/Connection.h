@@ -9,7 +9,7 @@
 #define ETCONNECTION_H
 
 #include "Config.h"
-#include "BufferV.h"
+#include "../utility/BufferV.h"
 
 namespace ET
 {

@@ -2,10 +2,7 @@
 
 #include "TimeServer.h"
 
-#include "EventLoop.h"
-#include "Connection.h"
-#include "TCPServer.h"
-#include "utility/Timestamp.h"
+#include "ET.h"
 
 using namespace ET;
 using namespace ET::EXAMPLES;

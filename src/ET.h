@@ -5,9 +5,15 @@
 //
 // This is an public header file, it must only include public header files.
 
-#ifndef ETLOOP_H
-#define ETLOOP_H
+#ifndef _ET_H
+#define _ET_H
 
 #include "EventLoop.h"
+#include "http/Server.h"
+#include "net/KqueueSelect.h"
+#include "net/TCPServer.h"
+#include "net/Connection.h"
 
-#endif // ETLOOP_H
+#include "utility/Timestamp.h"
+
+#endif // end _ET_H

@@ -9,8 +9,7 @@
 #include "TimeServer.h"
 
 // ET lib headers
-#include "EventLoop.h"
-#include "KqueueSelect.h"
+#include "ET.h"
 
 using namespace ET;
 using namespace EXAMPLES;

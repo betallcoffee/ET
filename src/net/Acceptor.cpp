@@ -10,10 +10,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <stdio.h>
 
 #include "Acceptor.h"
 
-#include "Loop.h"
 #include "Watcher.h"
 
 using namespace ET;

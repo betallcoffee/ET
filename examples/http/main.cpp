@@ -6,11 +6,8 @@
 //  Copyright (c) 2015 tina. All rights reserved.
 //
 
-#include "http/Server.h"
-
 // ET lib headers
-#include "EventLoop.h"
-#include "KqueueSelect.h"
+#include "ET.h"
 
 using namespace ET;
 
