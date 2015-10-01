@@ -10,7 +10,7 @@
 #define ET__FILE_H
 
 #include <string>
-#include <fcntl.h>
+#include <stdio.h>
 
 namespace ET {
     
@@ -20,7 +20,7 @@ namespace ET {
         
         class File {
         public:
-            File(const std::string &path, int flags, mode_t mode);
+            File(const std::string &path, const std::string &mode);
             ~File();
             
             static bool exist(const std::string &path);
@@ -34,7 +34,7 @@ namespace ET {
             
         private:
             std::string _path;
-            int _fd;
+            FILE *_file;
             size_t _size;
             time_t _atime;
             time_t _mtime;

@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include "RequestHeader.h"
+#include "ThreadPool.h"
 
 namespace ET {
     
@@ -42,13 +43,13 @@ namespace HTTP {
         void setURL(const std::string &url) { _requestHeader._url = url; } // TODO: parse path from url;
         const std::string &path() { return _requestHeader._path; }
         
-        virtual void run();
-        
     private:
         RequestHeader::eMethod stringToMethod(const std::string &method);
         bool parseFirstLine(BufferV &data);
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
+        
+        static THREAD::ThreadPool *sThreadPool;
 
         eStatus _status;
         BufferV *_body;

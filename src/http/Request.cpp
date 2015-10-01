@@ -7,12 +7,17 @@
 
 #include <vector>
 #include "ThreadPool.h"
+#include "File.h"
 #include "BufferV.h"
 #include "StringUtility.h"
+#include "FileReader.h"
 #include "Request.h"
 
 using namespace ET;
 using namespace HTTP;
+using namespace SYSTEM;
+
+THREAD::ThreadPool *Request::sThreadPool = new THREAD::ThreadPool(10);
 
 Request::eStatus Request::parse(BufferV &data) {
     /**
@@ -31,6 +36,11 @@ Request::eStatus Request::parse(BufferV &data) {
                 loop = readBody(data);
                 break;
             case COMPLETE:
+                if (File::exist(_requestHeader._path)) {
+                    File *file = new File(_requestHeader._path, "r");
+                    FileReader *task = new FileReader(file);
+                    Request::sThreadPool->addTask(task);
+                }
                 break;
         }
     } while(loop);
@@ -112,9 +122,3 @@ bool Request::readBody(ET::BufferV &data) {
     }
 }
 
-/**
- * override ThreadRunnable run method
- */
-void Request::run() {
-    
-}
