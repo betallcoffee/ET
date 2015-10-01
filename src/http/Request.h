@@ -16,6 +16,7 @@
 namespace ET {
     
     class BufferV;
+    class Response;
     
 namespace HTTP {
     
@@ -41,6 +42,8 @@ namespace HTTP {
         void setURL(const std::string &url) { _requestHeader._url = url; } // TODO: parse path from url;
         const std::string &path() { return _requestHeader._path; }
         
+        virtual void run();
+        
     private:
         RequestHeader::eMethod stringToMethod(const std::string &method);
         bool parseFirstLine(BufferV &data);
@@ -51,6 +54,8 @@ namespace HTTP {
         BufferV *_body;
         std::map<std::string, std::string> _headers;
         RequestHeader _requestHeader;
+    
+        Response *_response;
         
     };
 }

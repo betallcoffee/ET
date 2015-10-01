@@ -6,6 +6,7 @@
  */
 
 #include <vector>
+#include "ThreadPool.h"
 #include "BufferV.h"
 #include "StringUtility.h"
 #include "Request.h"
@@ -14,6 +15,9 @@ using namespace ET;
 using namespace HTTP;
 
 Request::eStatus Request::parse(BufferV &data) {
+    /**
+     * the loop can not run long time, because it run in main thread.
+     */
     bool loop = false;
     do {
         switch (_status) {
@@ -106,4 +110,11 @@ bool Request::readBody(ET::BufferV &data) {
     } else {
         return true;
     }
+}
+
+/**
+ * override ThreadRunnable run method
+ */
+void Request::run() {
+    
 }

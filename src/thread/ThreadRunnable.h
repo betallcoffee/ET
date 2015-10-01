@@ -14,12 +14,10 @@ namespace ET {
         
         class ThreadRunnable {
         public:
-            virtual ~ThreadRunnable();
+            ThreadRunnable() {};
+            virtual ~ThreadRunnable(){};
             
-            virtual void run();
-            
-        private:
-            ThreadRunnable() {}; // 抽象类，不可实例
+            virtual void run() {};
         };
         
     } // end namespace THREAD

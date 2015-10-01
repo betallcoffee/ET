@@ -15,12 +15,13 @@
 namespace ET {
     namespace THREAD {
         
+        class ThreadRunnable;
         /**
          * thread pool
          */
         class ThreadPool {
         public:
-            ThreadPool(int maxNum);
+            ThreadPool(int maxNumOfThread);
             ~ThreadPool();
             
             /**
@@ -30,19 +31,29 @@ namespace ET {
              */
             bool initialize();
             
+            /**
+             * Send a threadrunnable task to thread pool.
+             * @param task ThreadRunnable class, Thread pool will schedule a idle thread to run it, or create a new thread to run it.
+             * 
+             */
+            void addTask(ThreadRunnable *task);
             
         private:
             /**
              * The thread routine, the base is a loop. Take a task from task queue, complete task, and cycle repeats.
              */
             static void *threadRoutine(void *arg);
+            void threadRoutine();
             /**
              * Extend the number of threads, but the limit the _maxNum. Add one thread per call.
              */
             void extendThread();
             
-            int _maxNum;
+            int _maxNumOfThread;
             std::vector<pthread_t> _threads;
+            pthread_mutex_t _taskMutex;
+            pthread_cond_t _taskCond;
+            std::vector<ThreadRunnable *> _tasks;
         };
         
     } // end namespace THREAD

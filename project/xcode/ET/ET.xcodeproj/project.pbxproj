@@ -33,6 +33,8 @@
 		EC0D9F1B1BB7EBAD001ABA25 /* BufferV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */; };
 		EC0D9F1C1BB7EBAD001ABA25 /* BufferV.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F181BB7EBAD001ABA25 /* BufferV.h */; };
 		EC0D9F1E1BB7EC67001ABA25 /* ET.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F1D1BB7EC67001ABA25 /* ET.h */; };
+		EC0D9F291BBCE05F001ABA25 /* FileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */; };
+		EC0D9F2A1BBCE05F001ABA25 /* FileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F281BBCE05F001ABA25 /* FileReader.h */; };
 		EC9783301A483BC2000848C5 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC97832F1A483BC2000848C5 /* Server.cpp */; };
 		ECD7AD901B59419C005E8574 /* BaseHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7AD8C1B59419C005E8574 /* BaseHeader.cpp */; };
 		ECD7AD911B59419C005E8574 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7AD8D1B59419C005E8574 /* Request.cpp */; };
@@ -79,6 +81,8 @@
 		EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferV.cpp; sourceTree = "<group>"; };
 		EC0D9F181BB7EBAD001ABA25 /* BufferV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferV.h; sourceTree = "<group>"; };
 		EC0D9F1D1BB7EC67001ABA25 /* ET.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ET.h; sourceTree = "<group>"; };
+		EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileReader.cpp; sourceTree = "<group>"; };
+		EC0D9F281BBCE05F001ABA25 /* FileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileReader.h; sourceTree = "<group>"; };
 		EC97832C1A480627000848C5 /* Router.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		EC97832F1A483BC2000848C5 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
 		ECA3D02419C1627C003C02DE /* libET.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libET.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +188,8 @@
 		ECA3D04319C163AE003C02DE /* utility */ = {
 			isa = PBXGroup;
 			children = (
+				EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */,
+				EC0D9F281BBCE05F001ABA25 /* FileReader.h */,
 				EC0D9F151BB7EBAD001ABA25 /* Buffer.cpp */,
 				EC0D9F161BB7EBAD001ABA25 /* Buffer.h */,
 				EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */,
@@ -251,6 +257,7 @@
 				EC0D9F081BB7E40B001ABA25 /* Select.h in Headers */,
 				ECD7AD931B59419C005E8574 /* Transport.h in Headers */,
 				ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */,
+				EC0D9F2A1BBCE05F001ABA25 /* FileReader.h in Headers */,
 				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
 				EC0D9F111BB7E6F8001ABA25 /* Config.h in Headers */,
 				ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */,
@@ -324,6 +331,7 @@
 				EC9783301A483BC2000848C5 /* Server.cpp in Sources */,
 				ECD9D6921B611EAD00D1FB74 /* File.cpp in Sources */,
 				ECD7AD921B59419C005E8574 /* Transport.cpp in Sources */,
+				EC0D9F291BBCE05F001ABA25 /* FileReader.cpp in Sources */,
 				EC0D9F071BB7E40B001ABA25 /* Select.cpp in Sources */,
 				ECD7AD9D1B5BC970005E8574 /* RequestHeader.cpp in Sources */,
 				EC0D9F051BB7E40B001ABA25 /* KqueueSelect.cpp in Sources */,

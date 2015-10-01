@@ -34,9 +34,15 @@ namespace ET
         const char *findCRLF(char *start);
 
         void ensureWriteable(size_t n);
+        /**
+         * Remove the n byte data from buffer.
+         */
         void retrieve(size_t n) { readIndex_ += n; }
         void clear() { readIndex_ = writeIndex_ = 0; }
 
+        /**
+         * Read a line data, and remove the data from buffer.
+         */
         bool getLine(std::string &line);
 
     private:
