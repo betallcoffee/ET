@@ -17,30 +17,36 @@
 namespace ET {
     
     class BufferV;
-    class Response;
     
 namespace HTTP {
     
+    class Transport;
+    class Response;
+    
     class Request {
     public:
-        Request() : _status(FIRST_LINE), _body(NULL) {}
-        Request(const std::string &url);
+        Request(Transport *transport) : _transport(transport), _status(FIRST_LINE), _body(NULL) {}
+        Request(const std::string &url, Transport *transport);
         
         typedef enum Status {
         	FIRST_LINE = 1,
             PARSE_HEADER,
             READ_BODY,
-            COMPLETE
+            COMPLETE,
+            RESPONSEING
         }eStatus;
         
         eStatus parse(BufferV &data);
         void reset();
 
-        const std::string &method() { return _requestHeader._method; }
         eStatus status() { return _status; }
+        
+        const std::string &method() { return _requestHeader._method; }
         void setMethod(const std::string &method) { _requestHeader._method = method; }
+        
         const std::string &url() { return _requestHeader._url; }
         void setURL(const std::string &url) { _requestHeader._url = url; } // TODO: parse path from url;
+        
         const std::string &path() { return _requestHeader._path; }
         
     private:
@@ -48,16 +54,17 @@ namespace HTTP {
         bool parseFirstLine(BufferV &data);
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
+        void startResponse();
         
         static THREAD::ThreadPool *sThreadPool;
 
+        Transport *_transport;
         eStatus _status;
         BufferV *_body;
         std::map<std::string, std::string> _headers;
         RequestHeader _requestHeader;
     
         Response *_response;
-        
     };
 }
     

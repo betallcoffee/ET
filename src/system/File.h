@@ -35,6 +35,7 @@ namespace ET {
         private:
             std::string _path;
             FILE *_file;
+            size_t _peek;
             size_t _size;
             time_t _atime;
             time_t _mtime;

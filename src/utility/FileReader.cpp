@@ -20,16 +20,15 @@ FileReader::~FileReader() {
 }
 
 void FileReader::run() {
-    pthread_mutex_lock(&_bufMutex);
     _file->read(_buf);
-    pthread_mutex_unlock(&_bufMutex);
+    if (_fileReaderCallback) {
+        _fileReaderCallback(_ctx);
+    }
 }
 
 void FileReader::read(ET::BufferV &buf) {
-    pthread_mutex_lock(&_bufMutex);
     buf.appendBuffer(_buf);
     _buf.clear();
-    pthread_mutex_unlock(&_bufMutex);
 }
 
 

@@ -16,6 +16,7 @@ using namespace THREAD;
 
 ThreadPool::ThreadPool(int maxNumOfThread) {
     _maxNumOfThread = maxNumOfThread;
+    initialize();
 }
 
 ThreadPool::~ThreadPool() {
@@ -61,7 +62,6 @@ void ThreadPool::threadRoutine() {
             ThreadRunnable *task = _tasks.back();
             _tasks.pop_back();
             task->run();
-            delete  task;
         }
 
         pthread_mutex_unlock(&_taskMutex);

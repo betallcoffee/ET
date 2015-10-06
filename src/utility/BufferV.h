@@ -30,6 +30,8 @@ namespace ET
 
         size_t append(const char *data, size_t n);
         size_t appendBuffer(BufferV &buffer);
+        void reviseWriteable(size_t n) { writeIndex_ += n; }
+        
         const char *findCRLF();
         const char *findCRLF(char *start);
 

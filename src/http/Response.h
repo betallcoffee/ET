@@ -10,6 +10,8 @@
 #define ET_HTTP_RESPONSE_H
 
 #include <string>
+
+#include "FileReader.h"
 #include "BaseHeader.h"
 
 namespace ET {
@@ -18,13 +20,26 @@ namespace ET {
 
 namespace HTTP {
     
+    class Transport;
+    
     class Response {
     public:
-        int parse(BufferV &buf);
+        Response(Transport *transport, FileReader *fileReader) : _transport(transport), _fileReader(fileReader) {
+            _fileReader->setContext(this);
+            _fileReader->setFileReaderCallback(fileReaderCallback);
+        };
+        ~Response() {};
+        
         int statusCode() { return _statusCode; }
         const std::string &phrase() { return _phrase; }
         
     private:
+        static void fileReaderCallback(void *ctx);
+        void fileReader();
+        
+        Transport *_transport;
+        FileReader *_fileReader;
+        
         int _statusCode;
         std::string _phrase;
         

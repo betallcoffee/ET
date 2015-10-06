@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 liangliang. All rights reserved.
 //
 
-#include "Server.h"
 
 #include "Connection.h"
 #include "Transport.h"
+#include "Server.h"
 #include "Request.h"
 
 using namespace ET;
@@ -21,6 +21,7 @@ Transport::Transport(Server *server, Connection *connection) :
          _connection->setContext(this);
          _connection->setReadDataCallback(readDataCallback);
          _connection->setCloseCallback(closeCallback);
+         _request = new Request(this);
      }
 }
 
@@ -30,6 +31,10 @@ Transport::~Transport() {
     }
 }
 
+size_t Transport::writeData(ET::BufferV &buf) {
+    return _connection->send(buf);
+}
+
 void Transport::readDataCallback(void *ctx, ET::Connection *conn) {
     Transport *self = static_cast<Transport *>(ctx);
     self->readData(conn);
@@ -37,15 +42,7 @@ void Transport::readDataCallback(void *ctx, ET::Connection *conn) {
 
 void Transport::readData(ET::Connection *conn) {
 	BufferV &data = conn->readBuf();
-    _request.parse(data);
-}
-
-void Transport::writeDataCallback(void *ctx, ET::Connection *conn) {
-	Transport *self = static_cast<Transport *>(ctx);
-	self->writeData(conn);
-}
-
-void Transport::writeData(ET::Connection *conn) {
+    _request->parse(data);
 }
 
 void Transport::closeCallback(void *ctx, ET::Connection *conn) {

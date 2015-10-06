@@ -15,8 +15,7 @@
 using namespace ET;
 using namespace SYSTEM;
 
-File::File(const std::string &path, const std::string &mode) {
-    _path = path;
+File::File(const std::string &path, const std::string &mode) : _path(path), _peek(0) {
     struct stat st;
     int ret = stat(path.c_str(), &st);
     if (ret == 0) {
@@ -45,11 +44,13 @@ bool File::exist(const std::string &path) {
 }
 
 size_t File::read(BufferV &buf) {
-    if (_size > 0) {
+    if (_size > 0 && _peek < _size) {
         size_t size = 1024;
         size = size > _size ? _size : size;
         buf.ensureWriteable(size);
-        size = fread(buf.beginWrite(), size, 1, _file);
+        size = fread(buf.beginWrite(), 1, size, _file);
+        buf.reviseWriteable(size);
+        _peek += size;
         return size;
     }
     return 0;

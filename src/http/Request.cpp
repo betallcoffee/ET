@@ -12,6 +12,7 @@
 #include "StringUtility.h"
 #include "FileReader.h"
 #include "Request.h"
+#include "Response.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -36,11 +37,9 @@ Request::eStatus Request::parse(BufferV &data) {
                 loop = readBody(data);
                 break;
             case COMPLETE:
-                if (File::exist(_requestHeader._path)) {
-                    File *file = new File(_requestHeader._path, "r");
-                    FileReader *task = new FileReader(file);
-                    Request::sThreadPool->addTask(task);
-                }
+                startResponse();
+                break;
+            default:
                 break;
         }
     } while(loop);
@@ -119,6 +118,18 @@ bool Request::readBody(ET::BufferV &data) {
         return false;
     } else {
         return true;
+    }
+}
+
+void Request::startResponse() {
+    _status = RESPONSEING;
+    std::string path = "/Users/liang/Workspace/projects/ET";
+    path.append(_requestHeader._path);
+    if (File::exist(path)) {
+        File *file = new File(path, "r");
+        FileReader *fileReader = new FileReader(file);
+        _response = new Response(_transport, fileReader);
+        Request::sThreadPool->addTask(fileReader);
     }
 }
 
