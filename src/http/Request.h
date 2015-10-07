@@ -12,7 +12,6 @@
 #include <string>
 #include <map>
 #include "RequestHeader.h"
-#include "ThreadPool.h"
 
 namespace ET {
     
@@ -36,6 +35,8 @@ namespace HTTP {
             RESPONSEING
         }eStatus;
         
+        friend class Response;
+        
         eStatus parse(BufferV &data);
         void reset();
 
@@ -56,8 +57,6 @@ namespace HTTP {
         bool readBody(BufferV &data);
         void startResponse();
         
-        static THREAD::ThreadPool *sThreadPool;
-
         Transport *_transport;
         eStatus _status;
         BufferV *_body;

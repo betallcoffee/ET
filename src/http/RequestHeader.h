@@ -31,6 +31,7 @@ namespace ET {
             }eMethod;
             
             friend class Request;
+            friend class Response;
             
             bool parseAHeaderKeyValue(const std::string &key, const std::string &value);
             

@@ -27,11 +27,13 @@ Connection::Connection(EventLoop *eventLoop, int fd)
     closeCallback_(NULL),
     connectCallback_(NULL)
 {
+    printf("Init a connection(%d)\n", watcher_->getFD());
 }
 
 Connection::~Connection()
 {
     if (watcher_  != NULL) {
+        printf("Destroy a connection(%d)\n", watcher_->getFD());
         delete watcher_;
     }
 }

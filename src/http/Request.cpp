@@ -6,19 +6,13 @@
  */
 
 #include <vector>
-#include "ThreadPool.h"
-#include "File.h"
 #include "BufferV.h"
 #include "StringUtility.h"
-#include "FileReader.h"
 #include "Request.h"
 #include "Response.h"
 
 using namespace ET;
 using namespace HTTP;
-using namespace SYSTEM;
-
-THREAD::ThreadPool *Request::sThreadPool = new THREAD::ThreadPool(10);
 
 Request::eStatus Request::parse(BufferV &data) {
     /**
@@ -123,13 +117,6 @@ bool Request::readBody(ET::BufferV &data) {
 
 void Request::startResponse() {
     _status = RESPONSEING;
-    std::string path = "/Users/liang/Workspace/projects/ET";
-    path.append(_requestHeader._path);
-    if (File::exist(path)) {
-        File *file = new File(path, "r");
-        FileReader *fileReader = new FileReader(file);
-        _response = new Response(_transport, fileReader);
-        Request::sThreadPool->addTask(fileReader);
-    }
+    _response = new Response(_transport, this);
 }
 

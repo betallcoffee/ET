@@ -21,14 +21,12 @@ namespace ET {
 namespace HTTP {
     
     class Transport;
+    class Request;
     
     class Response {
     public:
-        Response(Transport *transport, FileReader *fileReader) : _transport(transport), _fileReader(fileReader) {
-            _fileReader->setContext(this);
-            _fileReader->setFileReaderCallback(fileReaderCallback);
-        };
-        ~Response() {};
+        Response(Transport *transport, Request *request);
+        ~Response();
         
         int statusCode() { return _statusCode; }
         const std::string &phrase() { return _phrase; }
@@ -38,6 +36,7 @@ namespace HTTP {
         void fileReader();
         
         Transport *_transport;
+        Request *_request;
         FileReader *_fileReader;
         
         int _statusCode;

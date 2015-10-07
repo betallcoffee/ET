@@ -15,6 +15,8 @@
 using namespace ET;
 using namespace HTTP;
 
+THREAD::ThreadPool *Transport::sThreadPool = new THREAD::ThreadPool(10);
+
 Transport::Transport(Server *server, Connection *connection) :
  _server(server), _connection(connection) {
      if (_connection != nullptr) {

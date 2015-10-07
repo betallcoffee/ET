@@ -9,6 +9,8 @@
 #ifndef ET_HTTP_SESSION_H
 #define ET_HTTP_SESSION_H
 
+#include "ThreadPool.h"
+
 namespace ET {
     
     class Connection;
@@ -25,6 +27,8 @@ namespace ET {
             ~Transport();
             
             size_t writeData(BufferV &buf);
+            
+            static THREAD::ThreadPool *sThreadPool;
             
         private:
             // Connection callback
