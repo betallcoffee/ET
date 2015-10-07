@@ -11,7 +11,6 @@
 
 #include <string>
 
-#include "FileReader.h"
 #include "BaseHeader.h"
 
 namespace ET {
@@ -32,11 +31,7 @@ namespace HTTP {
         const std::string &phrase() { return _phrase; }
         
     private:
-        static void fileReaderCallback(void *ctx);
-        void fileReader();
-        
         Request *_request;
-        FileReader *_fileReader;
         
         int _statusCode;
         std::string _phrase;

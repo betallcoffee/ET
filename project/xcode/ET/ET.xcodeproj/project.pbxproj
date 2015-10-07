@@ -33,11 +33,11 @@
 		EC0D9F1B1BB7EBAD001ABA25 /* BufferV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */; };
 		EC0D9F1C1BB7EBAD001ABA25 /* BufferV.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F181BB7EBAD001ABA25 /* BufferV.h */; };
 		EC0D9F1E1BB7EC67001ABA25 /* ET.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F1D1BB7EC67001ABA25 /* ET.h */; };
-		EC0D9F291BBCE05F001ABA25 /* FileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */; };
-		EC0D9F2A1BBCE05F001ABA25 /* FileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F281BBCE05F001ABA25 /* FileReader.h */; };
 		EC0D9F2C1BBD71E3001ABA25 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F2B1BBD71E3001ABA25 /* Response.cpp */; };
 		EC0D9F2F1BC513ED001ABA25 /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F2D1BC513ED001ABA25 /* Session.cpp */; };
 		EC0D9F301BC513ED001ABA25 /* Session.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F2E1BC513ED001ABA25 /* Session.h */; };
+		EC0D9F371BC5686E001ABA25 /* FileRunnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F351BC5686E001ABA25 /* FileRunnable.cpp */; };
+		EC0D9F381BC5686E001ABA25 /* FileRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F361BC5686E001ABA25 /* FileRunnable.h */; };
 		EC9783301A483BC2000848C5 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC97832F1A483BC2000848C5 /* Server.cpp */; };
 		ECD7AD901B59419C005E8574 /* BaseHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7AD8C1B59419C005E8574 /* BaseHeader.cpp */; };
 		ECD7AD911B59419C005E8574 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD7AD8D1B59419C005E8574 /* Request.cpp */; };
@@ -82,11 +82,11 @@
 		EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferV.cpp; sourceTree = "<group>"; };
 		EC0D9F181BB7EBAD001ABA25 /* BufferV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferV.h; sourceTree = "<group>"; };
 		EC0D9F1D1BB7EC67001ABA25 /* ET.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ET.h; sourceTree = "<group>"; };
-		EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileReader.cpp; sourceTree = "<group>"; };
-		EC0D9F281BBCE05F001ABA25 /* FileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileReader.h; sourceTree = "<group>"; };
 		EC0D9F2B1BBD71E3001ABA25 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
 		EC0D9F2D1BC513ED001ABA25 /* Session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
 		EC0D9F2E1BC513ED001ABA25 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		EC0D9F351BC5686E001ABA25 /* FileRunnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileRunnable.cpp; sourceTree = "<group>"; };
+		EC0D9F361BC5686E001ABA25 /* FileRunnable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileRunnable.h; sourceTree = "<group>"; };
 		EC97832C1A480627000848C5 /* Router.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		EC97832F1A483BC2000848C5 /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
 		ECA3D02419C1627C003C02DE /* libET.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libET.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,8 +190,6 @@
 		ECA3D04319C163AE003C02DE /* utility */ = {
 			isa = PBXGroup;
 			children = (
-				EC0D9F271BBCE05F001ABA25 /* FileReader.cpp */,
-				EC0D9F281BBCE05F001ABA25 /* FileReader.h */,
 				EC0D9F151BB7EBAD001ABA25 /* Buffer.cpp */,
 				EC0D9F161BB7EBAD001ABA25 /* Buffer.h */,
 				EC0D9F171BB7EBAD001ABA25 /* BufferV.cpp */,
@@ -232,6 +230,8 @@
 				ECF48B481A0F541D0076A7D4 /* Request.h */,
 				EC0D9F2B1BBD71E3001ABA25 /* Response.cpp */,
 				ECF48B491A0F542A0076A7D4 /* Response.h */,
+				EC0D9F351BC5686E001ABA25 /* FileRunnable.cpp */,
+				EC0D9F361BC5686E001ABA25 /* FileRunnable.h */,
 				EC97832C1A480627000848C5 /* Router.h */,
 				ECF48B4B1A0F545D0076A7D4 /* Client.h */,
 			);
@@ -260,9 +260,9 @@
 				EC0D9F081BB7E40B001ABA25 /* Select.h in Headers */,
 				EC0D9F301BC513ED001ABA25 /* Session.h in Headers */,
 				ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */,
-				EC0D9F2A1BBCE05F001ABA25 /* FileReader.h in Headers */,
 				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
 				EC0D9F111BB7E6F8001ABA25 /* Config.h in Headers */,
+				EC0D9F381BC5686E001ABA25 /* FileRunnable.h in Headers */,
 				ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */,
 				EC0D9F001BB7E40B001ABA25 /* Connection.h in Headers */,
 				EC0D9F0C1BB7E40B001ABA25 /* Watcher.h in Headers */,
@@ -324,6 +324,7 @@
 				EC0D9F1B1BB7EBAD001ABA25 /* BufferV.cpp in Sources */,
 				ECE7AC7019DA97B6000118A3 /* Timestamp.cpp in Sources */,
 				EC0D9EE61BB7E1C8001ABA25 /* ThreadPool.cpp in Sources */,
+				EC0D9F371BC5686E001ABA25 /* FileRunnable.cpp in Sources */,
 				EC0D9F121BB7E6F8001ABA25 /* EventLoop.cpp in Sources */,
 				ECD7AD911B59419C005E8574 /* Request.cpp in Sources */,
 				EC0D9EFD1BB7E40B001ABA25 /* Acceptor.cpp in Sources */,
@@ -333,7 +334,6 @@
 				EC0D9F091BB7E40B001ABA25 /* TCPServer.cpp in Sources */,
 				EC9783301A483BC2000848C5 /* Server.cpp in Sources */,
 				ECD9D6921B611EAD00D1FB74 /* File.cpp in Sources */,
-				EC0D9F291BBCE05F001ABA25 /* FileReader.cpp in Sources */,
 				EC0D9F071BB7E40B001ABA25 /* Select.cpp in Sources */,
 				ECD7AD9D1B5BC970005E8574 /* RequestHeader.cpp in Sources */,
 				EC0D9F051BB7E40B001ABA25 /* KqueueSelect.cpp in Sources */,

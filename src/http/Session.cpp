@@ -8,9 +8,11 @@
 
 
 #include "Connection.h"
+
 #include "Session.h"
 #include "Server.h"
 #include "Request.h"
+#include "FileRunnable.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -51,12 +53,20 @@ void Session::readDataCallback(void *ctx, ET::Connection *conn) {
 }
 
 void Session::readData(ET::Connection *conn) {
-	BufferV &data = conn->readBuf();
+    // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
     if (_request == nullptr || _request->status() == Request::RESPONSEING) {
         _request = new Request(this);
         _requests[_request] = _request;
     }
+    
+    BufferV &data = conn->readBuf();
     _request->parse(data);
+    
+    if (_request->status() == Request::COMPLETE) {
+        FileRunnable *fileRunnable = new FileRunnable(_request);
+        Session::sThreadPool->addTask(fileRunnable);
+        _request = nullptr;
+    }
 }
 
 void Session::closeCallback(void *ctx, ET::Connection *conn) {

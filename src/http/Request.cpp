@@ -6,10 +6,12 @@
  */
 
 #include <vector>
+
 #include "BufferV.h"
 #include "StringUtility.h"
+
 #include "Request.h"
-#include "Response.h"
+#include "FileRunnable.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -31,9 +33,10 @@ Request::eStatus Request::parse(BufferV &data) {
                 loop = readBody(data);
                 break;
             case COMPLETE:
-                startResponse();
+                loop = false;
                 break;
             default:
+                loop = false;
                 break;
         }
     } while(loop);
@@ -113,10 +116,5 @@ bool Request::readBody(ET::BufferV &data) {
     } else {
         return true;
     }
-}
-
-void Request::startResponse() {
-    _status = RESPONSEING;
-    _response = new Response(this);
 }
 

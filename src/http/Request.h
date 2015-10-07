@@ -12,8 +12,9 @@
 #include <string>
 #include <map>
 
-#include "RequestHeader.h"
 #include "Session.h"
+#include "RequestHeader.h"
+#include "Response.h"
 
 namespace ET {
     
@@ -22,11 +23,9 @@ namespace ET {
     
 namespace HTTP {
     
-    class Response;
-    
     class Request {
     public:
-        Request(Session *session) : _session(session), _status(FIRST_LINE), _body(NULL) {}
+        Request(Session *session) : _session(session), _status(FIRST_LINE), _body(NULL), _response(this) {}
         Request(const std::string &url, Session *session);
         
         typedef enum Status {
@@ -58,7 +57,6 @@ namespace HTTP {
         bool parseFirstLine(BufferV &data);
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
-        void startResponse();
         
         Session *_session;
         eStatus _status;
@@ -66,7 +64,7 @@ namespace HTTP {
         std::map<std::string, std::string> _headers;
         RequestHeader _requestHeader;
     
-        Response *_response;
+        Response _response;
     };
 }
     
