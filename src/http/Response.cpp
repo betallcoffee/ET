@@ -6,17 +6,19 @@
 //  Copyright (c) 2015 liangliang. All rights reserved.
 //
 
+#include "Connection.h"
 #include "BufferV.h"
 #include "FileReader.h"
+
 #include "Response.h"
-#include "Transport.h"
+#include "Session.h"
 #include "Request.h"
 
 using namespace ET;
 using namespace HTTP;
 
-Response::Response(Transport *transport, Request *request) :
-_transport(transport), _request(request), _fileReader(nullptr) {
+Response::Response(Request *request) :
+  _request(request), _fileReader(nullptr) {
     std::string path = "/Users/liang/Workspace/projects/ET";
     path.append(_request->path());
     if (File::exist(path)) {
@@ -24,7 +26,7 @@ _transport(transport), _request(request), _fileReader(nullptr) {
         _fileReader = new FileReader(file);
         _fileReader->setContext(this);
         _fileReader->setFileReaderCallback(fileReaderCallback);
-        Transport::sThreadPool->addTask(_fileReader);
+        Session::sThreadPool->addTask(_fileReader);
     }
 };
 
@@ -42,7 +44,7 @@ void Response::fileReaderCallback(void *ctx) {
 void Response::fileReader() {
     BufferV &buf = _fileReader->getReadBuffer();
     printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
-    size_t size = _transport->writeData(buf);
+    size_t size = _request->connection().send(buf);
     buf.retrieve(size);
 }
 

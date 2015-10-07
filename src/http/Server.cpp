@@ -8,7 +8,7 @@
 
 #include "Server.h"
 #include "TCPServer.h"
-#include "Transport.h"
+#include "Session.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -35,11 +35,11 @@ bool Server::run() {
 }
 
 void Server::stop() {
-    std::for_each(_transports.begin(), _transports.end(), [=](std::pair<Transport *, Transport*> pair) {
-        Transport *transport = pair.second;
-        delete transport;
+    std::for_each(_sessions.begin(), _sessions.end(), [=](std::pair<Session *, Session*> pair) {
+        Session *session = pair.second;
+        delete session;
     });
-    _transports.clear();
+    _sessions.clear();
 }
 
 bool Server::isRunning() {
@@ -49,9 +49,9 @@ bool Server::isRunning() {
     return false;
 }
 
-void Server::removeTransport(Transport *transport)
+void Server::removeSession(Session *session)
 {
-    _transports.erase(transport);
+    _sessions.erase(session);
 }
 
 void Server::connectionCallback(void *ctx, Connection *conn) {
@@ -60,6 +60,6 @@ void Server::connectionCallback(void *ctx, Connection *conn) {
 }
 
 void Server::connection(Connection *conn) {
-    Transport *transport = new Transport(this, conn);
-    _transports[transport] = transport;
+    Session *session = new Session(this, conn);
+    _sessions[session] = session;
 }

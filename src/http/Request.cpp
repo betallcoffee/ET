@@ -117,6 +117,6 @@ bool Request::readBody(ET::BufferV &data) {
 
 void Request::startResponse() {
     _status = RESPONSEING;
-    _response = new Response(_transport, this);
+    _response = new Response(this);
 }
 

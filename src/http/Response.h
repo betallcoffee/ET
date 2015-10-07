@@ -17,15 +17,15 @@
 namespace ET {
     
     class BufferV;
+    class Connection;
 
 namespace HTTP {
     
-    class Transport;
     class Request;
     
     class Response {
     public:
-        Response(Transport *transport, Request *request);
+        Response(Request *request);
         ~Response();
         
         int statusCode() { return _statusCode; }
@@ -35,7 +35,6 @@ namespace HTTP {
         static void fileReaderCallback(void *ctx);
         void fileReader();
         
-        Transport *_transport;
         Request *_request;
         FileReader *_fileReader;
         

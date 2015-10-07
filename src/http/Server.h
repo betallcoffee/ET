@@ -21,7 +21,7 @@ namespace ET {
     
 namespace HTTP {
 
-    class Transport;
+    class Session;
     /**
      * @brief 初始化网络，与路由表
      */
@@ -35,7 +35,7 @@ namespace HTTP {
         void stop();
         bool isRunning();
         
-        void removeTransport(Transport *transport);
+        void removeSession(Session *session);
         
     private:
         
@@ -45,7 +45,7 @@ namespace HTTP {
         TCPServer *_tcpServer;
         std::string _ip;
         short _port;
-        std::map<Transport *, Transport *> _transports;
+        std::map<Session *, Session *> _sessions;
     };
 } // end namespace HTTP
     

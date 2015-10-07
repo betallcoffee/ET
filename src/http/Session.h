@@ -1,5 +1,5 @@
 //
-//  Transport.h
+//  Session.h
 //  ET
 //
 //  Created by liang on 12/22/14.
@@ -9,6 +9,7 @@
 #ifndef ET_HTTP_SESSION_H
 #define ET_HTTP_SESSION_H
 
+#include <map>
 #include "ThreadPool.h"
 
 namespace ET {
@@ -21,12 +22,16 @@ namespace ET {
         class Server;
         class Request;
         
-        class Transport {
+        class Session {
         public:
-            Transport(Server *server, Connection *connection);
-            ~Transport();
+            Session(Server *server, Connection *connection);
+            ~Session();
             
             size_t writeData(BufferV &buf);
+            Connection &connection() { return *_connection; }
+            
+            void removeRequest(Request *request);
+            
             
             static THREAD::ThreadPool *sThreadPool;
             
@@ -41,6 +46,7 @@ namespace ET {
             Server *_server;
             Connection *_connection;
             Request *_request;
+            std::map<Request *, Request *> _requests;
         };
         
     } // end HTTP
