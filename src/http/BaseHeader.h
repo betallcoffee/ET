@@ -28,6 +28,17 @@ namespace ET {
             
             bool parseAHeaderKeyValue(const std::string &key, const std::string &value);
             
+            static const std::string kConnection;
+            static const std::string kDate;
+            static const std::string kMineVersion;
+            static const std::string kUpdate;
+            static const std::string kTrailer;
+            static const std::string kTransforEncoding;
+            static const std::string kVia;
+            
+            static const std::string kCacheControl;
+            static const std::string kPragma;
+            
         protected:
             sVersion stringToVersion(const std::string &str);
             sVersion _version;

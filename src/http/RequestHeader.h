@@ -35,6 +35,29 @@ namespace ET {
             
             bool parseAHeaderKeyValue(const std::string &key, const std::string &value);
             
+            static const std::string kClientIP;
+            static const std::string kFrom;
+            static const std::string kHost;
+            static const std::string kReferer;
+            static const std::string kUserAgent;
+            
+            static const std::string kAccept;
+            static const std::string kAcceptCharset;
+            static const std::string kAcceptEncoding;
+            static const std::string kAcceptLanguage;
+            
+            static const std::string kExpect;
+            static const std::string kIfMatch;
+            static const std::string kIfModifiedSince;
+            static const std::string kIfNoneMatch;
+            static const std::string kIfRange;
+            static const std::string kIfUnmodifiedSince;
+            static const std::string kRange;
+            
+            static const std::string kAuthorization;
+            static const std::string kCookies;
+            static const std::string kCookies2;
+            
         private:
             eMethod _m;
             std::string _method; // 请求方法

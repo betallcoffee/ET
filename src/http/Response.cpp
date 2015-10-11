@@ -25,4 +25,14 @@ Response::~Response() {
 }
 
 
+std::string Response::head(const std::string &k) {
+    std::string key(k);
+    std::transform(key.begin(), key.end(), key.begin(), std::tolower);
+    return _headers[key];
+}
 
+void Response::addHead(const std::string &k, const std::string &value) {
+    std::string key(k);
+    std::transform(key.begin(), key.end(), key.begin(), std::tolower);
+    _headers[key] = value;
+}

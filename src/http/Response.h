@@ -10,6 +10,7 @@
 #define ET_HTTP_RESPONSE_H
 
 #include <string>
+#include <map>
 
 #include "BaseHeader.h"
 
@@ -30,24 +31,16 @@ namespace HTTP {
         int statusCode() { return _statusCode; }
         const std::string &phrase() { return _phrase; }
         
+        std::string head(const std::string &key);
+        void addHead(const std::string &key, const std::string &value);
+        
     private:
         Request *_request;
+        std::map<std::string, std::string> _headers;
         
         int _statusCode;
         std::string _phrase;
         
-        std::string _age;
-        std::string _public;
-        std::string _retryAfter;
-        std::string _server;
-        std::string _title;
-        std::string _warning;
-        
-        std::string _accpetRanges;
-        
-        std::string _setCookies;
-        std::string _setCookies2;
-        std::string _WWWAuthenticate;
     };
 }
     

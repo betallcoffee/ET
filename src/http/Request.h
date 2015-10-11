@@ -52,6 +52,11 @@ namespace HTTP {
         
         const std::string &path() { return _requestHeader._path; }
         
+        std::string head(const std::string &key);
+        void addHead(const std::string &key, const std::string &value);
+        
+        Response &response() { return _response; }
+        
     private:
         RequestHeader::eMethod stringToMethod(const std::string &method);
         bool parseFirstLine(BufferV &data);

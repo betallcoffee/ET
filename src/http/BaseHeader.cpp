@@ -13,6 +13,17 @@
 using namespace ET;
 using namespace HTTP;
 
+const std::string BaseHeader::kConnection = "connection";
+const std::string BaseHeader::kDate = "date";
+const std::string BaseHeader::kMineVersion = "mime-version";
+const std::string BaseHeader::kUpdate = "update";
+const std::string BaseHeader::kTrailer = "trailer";
+const std::string BaseHeader::kTransforEncoding = "transfor-encoding";
+const std::string BaseHeader::kVia = "via";
+
+const std::string BaseHeader::kCacheControl = "cache-control";
+const std::string BaseHeader::kPragma = "pragma";
+
 BaseHeader::sVersion BaseHeader::stringToVersion(std::string const &str) {
 	sVersion version;
 	std::vector<std::string> strs = STRING::splite(str, "/");
@@ -22,26 +33,27 @@ BaseHeader::sVersion BaseHeader::stringToVersion(std::string const &str) {
 	return version;
 }
 
-bool BaseHeader::parseAHeaderKeyValue(const std::string &key, const std::string &value) {
+bool BaseHeader::parseAHeaderKeyValue(const std::string &k, const std::string &value) {
     bool ret = false;
-    
-    if (key == "Connection") {
+    std::string key(k);
+    std::transform(key.begin(), key.end(), key.begin(), std::tolower);
+    if (key == kConnection) {
         _connection = value;
-    } else if (key == "Date") {
+    } else if (key == kDate) {
         _date = value;
-    } else if (key == "MIME-Version") {
+    } else if (key == kMineVersion) {
         _mineVersion = value;
-    } else if (key == "Trailer") {
+    } else if (key == kTrailer) {
         _trailer = value;
-    } else if (key == "Transfer-Encoding") {
+    } else if (key == kTransforEncoding) {
         _transforEncoding = value;
-    } else if (key == "Update") {
+    } else if (key == kUpdate) {
         _update = value;
-    } else if (key == "Via") {
+    } else if (key == kVia) {
         _via = value;
-    } else if (key == "Cache-Control") {
+    } else if (key == kCacheControl) {
         _cacheControl = value;
-    } else if (key == "Pragma") {
+    } else if (key == kPragma) {
         _pragma = value;
     }
     
