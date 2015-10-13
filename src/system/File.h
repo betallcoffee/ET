@@ -25,6 +25,7 @@ namespace ET {
             
             static bool exist(const std::string &path);
             
+            size_t size() { return _size; }
             size_t read(BufferV &buf);
             size_t write(BufferV &buf);
             

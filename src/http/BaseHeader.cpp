@@ -24,6 +24,15 @@ const std::string BaseHeader::kVia = "via";
 const std::string BaseHeader::kCacheControl = "cache-control";
 const std::string BaseHeader::kPragma = "pragma";
 
+const std::string BaseHeader::kContentBase = "content-base";
+const std::string BaseHeader::kContentEncoding = "content-encoding";
+const std::string BaseHeader::kContentLanguage = "content-language";
+const std::string BaseHeader::kContentLenght = "content-length";
+const std::string BaseHeader::kContentLocation = "content-location";
+const std::string BaseHeader::kContentMD5 = "content-md5";
+const std::string BaseHeader::kContentRange = "content-range";
+const std::string BaseHeader::kContentType = "content-type";
+
 BaseHeader::sVersion BaseHeader::stringToVersion(std::string const &str) {
 	sVersion version;
 	std::vector<std::string> strs = STRING::splite(str, "/");

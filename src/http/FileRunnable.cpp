@@ -12,6 +12,7 @@
 
 #include "File.h"
 #include "BufferV.h"
+#include "StringUtility.h"
 
 #include "FileRunnable.h"
 #include "Request.h"
@@ -20,12 +21,25 @@
 using namespace ET;
 using namespace HTTP;
 using namespace SYSTEM;
+using namespace STRING;
 
 void FileRunnable::run() {
+    Response &response = _request->response();
     std::string path = "/Users/liang/Workspace/projects/ET";
     path.append(_request->path());
     if (File::exist(path)) {
         File *file = new File(path, "r");
+        
+        response.setStatusCode(Response::OK);
+        response.setPhrase("OK");
+        
+        std::string range = "0-";
+        long end = file->size();
+        range.append(intToStr(end));
+        response.addHead(ResponseHeader::kContentRange, range);
+        
+        _request->connection().send(response.createHeads());
+        
         BufferV buf;
         do {
             file->read(buf);

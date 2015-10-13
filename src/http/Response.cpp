@@ -8,6 +8,7 @@
 
 #include "Connection.h"
 #include "BufferV.h"
+#include "StringUtility.h"
 
 #include "Response.h"
 #include "Session.h"
@@ -15,6 +16,10 @@
 
 using namespace ET;
 using namespace HTTP;
+using namespace STRING;
+
+const std::string Response::kCRLF = "\r\n";
+const std::string Response::kSep = ":";
 
 Response::Response(Request *request) :
   _request(request) {
@@ -35,4 +40,22 @@ void Response::addHead(const std::string &k, const std::string &value) {
     std::string key(k);
     std::transform(key.begin(), key.end(), key.begin(), std::tolower);
     _headers[key] = value;
+}
+
+BufferV &Response::createHeads() {
+    _buf.clear();
+    std::string firstLine = intToStr(_statusCode);
+    firstLine.append(" ");
+    firstLine.append(_phrase);
+    _buf.append(firstLine.c_str(), firstLine.size());
+    std::for_each(_headers.begin(), _headers.end(), [=](std::pair<std::string, std::string> pair){
+        std::string line(kCRLF);
+        line.append(pair.first);
+        line.append(kSep);
+        line.append(pair.second);
+        _buf.append(line.c_str(), line.size());
+    });
+    _buf.append(kCRLF.c_str(), kCRLF.size());
+    _buf.append(kCRLF.c_str(), kCRLF.size());
+    return _buf;
 }

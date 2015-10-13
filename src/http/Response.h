@@ -12,7 +12,9 @@
 #include <string>
 #include <map>
 
-#include "BaseHeader.h"
+#include "BufferV.h"
+
+#include "ResponseHeader.h"
 
 namespace ET {
     
@@ -28,11 +30,22 @@ namespace HTTP {
         Response(Request *request);
         ~Response();
         
+        typedef enum StatusCode {
+            OK = 200
+        }eStatusCode;
+        
+        static const std::string kCRLF;
+        static const std::string kSep;
+        
         int statusCode() { return _statusCode; }
+        void setStatusCode(int statusCode) { _statusCode = statusCode; }
+        
         const std::string &phrase() { return _phrase; }
+        void setPhrase(const std::string &phrase) { _phrase = phrase; }
         
         std::string head(const std::string &key);
         void addHead(const std::string &key, const std::string &value);
+        BufferV &createHeads();
         
     private:
         Request *_request;
@@ -41,6 +54,7 @@ namespace HTTP {
         int _statusCode;
         std::string _phrase;
         
+        BufferV _buf;
     };
 }
     
