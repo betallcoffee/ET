@@ -36,9 +36,9 @@ void FileRunnable::run() {
         std::string range = "0-";
         long end = file->size();
         range.append(intToStr(end));
-        response.addHead(ResponseHeader::kContentRange, range);
+        response.addHeader(ResponseHeader::kContentRange, range);
         
-        _request->connection().send(response.createHeads());
+        _request->connection().send(response.createHeaders());
         
         BufferV buf;
         do {

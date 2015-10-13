@@ -44,13 +44,13 @@ Request::eStatus Request::parse(BufferV &data) {
     return status();
 }
 
-std::string Request::head(const std::string &k) {
+std::string Request::header(const std::string &k) {
     std::string key(k);
     std::transform(key.begin(), key.end(), key.begin(), std::tolower);
     return _headers[key];
 }
 
-void Request::addHead(const std::string &k, const std::string &value) {
+void Request::addHeader(const std::string &k, const std::string &value) {
     std::string key(k);
     std::transform(key.begin(), key.end(), key.begin(), std::tolower);
     _headers[key] = value;

@@ -43,9 +43,9 @@ namespace HTTP {
         const std::string &phrase() { return _phrase; }
         void setPhrase(const std::string &phrase) { _phrase = phrase; }
         
-        std::string head(const std::string &key);
-        void addHead(const std::string &key, const std::string &value);
-        BufferV &createHeads();
+        std::string header(const std::string &key);
+        void addHeader(const std::string &key, const std::string &value);
+        BufferV &createHeaders();
         
     private:
         Request *_request;

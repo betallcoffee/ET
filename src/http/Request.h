@@ -52,8 +52,8 @@ namespace HTTP {
         
         const std::string &path() { return _requestHeader._path; }
         
-        std::string head(const std::string &key);
-        void addHead(const std::string &key, const std::string &value);
+        std::string header(const std::string &key);
+        void addHeader(const std::string &key, const std::string &value);
         
         Response &response() { return _response; }
         
