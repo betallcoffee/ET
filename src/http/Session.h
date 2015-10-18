@@ -28,12 +28,12 @@ namespace ET {
             ~Session();
             
             size_t writeData(BufferV &buf);
-            Connection &connection() { return *_connection; }
+            std::shared_ptr<Connection> &connection() { return _connection; }
             
             void removeRequest(Request *request);
             
             
-            static THREAD::ThreadPool *sThreadPool;
+            static THREAD::ThreadPool *sTaskThreadPool;
             
         private:
             // Connection callback
@@ -44,9 +44,9 @@ namespace ET {
             void closeConn(Connection *conn);
             
             Server *_server;
-            Connection *_connection;
-            Request *_request;
-            std::map<Request *, Request *> _requests;
+            std::shared_ptr<Connection> _connection;
+            std::shared_ptr<Request> _request;
+            std::map<Request *, std::shared_ptr<Request>> _requests;
         };
         
     } // end HTTP

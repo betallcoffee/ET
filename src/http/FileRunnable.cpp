@@ -24,33 +24,38 @@ using namespace SYSTEM;
 using namespace STRING;
 
 void FileRunnable::run() {
-    Response &response = _request->response();
-    std::string path = "/Users/liang/Workspace/projects/ET";
-    path.append(_request->path());
-    if (File::exist(path)) {
-        File *file = new File(path, "r");
-        
-        response.setStatusCode(Response::OK);
-        response.setPhrase("OK");
-        
-        // 设置 body 的大小
-        long end = file->size();
-        response.addHeader(ResponseHeader::kContentLenght, intToStr(end));
-        
-        // 设置短连接 connection: close
-        response.addHeader(ResponseHeader::kConnection, "close");
-        
-        _request->connection().send(response.createHeaders());
-        
-        BufferV buf;
-        do {
-            file->read(buf);
-            printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
-            size_t size = _request->connection().send(buf);
-            if (size > 0) {
-                buf.retrieve(size);
-            }
-        } while (!buf.empty());
-        
+    std::shared_ptr<Request> request = _request.lock();
+    if (request) {
+        Response &response = request->response();
+        std::string path = "/Users/liang/Workspace/projects/ET";
+        path.append(request->path());
+        if (File::exist(path)) {
+            File *file = new File(path, "r");
+            
+            response.setStatusCode(Response::OK);
+            response.setPhrase("OK");
+            
+            // 设置 body 的大小
+            long end = file->size();
+            response.addHeader(ResponseHeader::kContentLenght, intToStr(end));
+            
+            // 设置短连接 connection: close
+            response.addHeader(ResponseHeader::kConnection, "close");
+            
+            request->connection()->send(response.createHeaders());
+            
+            BufferV buf;
+            do {
+                file->read(buf);
+//                printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
+                size_t size = request->connection()->send(buf);
+                if (size > 0) {
+                    buf.retrieve(size);
+                } else {
+                    break;
+                }
+            } while (!buf.empty());
+            
+        }
     }
 }

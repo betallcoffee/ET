@@ -17,28 +17,21 @@
 using namespace ET;
 using namespace HTTP;
 
-THREAD::ThreadPool *Session::sThreadPool = new THREAD::ThreadPool(10);
+THREAD::ThreadPool *Session::sTaskThreadPool = new THREAD::ThreadPool(10);
 
 Session::Session(Server *server, Connection *connection) :
   _server(server), _connection(connection) {
+      printf("session init\n");
      if (_connection != nullptr) {
          _connection->setContext(this);
          _connection->setReadDataCallback(readDataCallback);
          _connection->setCloseCallback(closeCallback);
      }
-      printf("session init\n");
 }
 
 Session::~Session() {
-    if (_connection) {
-        delete _connection;
-    }
-    std::for_each(_requests.begin(), _requests.end(), [=](std::pair<Request *, Request*> pair) {
-        Request *request = pair.second;
-        delete request;
-    });
-    _requests.clear();
     printf("session destroy\n");
+    _requests.clear();
 }
 
 void Session::removeRequest(ET::HTTP::Request *request) {
@@ -56,9 +49,10 @@ void Session::readDataCallback(void *ctx, ET::Connection *conn) {
 
 void Session::readData(ET::Connection *conn) {
     // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
+    std::shared_ptr<Session> session = _server->findSession(this);
     if (_request == nullptr || _request->status() == Request::RESPONSEING) {
-        _request = new Request(this);
-        _requests[_request] = _request;
+        _request.reset(new Request(session));
+        _requests[_request.get()] = _request;
     }
     
     BufferV &data = conn->readBuf();
@@ -66,7 +60,7 @@ void Session::readData(ET::Connection *conn) {
     
     if (_request->status() == Request::COMPLETE) {
         FileRunnable *fileRunnable = new FileRunnable(_request);
-        Session::sThreadPool->addTask(fileRunnable);
+        Session::sTaskThreadPool->addTask(fileRunnable);
         _request = nullptr;
     }
 }
@@ -77,8 +71,7 @@ void Session::closeCallback(void *ctx, ET::Connection *conn) {
 }
 
 void Session::closeConn(ET::Connection *conn) {
-    delete this;
-    _server->removeSession(this);
     printf("session close connection\n");
+    _server->removeSession(this);
 }
 

@@ -178,8 +178,6 @@ void Connection::closeHandle()
 {
     watcher_->disableAll();
     ::close(watcher_->getFD());
-    delete watcher_;
-    watcher_ = NULL;
     setState(kConnStatesDisconnected);
 
     if (closeCallback_) {

@@ -21,7 +21,7 @@ namespace ET {
          */
         class FileRunnable : public THREAD::ThreadRunnable {
         public:
-            FileRunnable(Request *request) : _request(request) {};
+            FileRunnable(std::shared_ptr<Request> &request) : _request(request) {};
             ~FileRunnable() {};
           
             /**
@@ -30,7 +30,7 @@ namespace ET {
             virtual void run();
             
         private:
-            Request *_request;
+            std::weak_ptr<Request> _request;
         };
     }
 }

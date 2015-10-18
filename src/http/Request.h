@@ -25,8 +25,12 @@ namespace HTTP {
     
     class Request {
     public:
-        Request(Session *session) : _session(session), _status(FIRST_LINE), _body(NULL), _response(this) {}
+        Request(std::shared_ptr<Session> &session) : _session(session), _status(FIRST_LINE), _body(NULL), _response(this) {
+            printf("request init\n");
+            _connection = session->connection();
+        }
         Request(const std::string &url, Session *session);
+        ~Request() { printf("request destory\n"); }
         
         typedef enum Status {
         	FIRST_LINE = 1,
@@ -37,7 +41,7 @@ namespace HTTP {
         }eStatus;
         
         friend class Response;
-        Connection &connection() { return _session->connection(); }
+        std::shared_ptr<Connection> &connection() { return _connection; }
         
         eStatus parse(BufferV &data);
         void reset();
@@ -63,7 +67,8 @@ namespace HTTP {
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
         
-        Session *_session;
+        std::weak_ptr<Session> _session;
+        std::shared_ptr<Connection> _connection;
         eStatus _status;
         BufferV *_body;
         std::map<std::string, std::string> _headers;

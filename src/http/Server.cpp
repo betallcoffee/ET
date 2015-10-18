@@ -35,10 +35,6 @@ bool Server::run() {
 }
 
 void Server::stop() {
-    std::for_each(_sessions.begin(), _sessions.end(), [=](std::pair<Session *, Session*> pair) {
-        Session *session = pair.second;
-        delete session;
-    });
     _sessions.clear();
 }
 
@@ -47,6 +43,10 @@ bool Server::isRunning() {
         return _tcpServer->isRunning();
     }
     return false;
+}
+
+std::shared_ptr<Session> &Server::findSession(Session *session) {
+    return _sessions[session];
 }
 
 void Server::removeSession(Session *session)
@@ -60,6 +60,6 @@ void Server::connectionCallback(void *ctx, Connection *conn) {
 }
 
 void Server::connection(Connection *conn) {
-    Session *session = new Session(this, conn);
-    _sessions[session] = session;
+    std::shared_ptr<Session> session(new Session(this, conn));
+    _sessions[session.get()] = session;
 }

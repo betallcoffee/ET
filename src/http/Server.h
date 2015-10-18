@@ -35,6 +35,7 @@ namespace HTTP {
         void stop();
         bool isRunning();
         
+        std::shared_ptr<Session> &findSession(Session *session);
         void removeSession(Session *session);
         
     private:
@@ -45,7 +46,7 @@ namespace HTTP {
         TCPServer *_tcpServer;
         std::string _ip;
         short _port;
-        std::map<Session *, Session *> _sessions;
+        std::map<Session *, std::shared_ptr<Session>> _sessions;
     };
 } // end namespace HTTP
     
