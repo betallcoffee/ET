@@ -32,7 +32,7 @@ Connection::Connection(EventLoop *eventLoop, int fd)
 
 Connection::~Connection()
 {
-    if (watcher_  != NULL) {
+    if (watcher_ != NULL) {
         printf("Destroy a connection(%d)\n", watcher_->getFD());
         delete watcher_;
     }

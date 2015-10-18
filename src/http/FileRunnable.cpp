@@ -33,10 +33,12 @@ void FileRunnable::run() {
         response.setStatusCode(Response::OK);
         response.setPhrase("OK");
         
-        std::string range = "0-";
+        // 设置 body 的大小
         long end = file->size();
-        range.append(intToStr(end));
-        response.addHeader(ResponseHeader::kContentRange, range);
+        response.addHeader(ResponseHeader::kContentLenght, intToStr(end));
+        
+        // 设置短连接 connection: close
+        response.addHeader(ResponseHeader::kConnection, "close");
         
         _request->connection().send(response.createHeaders());
         
@@ -45,7 +47,9 @@ void FileRunnable::run() {
             file->read(buf);
             printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
             size_t size = _request->connection().send(buf);
-            buf.retrieve(size);
+            if (size > 0) {
+                buf.retrieve(size);
+            }
         } while (!buf.empty());
         
     }

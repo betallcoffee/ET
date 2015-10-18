@@ -44,7 +44,8 @@ void Response::addHeader(const std::string &k, const std::string &value) {
 
 BufferV &Response::createHeaders() {
     _buf.clear();
-    std::string firstLine = intToStr(_statusCode);
+    std::string firstLine = "HTTP/1.1 ";
+    firstLine.append(intToStr(_statusCode));
     firstLine.append(" ");
     firstLine.append(_phrase);
     _buf.append(firstLine.c_str(), firstLine.size());

@@ -26,6 +26,7 @@ Session::Session(Server *server, Connection *connection) :
          _connection->setReadDataCallback(readDataCallback);
          _connection->setCloseCallback(closeCallback);
      }
+      printf("session init\n");
 }
 
 Session::~Session() {
@@ -37,6 +38,7 @@ Session::~Session() {
         delete request;
     });
     _requests.clear();
+    printf("session destroy\n");
 }
 
 void Session::removeRequest(ET::HTTP::Request *request) {
@@ -77,5 +79,6 @@ void Session::closeCallback(void *ctx, ET::Connection *conn) {
 void Session::closeConn(ET::Connection *conn) {
     delete this;
     _server->removeSession(this);
+    printf("session close connection\n");
 }
 
