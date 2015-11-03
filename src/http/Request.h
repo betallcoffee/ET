@@ -36,8 +36,8 @@ namespace HTTP {
         	FIRST_LINE = 1,
             PARSE_HEADER,
             READ_BODY,
-            COMPLETE,
-            RESPONSEING
+            PARSE_COMPLETE,
+            RESPONSING
         }eStatus;
         
         friend class Response;
@@ -46,6 +46,7 @@ namespace HTTP {
         eStatus parse(BufferV &data);
         void reset();
 
+        void responsing();
         eStatus status() { return _status; }
         
         const std::string &method() { return _requestHeader._method; }

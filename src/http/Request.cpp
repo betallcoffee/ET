@@ -32,7 +32,7 @@ Request::eStatus Request::parse(BufferV &data) {
             case READ_BODY:
                 loop = readBody(data);
                 break;
-            case COMPLETE:
+            case PARSE_COMPLETE:
                 loop = false;
                 break;
             default:
@@ -109,7 +109,7 @@ bool Request::parseHeaders(BufferV &data) {
             _requestHeader._m == RequestHeader::PUT) {
             _status = READ_BODY;
         } else {
-            _status = COMPLETE;
+            _status = PARSE_COMPLETE;
         }
     }
     return ret;
@@ -127,5 +127,10 @@ bool Request::readBody(ET::BufferV &data) {
     } else {
         return true;
     }
+}
+
+void Request::responsing()
+{
+    _status = RESPONSING;
 }
 
