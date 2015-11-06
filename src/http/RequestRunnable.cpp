@@ -1,5 +1,5 @@
 //
-//  FileRunnable.cpp
+//  RequestRunnable.cpp
 //  ET
 //
 //  Created by liang on 10/7/15.
@@ -14,7 +14,7 @@
 #include "BufferV.h"
 #include "StringUtility.h"
 
-#include "FileRunnable.h"
+#include "RequestRunnable.h"
 #include "Request.h"
 #include "Response.h"
 
@@ -23,7 +23,7 @@ using namespace HTTP;
 using namespace SYSTEM;
 using namespace STRING;
 
-void FileRunnable::run() {
+void RequestRunnable::run() {
     std::shared_ptr<Request> request = _request.lock();
     if (request) {
         Response &response = request->response();

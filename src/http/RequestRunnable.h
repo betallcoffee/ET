@@ -1,5 +1,5 @@
 //
-//  FileRunnable.h
+//  RequestRunnable.h
 //  ET
 //
 //  Created by liang on 10/7/15.
@@ -19,10 +19,10 @@ namespace ET {
         /**
          * Read data from file to response. use block I/O. derived from ThreadRunnable.
          */
-        class FileRunnable : public THREAD::ThreadRunnable {
+        class Runnable : public THREAD::ThreadRunnable {
         public:
-            FileRunnable(std::shared_ptr<Request> &request) : _request(request) {};
-            ~FileRunnable() {};
+            RequestRunnable(std::shared_ptr<Request> &request) : _request(request) {};
+            ~RequestRunnable() {};
           
             /**
              * Override the run virtual method of ThreadRunnable.
