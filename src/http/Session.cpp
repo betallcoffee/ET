@@ -56,18 +56,19 @@ void Session::readDataCallback(void *ctx, ET::Connection *conn) {
 void Session::readData(ET::Connection *conn) {
     // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
     std::shared_ptr<Session> &session = _server->findSession(this);
-    if (_request == nullptr || _request->status() == Request::RESPONSING) {
-        _request.reset(new Request(_connection));
-        _requests[_request.get()] = _request;
+    std::shared_ptr<Request> request = _request.lock();
+    if (request == nullptr || request->status() == Request::RESPONSING) {
+        request.reset(new Request(_connection));
+        _requests[request.get()] = std::weak_ptr<Request>(request);
+        _request = request;
     }
     
     BufferV &data = conn->readBuf();
-    _request->parse(data);
+    request->parse(data);
     
-    if (_request->status() == Request::PARSE_COMPLETE) {
-        ResponseRunnable *responsetRunnable = new ResponseRunnable(session, _request);
+    if (request->status() == Request::PARSE_COMPLETE) {
+        ResponseRunnable *responsetRunnable = new ResponseRunnable(session, request);
         Session::sTaskThreadPool->addTask(responsetRunnable);
-        _request = nullptr;
     }
 }
 

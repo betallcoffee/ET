@@ -46,8 +46,8 @@ namespace ET {
             
             Server *_server;
             std::shared_ptr<Connection> _connection;
-            std::shared_ptr<Request> _request;
-            std::map<Request *, std::shared_ptr<Request>> _requests;
+            std::weak_ptr<Request> _request;
+            std::map<Request *, std::weak_ptr<Request>> _requests;
         };
         
     } // end HTTP

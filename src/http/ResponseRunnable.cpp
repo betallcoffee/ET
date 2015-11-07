@@ -31,6 +31,7 @@ void ResponseRunnable::run() {
         // TODO support keep live.
         std::shared_ptr<Session> session = _session.lock();
         if (session) {
+            session->removeRequest(_request.get());
             session->finishSession();
         }
     }
