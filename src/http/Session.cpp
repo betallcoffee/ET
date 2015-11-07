@@ -38,6 +38,12 @@ void Session::removeRequest(ET::HTTP::Request *request) {
     _requests.erase(request);
 }
 
+void Session::finishSession()
+{
+    printf("session finish\n");
+    _connection->connectClose();
+}
+
 size_t Session::writeData(ET::BufferV &buf) {
     return _connection->send(buf);
 }
@@ -51,7 +57,7 @@ void Session::readData(ET::Connection *conn) {
     // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
     std::shared_ptr<Session> &session = _server->findSession(this);
     if (_request == nullptr || _request->status() == Request::RESPONSING) {
-        _request.reset(new Request(session));
+        _request.reset(new Request(_connection));
         _requests[_request.get()] = _request;
     }
     
@@ -59,7 +65,7 @@ void Session::readData(ET::Connection *conn) {
     _request->parse(data);
     
     if (_request->status() == Request::PARSE_COMPLETE) {
-        ResponseRunnable *responsetRunnable = new ResponseRunnable(_request);
+        ResponseRunnable *responsetRunnable = new ResponseRunnable(session, _request);
         Session::sTaskThreadPool->addTask(responsetRunnable);
         _request = nullptr;
     }

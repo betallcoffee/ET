@@ -14,6 +14,7 @@
 namespace ET {
     namespace HTTP {
         
+        class Session;
         class Request;
         
         /**
@@ -21,7 +22,7 @@ namespace ET {
          */
         class ResponseRunnable : public THREAD::ThreadRunnable {
         public:
-            ResponseRunnable(std::shared_ptr<Request> &request) : _request(request) {};
+            ResponseRunnable(std::shared_ptr<Session> &session, std::shared_ptr<Request> &request) : _session(session), _request(request) {};
             ~ResponseRunnable() {};
           
             /**
@@ -30,6 +31,7 @@ namespace ET {
             virtual void run();
             
         private:
+            std::weak_ptr<Session> _session;
             std::shared_ptr<Request> _request;
         };
     }

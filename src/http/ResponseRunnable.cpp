@@ -12,6 +12,7 @@
 
 #include "ResponseRunnable.h"
 
+#include "Session.h"
 #include "Request.h"
 #include "Response.h"
 
@@ -26,6 +27,12 @@ void ResponseRunnable::run() {
         // TODO 1. url 路由; 2. 链式 command 处理 request ; 3. 流式 response;
         StaticFileCommand *command = new StaticFileCommand(_request);
         command->execute();
+        
+        // TODO support keep live.
+        std::shared_ptr<Session> session = _session.lock();
+        if (session) {
+            session->finishSession();
+        }
     }
     
 }

@@ -31,6 +31,7 @@ namespace ET {
             std::shared_ptr<Connection> &connection() { return _connection; }
             
             void removeRequest(Request *request);
+            void finishSession();
             
             
             static THREAD::ThreadPool *sTaskThreadPool;

@@ -12,9 +12,9 @@
 #include <string>
 #include <map>
 
+#include "Response.h"
 #include "Session.h"
 #include "RequestHeader.h"
-#include "Response.h"
 
 namespace ET {
     
@@ -25,11 +25,10 @@ namespace HTTP {
     
     class Request {
     public:
-        Request(std::shared_ptr<Session> &session) : _session(session), _status(FIRST_LINE), _body(NULL), _response(this) {
+        Request(std::shared_ptr<Connection> &connection) : _connection(connection), _status(FIRST_LINE), _body(NULL), _response(this) {
             printf("request init\n");
-            _connection = session->connection();
         }
-        Request(const std::string &url, Session *session);
+
         ~Request() { printf("request destory\n"); }
         
         typedef enum Status {
@@ -68,7 +67,6 @@ namespace HTTP {
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
         
-        std::weak_ptr<Session> _session;
         std::shared_ptr<Connection> _connection;
         eStatus _status;
         BufferV *_body;
