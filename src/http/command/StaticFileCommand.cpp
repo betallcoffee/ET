@@ -1,8 +1,8 @@
 //
-//  RequestRunnable.cpp
+//  StaticFileCommand.cpp
 //  ET
 //
-//  Created by liang on 10/7/15.
+//  Created by liang on 11/6/15.
 //  Copyright (c) 2015 liangliang. All rights reserved.
 //
 
@@ -14,16 +14,18 @@
 #include "BufferV.h"
 #include "StringUtility.h"
 
-#include "RequestRunnable.h"
+#include "StaticFileCommand.h"
+
 #include "Request.h"
 #include "Response.h"
+#include "ResponseRunnable.h"
 
 using namespace ET;
 using namespace HTTP;
 using namespace SYSTEM;
 using namespace STRING;
 
-void RequestRunnable::run() {
+void StaticFileCommand::execute() {
     std::shared_ptr<Request> request = _request.lock();
     if (request) {
         Response &response = request->response();
@@ -47,7 +49,7 @@ void RequestRunnable::run() {
             BufferV buf;
             do {
                 file->read(buf);
-//                printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
+                //                printf("Response::fileReader(): buffer:(%s)\n", buf.beginRead());
                 size_t size = request->connection()->send(buf);
                 if (size > 0) {
                     buf.retrieve(size);

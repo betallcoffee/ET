@@ -12,7 +12,7 @@
 #include "Session.h"
 #include "Server.h"
 #include "Request.h"
-#include "FileRunnable.h"
+#include "ResponseRunnable.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -59,8 +59,8 @@ void Session::readData(ET::Connection *conn) {
     _request->parse(data);
     
     if (_request->status() == Request::PARSE_COMPLETE) {
-        FileRunnable *fileRunnable = new FileRunnable(_request);
-        Session::sTaskThreadPool->addTask(fileRunnable);
+        ResponseRunnable *responsetRunnable = new ResponseRunnable(_request);
+        Session::sTaskThreadPool->addTask(responsetRunnable);
         _request = nullptr;
     }
 }
