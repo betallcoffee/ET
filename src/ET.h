@@ -15,5 +15,8 @@
 #include "net/Connection.h"
 
 #include "utility/Timestamp.h"
+#include "utility/Log.h"
+#include "utility/Logger.h"
+#include "utility/LoggerTarget.h"
 
 #endif // end _ET_H

@@ -13,19 +13,24 @@ using namespace ET;
 
 int main()
 {
+    // init log
+    Logger::sharedInstance();
+    Logger::sharedInstance()->setLogLevel(Logger::VERBOSE);
+    LogV("Log init success");
+    
     KqueueSelect select;
     EventLoop eventLoop(&select);
     HTTP::Server server(&eventLoop, nullptr, 8080);
-    printf("http server init 8080\n");
+    LogV("http server init 8080");
     bool res = server.run();
     if (res) {
-        printf("http server run begin\n");
+        LogV("http server run begin");
         while(true) {
             eventLoop.runOneLoop();
         }
-        printf("http server run end\n");
+        LogV("http server run end");
     } else {
-        printf("http server init error\n");
+        LogE("http server init error");
     }
     
     return 0;

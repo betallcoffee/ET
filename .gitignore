@@ -26,7 +26,8 @@ list
 build/
 *impl
 .idea/
-xcuserdata
+xcuserdata/
 
 Default
 .d
+

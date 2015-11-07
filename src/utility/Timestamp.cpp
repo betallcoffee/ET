@@ -51,7 +51,8 @@ std::string Timestamp::toString() const
 std::string Timestamp::toFormattedString() const
 {
     char buf[32] = {0};
-    ctime_r(&timeSinceEpoch_.tv_sec, buf);
+    struct tm *tm = localtime(&timeSinceEpoch_.tv_sec);
+    strftime(buf, 31, "%c" , tm);
     return buf;
 }
 

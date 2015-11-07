@@ -58,6 +58,12 @@
 		ECED85201BED904E00891D1C /* Command.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED851E1BED904E00891D1C /* Command.h */; };
 		ECED85231BED92BF00891D1C /* ResponseRunnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */; };
 		ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED85221BED92BF00891D1C /* ResponseRunnable.h */; };
+		ECED85271BEE024C00891D1C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85251BEE024C00891D1C /* Log.cpp */; };
+		ECED85281BEE024C00891D1C /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED85261BEE024C00891D1C /* Log.h */; };
+		ECED852B1BEE2AA100891D1C /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85291BEE2AA100891D1C /* Logger.cpp */; };
+		ECED852C1BEE2AA100891D1C /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED852A1BEE2AA100891D1C /* Logger.h */; };
+		ECED852F1BEE430200891D1C /* LoggerTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED852D1BEE430200891D1C /* LoggerTarget.cpp */; };
+		ECED85301BEE430200891D1C /* LoggerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED852E1BEE430200891D1C /* LoggerTarget.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +120,12 @@
 		ECED851E1BED904E00891D1C /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
 		ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResponseRunnable.cpp; sourceTree = "<group>"; };
 		ECED85221BED92BF00891D1C /* ResponseRunnable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseRunnable.h; sourceTree = "<group>"; };
+		ECED85251BEE024C00891D1C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
+		ECED85261BEE024C00891D1C /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		ECED85291BEE2AA100891D1C /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		ECED852A1BEE2AA100891D1C /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		ECED852D1BEE430200891D1C /* LoggerTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoggerTarget.cpp; sourceTree = "<group>"; };
+		ECED852E1BEE430200891D1C /* LoggerTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerTarget.h; sourceTree = "<group>"; };
 		ECF48B481A0F541D0076A7D4 /* Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		ECF48B491A0F542A0076A7D4 /* Response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		ECF48B4A1A0F54530076A7D4 /* Server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
@@ -210,6 +222,12 @@
 				ECE7AC6F19DA97B6000118A3 /* Timestamp.h */,
 				ECE7AC6A19DA9769000118A3 /* Alloc.cpp */,
 				ECE7AC6B19DA9769000118A3 /* Alloc.h */,
+				ECED85251BEE024C00891D1C /* Log.cpp */,
+				ECED85261BEE024C00891D1C /* Log.h */,
+				ECED85291BEE2AA100891D1C /* Logger.cpp */,
+				ECED852A1BEE2AA100891D1C /* Logger.h */,
+				ECED852D1BEE430200891D1C /* LoggerTarget.cpp */,
+				ECED852E1BEE430200891D1C /* LoggerTarget.h */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -268,6 +286,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECED852C1BEE2AA100891D1C /* Logger.h in Headers */,
 				EC0D9F1C1BB7EBAD001ABA25 /* BufferV.h in Headers */,
 				ECD7AD971B594214005E8574 /* StringUtility.h in Headers */,
 				EC0D9EE71BB7E1C8001ABA25 /* ThreadPool.h in Headers */,
@@ -285,6 +304,8 @@
 				ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */,
 				EC0D9F301BC513ED001ABA25 /* Session.h in Headers */,
 				ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */,
+				ECED85281BEE024C00891D1C /* Log.h in Headers */,
+				ECED85301BEE430200891D1C /* LoggerTarget.h in Headers */,
 				ECED851C1BECFBC800891D1C /* StaticFileCommand.h in Headers */,
 				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
 				EC0D9F111BB7E6F8001ABA25 /* Config.h in Headers */,
@@ -322,7 +343,7 @@
 		ECA3D01C19C1627C003C02DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = liangliang;
 			};
 			buildConfigurationList = ECA3D01F19C1627C003C02DE /* Build configuration list for PBXProject "ET" */;
@@ -350,6 +371,7 @@
 				EC0D9F1B1BB7EBAD001ABA25 /* BufferV.cpp in Sources */,
 				ECE7AC7019DA97B6000118A3 /* Timestamp.cpp in Sources */,
 				EC0D9EE61BB7E1C8001ABA25 /* ThreadPool.cpp in Sources */,
+				ECED85271BEE024C00891D1C /* Log.cpp in Sources */,
 				EC0D9F121BB7E6F8001ABA25 /* EventLoop.cpp in Sources */,
 				ECD7AD911B59419C005E8574 /* Request.cpp in Sources */,
 				EC0D9EFD1BB7E40B001ABA25 /* Acceptor.cpp in Sources */,
@@ -361,6 +383,7 @@
 				EC9783301A483BC2000848C5 /* Server.cpp in Sources */,
 				ECD9D6921B611EAD00D1FB74 /* File.cpp in Sources */,
 				EC0D9F3F1BCAAB4B001ABA25 /* ResponseHeader.cpp in Sources */,
+				ECED852B1BEE2AA100891D1C /* Logger.cpp in Sources */,
 				EC0D9F071BB7E40B001ABA25 /* Select.cpp in Sources */,
 				ECD7AD9D1B5BC970005E8574 /* RequestHeader.cpp in Sources */,
 				EC0D9F051BB7E40B001ABA25 /* KqueueSelect.cpp in Sources */,
@@ -370,6 +393,7 @@
 				EC0D9EEA1BB7E272001ABA25 /* ThreadRunnable.cpp in Sources */,
 				EC0D9F2C1BBD71E3001ABA25 /* Response.cpp in Sources */,
 				EC0D9EFF1BB7E40B001ABA25 /* Connection.cpp in Sources */,
+				ECED852F1BEE430200891D1C /* LoggerTarget.cpp in Sources */,
 				ECE7AC6C19DA9769000118A3 /* Alloc.cpp in Sources */,
 				ECD9D6A01B690D7F00D1FB74 /* Dir.cpp in Sources */,
 				ECED85231BED92BF00891D1C /* ResponseRunnable.cpp in Sources */,
@@ -452,6 +476,7 @@
 		ECA3D02919C1627C003C02DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
@@ -466,6 +491,7 @@
 		ECA3D02A19C1627C003C02DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
