@@ -7,6 +7,7 @@
 //
 
 
+#include "Log.h"
 #include "Connection.h"
 
 #include "Session.h"
@@ -21,7 +22,7 @@ THREAD::ThreadPool *Session::sTaskThreadPool = new THREAD::ThreadPool(10);
 
 Session::Session(Server *server, Connection *connection) :
   _server(server), _connection(connection) {
-      printf("session init\n");
+      LogD("Session init");
      if (_connection != nullptr) {
          _connection->setContext(this);
          _connection->setReadDataCallback(readDataCallback);
@@ -30,7 +31,7 @@ Session::Session(Server *server, Connection *connection) :
 }
 
 Session::~Session() {
-    printf("session destroy\n");
+    LogD("Session destroy");
     _requests.clear();
 }
 
@@ -40,7 +41,7 @@ void Session::removeRequest(ET::HTTP::Request *request) {
 
 void Session::finishSession()
 {
-    printf("session finish\n");
+    LogD("Session finish");
     _connection->connectClose();
 }
 
@@ -78,7 +79,7 @@ void Session::closeCallback(void *ctx, ET::Connection *conn) {
 }
 
 void Session::closeConn(ET::Connection *conn) {
-    printf("session close connection\n");
+    LogD("Session close connection");
     _server->removeSession(this);
 }
 

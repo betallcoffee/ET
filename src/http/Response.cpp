@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 liangliang. All rights reserved.
 //
 
+#include "Log.h"
 #include "Connection.h"
 #include "BufferV.h"
 #include "StringUtility.h"
@@ -48,12 +49,14 @@ BufferV &Response::createHeaders() {
     firstLine.append(intToStr(_statusCode));
     firstLine.append(" ");
     firstLine.append(_phrase);
+    LogV("status code:%s", firstLine.c_str());
     _buf.append(firstLine.c_str(), firstLine.size());
     std::for_each(_headers.begin(), _headers.end(), [=](std::pair<std::string, std::string> pair){
         std::string line(kCRLF);
         line.append(pair.first);
         line.append(kSep);
         line.append(pair.second);
+        LogV("response head:%s", line.c_str());
         _buf.append(line.c_str(), line.size());
     });
     _buf.append(kCRLF.c_str(), kCRLF.size());

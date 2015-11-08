@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "Log.h"
 #include "BufferV.h"
 #include "StringUtility.h"
 
@@ -72,7 +73,7 @@ bool Request::parseFirstLine(BufferV &data) {
     std::string line;
     bool ret = data.getLine(line);
 	if (ret && line.size() > 0) {
-        printf("a request first line:%s", line.c_str());
+        LogV("a request first line:%s", line.c_str());
 		std::vector<std::string> strs = STRING::splite(line.substr(0, line.size() - 2));
         if (strs.size() > 0) {
             _requestHeader._method = strs[0];
@@ -100,6 +101,7 @@ bool Request::parseHeaders(BufferV &data) {
         STRING::trim(line);
         std::vector<std::string> strs = STRING::splite(line, ":", false);
         if (strs.size() >= 2) {
+            LogV("request head:%s=%s", strs[0].c_str(), strs[1].c_str());
             _headers[strs[0]] = strs[1];
             _requestHeader.parseAHeaderKeyValue(strs[0], strs[1]);
         }

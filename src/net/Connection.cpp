@@ -10,9 +10,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "Log.h"
+
+#include "Connection.h"
 #include "EventLoop.h"
 #include "Watcher.h"
-#include "Connection.h"
 
 using namespace ET;
 
@@ -27,14 +29,16 @@ Connection::Connection(EventLoop *eventLoop, int fd)
     closeCallback_(NULL),
     connectCallback_(NULL)
 {
-    printf("Init a connection(%d)\n", watcher_->getFD());
+    LogD("Init a connection(%d)", watcher_->getFD());
 }
 
 Connection::~Connection()
 {
     if (watcher_ != NULL) {
-        printf("Destroy a connection(%d)\n", watcher_->getFD());
+        LogD("Destroy a connection(%d)", watcher_->getFD());
         delete watcher_;
+    } else {
+        LogD("Destroy a connection");
     }
 }
 

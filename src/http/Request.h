@@ -12,6 +12,8 @@
 #include <string>
 #include <map>
 
+#include "Log.h"
+
 #include "Response.h"
 #include "Session.h"
 #include "RequestHeader.h"
@@ -26,10 +28,10 @@ namespace HTTP {
     class Request {
     public:
         Request(std::shared_ptr<Connection> &connection) : _connection(connection), _status(FIRST_LINE), _body(NULL), _response(this) {
-            printf("request init\n");
+            LogD("Request init");
         }
 
-        ~Request() { printf("request destory\n"); }
+        ~Request() { LogD("Request destory"); }
         
         typedef enum Status {
         	FIRST_LINE = 1,
