@@ -8,7 +8,7 @@
 #ifndef ETEVENTLOOP_H
 #define ETEVENTLOOP_H
 
-#include "Config.h"
+#include "net/Net.h"
 #include "net/Select.h"
 
 namespace ET

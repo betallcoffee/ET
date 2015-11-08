@@ -8,7 +8,7 @@
 #ifndef ETCONNECTION_H
 #define ETCONNECTION_H
 
-#include "Config.h"
+#include "Net.h"
 #include "../utility/BufferV.h"
 
 namespace ET

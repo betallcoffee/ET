@@ -8,7 +8,7 @@
 #ifndef ETTCPSERVER_H
 #define ETTCPSERVER_H
 
-#include "Config.h"
+#include "Net.h"
 #include "Acceptor.h"
 
 namespace ET

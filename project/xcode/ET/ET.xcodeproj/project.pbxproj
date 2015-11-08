@@ -25,7 +25,6 @@
 		EC0D9F0A1BB7E40B001ABA25 /* TCPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9EFA1BB7E40B001ABA25 /* TCPServer.h */; };
 		EC0D9F0B1BB7E40B001ABA25 /* Watcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9EFB1BB7E40B001ABA25 /* Watcher.cpp */; };
 		EC0D9F0C1BB7E40B001ABA25 /* Watcher.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9EFC1BB7E40B001ABA25 /* Watcher.h */; };
-		EC0D9F111BB7E6F8001ABA25 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F0D1BB7E6F8001ABA25 /* Config.h */; };
 		EC0D9F121BB7E6F8001ABA25 /* EventLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F0E1BB7E6F8001ABA25 /* EventLoop.cpp */; };
 		EC0D9F131BB7E6F8001ABA25 /* EventLoop.h in Headers */ = {isa = PBXBuildFile; fileRef = EC0D9F0F1BB7E6F8001ABA25 /* EventLoop.h */; };
 		EC0D9F191BB7EBAD001ABA25 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC0D9F151BB7EBAD001ABA25 /* Buffer.cpp */; };
@@ -64,6 +63,7 @@
 		ECED852C1BEE2AA100891D1C /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED852A1BEE2AA100891D1C /* Logger.h */; };
 		ECED852F1BEE430200891D1C /* LoggerTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED852D1BEE430200891D1C /* LoggerTarget.cpp */; };
 		ECED85301BEE430200891D1C /* LoggerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED852E1BEE430200891D1C /* LoggerTarget.h */; };
+		ECED85341BEEF45800891D1C /* Net.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED85331BEEF45800891D1C /* Net.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +85,6 @@
 		EC0D9EFA1BB7E40B001ABA25 /* TCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPServer.h; sourceTree = "<group>"; };
 		EC0D9EFB1BB7E40B001ABA25 /* Watcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Watcher.cpp; sourceTree = "<group>"; };
 		EC0D9EFC1BB7E40B001ABA25 /* Watcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watcher.h; sourceTree = "<group>"; };
-		EC0D9F0D1BB7E6F8001ABA25 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		EC0D9F0E1BB7E6F8001ABA25 /* EventLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventLoop.cpp; sourceTree = "<group>"; };
 		EC0D9F0F1BB7E6F8001ABA25 /* EventLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventLoop.h; sourceTree = "<group>"; };
 		EC0D9F151BB7EBAD001ABA25 /* Buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
@@ -126,6 +125,7 @@
 		ECED852A1BEE2AA100891D1C /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		ECED852D1BEE430200891D1C /* LoggerTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoggerTarget.cpp; sourceTree = "<group>"; };
 		ECED852E1BEE430200891D1C /* LoggerTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerTarget.h; sourceTree = "<group>"; };
+		ECED85331BEEF45800891D1C /* Net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Net.h; sourceTree = "<group>"; };
 		ECF48B481A0F541D0076A7D4 /* Request.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		ECF48B491A0F542A0076A7D4 /* Response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Response.h; sourceTree = "<group>"; };
 		ECF48B4A1A0F54530076A7D4 /* Server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
@@ -158,6 +158,7 @@
 		EC0D9EEC1BB7E40B001ABA25 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				ECED85331BEEF45800891D1C /* Net.h */,
 				EC0D9EED1BB7E40B001ABA25 /* Acceptor.cpp */,
 				EC0D9EEE1BB7E40B001ABA25 /* Acceptor.h */,
 				EC0D9EEF1BB7E40B001ABA25 /* Connection.cpp */,
@@ -196,14 +197,13 @@
 			isa = PBXGroup;
 			children = (
 				EC0D9F1D1BB7EC67001ABA25 /* ET.h */,
-				EC0D9F0D1BB7E6F8001ABA25 /* Config.h */,
 				EC0D9F0E1BB7E6F8001ABA25 /* EventLoop.cpp */,
 				EC0D9F0F1BB7E6F8001ABA25 /* EventLoop.h */,
+				ECA3D04319C163AE003C02DE /* utility */,
 				EC0D9EEC1BB7E40B001ABA25 /* net */,
 				EC0D9EE31BB7E1AD001ABA25 /* thread */,
 				ECD9D68F1B611E9400D1FB74 /* system */,
 				ECF48B471A0F0C4B0076A7D4 /* http */,
-				ECA3D04319C163AE003C02DE /* utility */,
 			);
 			name = src;
 			path = ../../../src;
@@ -304,11 +304,11 @@
 				ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */,
 				EC0D9F301BC513ED001ABA25 /* Session.h in Headers */,
 				ECD9D6A11B690D7F00D1FB74 /* Dir.h in Headers */,
+				ECED85341BEEF45800891D1C /* Net.h in Headers */,
 				ECED85281BEE024C00891D1C /* Log.h in Headers */,
 				ECED85301BEE430200891D1C /* LoggerTarget.h in Headers */,
 				ECED851C1BECFBC800891D1C /* StaticFileCommand.h in Headers */,
 				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
-				EC0D9F111BB7E6F8001ABA25 /* Config.h in Headers */,
 				EC0D9F401BCAAB4B001ABA25 /* ResponseHeader.h in Headers */,
 				ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */,
 				EC0D9F001BB7E40B001ABA25 /* Connection.h in Headers */,

@@ -8,7 +8,7 @@
 #ifndef ETACCEPTOR_H
 #define ETACCEPTOR_H
 
-#include "Config.h"
+#include "Net.h"
 
 namespace ET
 {

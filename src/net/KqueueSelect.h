@@ -10,7 +10,7 @@
 
 #include <sys/event.h>
 
-#include "Config.h"
+#include "Net.h"
 #include "Select.h"
 
 namespace ET {

@@ -5,8 +5,8 @@
 //
 // This is an public header file, it must only include public header files.
 
-#ifndef ETCONFIG_H
-#define ETCONFIG_H
+#ifndef _ET_NET_H
+#define _ET_NET_H
 
 namespace ET
 {
@@ -34,4 +34,4 @@ typedef void(*ConnectionCb)(void *ctx, Connection *conn);
 
 } // end namespace ET
 
-#endif // ETCONFIG_H
+#endif // _ET_NET_H
