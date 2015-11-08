@@ -25,7 +25,7 @@ namespace ET {
         virtual void output(int logType, const char *message);
         
         void setLogLevel(int logLevel) { _logLevel = logLevel; }
-        void addLoggerTarget(const LoggerTarget &loggerTarget);
+        void addLoggerTarget(std::shared_ptr<LoggerTarget> &loggerTarget) { _targetList.push_back(loggerTarget); };
         
         typedef enum {
             NONE    = 0x00,

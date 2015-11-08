@@ -20,8 +20,8 @@ Logger *Logger::sharedInstance()
     if (gSharedInstance == nullptr)
     {
         gSharedInstance = new Logger();
-        LoggerTarget *loggerTarget = new LoggerTarget();
-        gSharedInstance->addLoggerTarget(*loggerTarget);
+        auto loggerTarget = std::make_shared<LoggerTarget>(*(new LoggerTarget()));
+        gSharedInstance->addLoggerTarget(loggerTarget);
     }
     
     return gSharedInstance;
@@ -41,11 +41,6 @@ void Logger::output(int logType, const char *message)
     std::for_each(_targetList.begin(), _targetList.end(), [=](std::shared_ptr<LoggerTarget> loggerTarget) {
         loggerTarget->output(logLineMessage);
     });
-}
-
-void Logger::addLoggerTarget(const ET::LoggerTarget &loggerTarget)
-{
-    _targetList.push_back(std::make_shared<LoggerTarget>(loggerTarget));
 }
 
 const char *Logger::getMaskString(int logType)
