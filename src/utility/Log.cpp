@@ -29,7 +29,7 @@ void ET::log(Logger *logger,
     va_end(vaList);
     
 #if defined(DEBUG)
-    snprintf(logLineMessage + length, Logger::kMaxLineLength - length, " - %s %d %s", fileName, lineNo, functionName);
+    snprintf(logLineMessage + length, Logger::kMaxLineLength - length, " - %d %s", lineNo, functionName);
 #endif
     
     logger->output(logType, logLineMessage);

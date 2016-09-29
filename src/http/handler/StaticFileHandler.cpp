@@ -14,7 +14,7 @@
 #include "BufferV.h"
 #include "StringUtility.h"
 
-#include "StaticFileCommand.h"
+#include "StaticFileHandler.h"
 
 #include "Request.h"
 #include "Response.h"
@@ -25,7 +25,7 @@ using namespace HTTP;
 using namespace SYSTEM;
 using namespace STRING;
 
-void StaticFileCommand::execute() {
+void StaticFileHandler::execute() {
     std::shared_ptr<Request> request = _request.lock();
     if (request) {
         Response &response = request->response();

@@ -1,24 +1,24 @@
 //
-//  StaticFileCommand.h
+//  StaticFileHandler.h
 //  ET
 //
 //  Created by liang on 11/6/15.
 //  Copyright (c) 2015 liangliang. All rights reserved.
 //
 
-#ifndef _ET_STATIC_FILE_COMMAND_H_
-#define _ET_STATIC_FILE_COMMAND_H_
+#ifndef _ET_STATIC_FILE_Handler_H_
+#define _ET_STATIC_FILE_Handler_H_
 
-#include "Command.h"
+#include "Handler.h"
 #include "Request.h"
 
 namespace ET {
     namespace HTTP {
         
-        class StaticFileCommand : public Command {
+        class StaticFileHandler : public Handler {
         public:
-            StaticFileCommand(std::shared_ptr<Request> &request) : _request(request) {};
-            ~StaticFileCommand();
+            StaticFileHandler(std::shared_ptr<Request> &request) : _request(request) {};
+            ~StaticFileHandler();
             
             void execute();
             
@@ -29,4 +29,4 @@ namespace ET {
     }  // end HTTP
 } // end ET
 
-#endif // end _ET_STATIC_FILE_COMMAND_H_
+#endif // end _ET_STATIC_FILE_HANDLER_H_

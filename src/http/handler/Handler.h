@@ -1,21 +1,21 @@
 //
-//  Command.h
+//  Handler.h
 //  ET
 //
 //  Created by liang on 11/7/15.
 //  Copyright (c) 2015 liangliang. All rights reserved.
 //
 
-#ifndef _ET_COMMAND_
-#define _ET_COMMAND_
+#ifndef _ET_HANDLER_
+#define _ET_HANDLER_
 
 namespace ET {
     namespace HTTP{
         
-        class Command {
+        class Handler {
         public:
-            Command() {};
-            ~Command() {};
+            Handler() {};
+            ~Handler() {};
             
             virtual void execute() = 0;
         };
@@ -24,4 +24,4 @@ namespace ET {
 } // end ET
 
 
-#endif // end _ET_COMMAND_
+#endif // end _ET_HANDLER_

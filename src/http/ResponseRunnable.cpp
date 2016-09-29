@@ -16,7 +16,7 @@
 #include "Request.h"
 #include "Response.h"
 
-#include "StaticFileCommand.h"
+#include "StaticFileHandler.h"
 
 using namespace ET;
 using namespace HTTP;
@@ -24,9 +24,9 @@ using namespace HTTP;
 void ResponseRunnable::run() {
     if (_request)
     {
-        // TODO 1. url 路由; 2. 链式 command 处理 request ; 3. 流式 response;
-        StaticFileCommand *command = new StaticFileCommand(_request);
-        command->execute();
+        // TODO 1. url 路由; 2. 链式 handler 处理 request ; 3. 流式 response;
+        StaticFileHandler *handler = new StaticFileHandler(_request);
+        handler->execute();
         
         // TODO support keep live.
         std::shared_ptr<Session> session = _session.lock();
