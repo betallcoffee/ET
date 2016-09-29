@@ -10,6 +10,7 @@
 
 #include "Net.h"
 #include "Acceptor.h"
+#include "EventLoop.h"
 
 namespace ET
 {
@@ -22,8 +23,9 @@ namespace ET
         TCPServer(EventLoop *eventLoop, const char *ip, unsigned short port);
         ~TCPServer();
 
-        int run();
-        int isRunning() { return state_ == kServerStatesRunning; }
+        bool run();
+        bool stop();
+        bool isRunning() { return state_ == kServerStatesRunning; }
 
         void setContext(void *ctx) { ctx_ = ctx; }
         void setConnectionCb(ConnectionCb connectionCb)

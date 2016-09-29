@@ -12,12 +12,8 @@ int main()
     EventLoop eventLoop(&select);
     EchoServer echoServer(&eventLoop, NULL, 8080);
     printf("echo server init 8080\n");
-    int res = echoServer.run();
-    if (res == 0) {
-        printf("echo server run begin\n");
-        while(true) {
-            eventLoop.runOneLoop();
-        }
+    printf("echo server run begin\n");
+    if (echoServer.run()) {
         printf("echo server run end\n");
     } else {
         printf("echo server init error\n");

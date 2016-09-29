@@ -22,12 +22,8 @@ int main()
     EventLoop eventLoop(&select);
     HTTP::Server server(&eventLoop, nullptr, 8080);
     LogD("http server init 8080");
-    bool res = server.run();
-    if (res) {
-        LogD("http server run begin");
-        while(true) {
-            eventLoop.runOneLoop();
-        }
+    LogD("http server run begin");
+    if (server.run()) {
         LogD("http server run end");
     } else {
         LogE("http server init error");

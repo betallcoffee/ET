@@ -26,13 +26,21 @@ TCPServer::~TCPServer()
 {
 }
 
-int TCPServer::run()
+bool TCPServer::run()
 {
     int res = acceptor_.listen();
     if (res == 0) {
         setState(kServerStatesRunning);
+        while (kServerStatesRunning == state_) {
+            eventLoop_->runOneLoop();
+        }
     }
-    return res;
+    return res == 0;
+}
+
+bool TCPServer::stop() {
+    setState(kServerStatesStopped);
+    return true;
 }
 
 void TCPServer::newSocketCallback(void *ctx, int fd)

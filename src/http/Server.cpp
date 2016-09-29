@@ -29,7 +29,7 @@ Server::~Server() {
 
 bool Server::run() {
     if (_tcpServer != nullptr) {
-        return _tcpServer->run() == 0;
+        return _tcpServer->run();
     }
     return false;
 }

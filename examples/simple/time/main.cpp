@@ -20,12 +20,8 @@ int main()
     EventLoop eventLoop(&select);
     TimeServer timeServer(&eventLoop, NULL, 8080);
     printf("time server init 8080\n");
-    int res = timeServer.run();
-    if (res == 0) {
-        printf("time server run begin\n");
-        while(true) {
-            eventLoop.runOneLoop();
-        }
+    printf("time server run begin\n");
+    if (timeServer.run()){
         printf("time server run end\n");
     } else {
         printf("time server init error\n");
