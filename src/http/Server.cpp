@@ -19,6 +19,8 @@ Server::Server(EventLoop *eventLoop, const char *ip, short port) : _port(port) {
     _tcpServer = new TCPServer(eventLoop, ip, _port);
     _tcpServer->setContext(this);
     _tcpServer->setConnectionCb(connectionCallback);
+    
+    _router = std::make_shared<Router>();
 }
 
 Server::~Server() {

@@ -12,6 +12,8 @@
 
 #include "ResponseRunnable.h"
 
+#include "Server.h"
+#include "Router.h"
 #include "Session.h"
 #include "Request.h"
 #include "Response.h"
@@ -22,18 +24,15 @@ using namespace ET;
 using namespace HTTP;
 
 void ResponseRunnable::run() {
-    if (_request)
+    if (_server && _session && _request)
     {
-        // TODO 1. url 路由; 2. 链式 handler 处理 request ; 3. 流式 response;
-        StaticFileHandler *handler = new StaticFileHandler(_request);
+        // TODO 1. rewrite 处理 request; 2. 流式 response;
+        std::shared_ptr<Handler> handler = _server->getRouter()->disptach(_request);
         handler->execute();
         
         // TODO support keep live.
-        std::shared_ptr<Session> session = _session.lock();
-        if (session) {
-            session->removeRequest(_request.get());
-            session->finishSession();
-        }
+        _session->removeRequest(_request.get());
+        _session->finishSession();
     }
     
 }

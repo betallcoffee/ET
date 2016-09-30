@@ -10,6 +10,7 @@
 #define ET_HTTP_SESSION_H
 
 #include <map>
+
 #include "ThreadPool.h"
 
 namespace ET {
@@ -24,30 +25,30 @@ namespace ET {
         
         class Session {
         public:
-            Session(Server *server, Connection *connection);
+            Session(Server* server, Connection* connection);
             ~Session();
             
             size_t writeData(BufferV &buf);
             std::shared_ptr<Connection> &connection() { return _connection; }
             
-            void removeRequest(Request *request);
+            void removeRequest(Request* request);
             void finishSession();
             
             
-            static THREAD::ThreadPool *sTaskThreadPool;
+            static THREAD::ThreadPool* sTaskThreadPool;
             
         private:
             // Connection callback
-            static void readDataCallback(void *ctx, Connection *conn);
-            static void closeCallback(void *ctx, Connection *conn);
+            static void readDataCallback(void* ctx, Connection* conn);
+            static void closeCallback(void* ctx, Connection* conn);
             
-            void readData(Connection *conn);
-            void closeConn(Connection *conn);
+            void readData(Connection* conn);
+            void closeConn(Connection* conn);
             
-            Server *_server;
+            Server* _server;
             std::shared_ptr<Connection> _connection;
-            std::weak_ptr<Request> _request;
-            std::map<Request *, std::weak_ptr<Request>> _requests;
+            std::shared_ptr<Request> _request;
+            std::map<Request*, std::shared_ptr<Request>> _requests;
         };
         
     } // end HTTP

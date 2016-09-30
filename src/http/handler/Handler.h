@@ -12,12 +12,18 @@
 namespace ET {
     namespace HTTP{
         
+        class Request;
+        
         class Handler {
         public:
-            Handler() {};
-            ~Handler() {};
+            Handler() {}
+            virtual ~Handler() {}
             
+            virtual std::shared_ptr<Handler> createHandler(std::shared_ptr<Request> request) = 0;
             virtual void execute() = 0;
+            
+        protected:
+            std::weak_ptr<Request> _request;
         };
         
     } // end HTTP

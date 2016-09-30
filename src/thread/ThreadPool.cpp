@@ -36,7 +36,7 @@ bool ThreadPool::initialize() {
     return true;
 }
 
-void ThreadPool::addTask(ET::THREAD::ThreadRunnable *task) {
+void ThreadPool::addTask(std::shared_ptr<ThreadRunnable> task) {
     if (task) {
         pthread_mutex_lock(&_taskMutex);
         _tasks.push_back(task);
@@ -59,7 +59,7 @@ void ThreadPool::threadRoutine() {
         }
         
         if (!_tasks.empty()) {
-            ThreadRunnable *task = _tasks.back();
+            std::shared_ptr<ThreadRunnable> task = _tasks.back();
             _tasks.pop_back();
             task->run();
         }

@@ -18,19 +18,18 @@ namespace HTTP{
     
     class Request;
     class Response;
-    
-    typedef void (*Handle)(Request *req, Response *res);
+    class Handler;
     
     class Router {
     public:
         Router();
         ~Router();
         
-        void registerHandle(const std::string *path, Handle handle);
-        void disptach(const std::string *path, Request *req, Response *res);
+        void registerHandle(std::shared_ptr<const std::string> path, std::shared_ptr<Handler> handler);
+        std::shared_ptr<Handler> disptach(std::shared_ptr<Request> request);
         
     private:
-        std::map<std::string, Handle> _handles;
+        std::map<std::shared_ptr<const std::string>, std::shared_ptr<Handler>> _handlers;
         
     };
         

@@ -36,7 +36,7 @@ namespace ET {
              * @param task ThreadRunnable class, Thread pool will schedule a idle thread to run it, or create a new thread to run it.
              * 
              */
-            void addTask(ThreadRunnable *task);
+            void addTask(std::shared_ptr<ThreadRunnable> task);
             
         private:
             /**
@@ -53,7 +53,7 @@ namespace ET {
             std::vector<pthread_t> _threads;
             pthread_mutex_t _taskMutex;
             pthread_cond_t _taskCond;
-            std::vector<ThreadRunnable *> _tasks;
+            std::vector<std::shared_ptr<ThreadRunnable>> _tasks;
         };
         
     } // end namespace THREAD

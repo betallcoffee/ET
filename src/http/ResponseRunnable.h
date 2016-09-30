@@ -9,11 +9,14 @@
 #ifndef _ET_RESPONSE_RUNNABLE_
 #define _ET_RESPONSE_RUNNABLE_
 
+#include "Log.h"
+
 #include "ThreadRunnable.h"
 
 namespace ET {
     namespace HTTP {
         
+        class Server;
         class Session;
         class Request;
         
@@ -22,8 +25,14 @@ namespace ET {
          */
         class ResponseRunnable : public THREAD::ThreadRunnable {
         public:
-            ResponseRunnable(std::shared_ptr<Session> &session, std::shared_ptr<Request> &request) : _session(session), _request(request) {};
-            ~ResponseRunnable() {};
+            ResponseRunnable(Server* server,
+                             std::shared_ptr<Session> session,
+                             std::shared_ptr<Request> request) : _server(server), _session(session), _request(request) {
+                LogD("response runnable init");
+            }
+            ~ResponseRunnable() {
+                LogD("response runnable destroy");
+            }
           
             /**
              * Override the run virtual method of ThreadRunnable.
@@ -31,7 +40,8 @@ namespace ET {
             virtual void run();
             
         private:
-            std::weak_ptr<Session> _session;
+            Server* _server;
+            std::shared_ptr<Session> _session;
             std::shared_ptr<Request> _request;
         };
     }

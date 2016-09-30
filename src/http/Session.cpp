@@ -18,9 +18,9 @@
 using namespace ET;
 using namespace HTTP;
 
-THREAD::ThreadPool *Session::sTaskThreadPool = new THREAD::ThreadPool(10);
+THREAD::ThreadPool* Session::sTaskThreadPool = new THREAD::ThreadPool(10);
 
-Session::Session(Server *server, Connection *connection) :
+Session::Session(Server* server, Connection* connection) :
   _server(server), _connection(connection) {
       LogD("Session init");
      if (_connection != nullptr) {
@@ -56,19 +56,17 @@ void Session::readDataCallback(void *ctx, ET::Connection *conn) {
 
 void Session::readData(ET::Connection *conn) {
     // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
-    std::shared_ptr<Session> &session = _server->findSession(this);
-    std::shared_ptr<Request> request = _request.lock();
-    if (request == nullptr || request->status() == Request::RESPONSING) {
-        request.reset(new Request(_connection));
-        _requests[request.get()] = std::weak_ptr<Request>(request);
-        _request = request;
+    std::shared_ptr<Session> session = _server->findSession(this);
+    if (_request == nullptr || _request->status() == Request::RESPONSING) {
+        _request.reset(new Request(_connection));
+        _requests[_request.get()] = _request;
     }
     
     BufferV &data = conn->readBuf();
-    request->parse(data);
+    _request->parse(data);
     
-    if (request->status() == Request::PARSE_COMPLETE) {
-        ResponseRunnable *responsetRunnable = new ResponseRunnable(session, request);
+    if (_request->status() == Request::PARSE_COMPLETE) {
+        std::shared_ptr<ResponseRunnable> responsetRunnable = std::make_shared<ResponseRunnable>(_server, session, _request);
         Session::sTaskThreadPool->addTask(responsetRunnable);
     }
 }

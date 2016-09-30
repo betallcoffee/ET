@@ -12,12 +12,13 @@
 #include <string>
 #include <map>
 
+#include "Router.h"
+
 namespace ET {
     
     class TCPServer;
     class EventLoop;
     class Connection;
-    
     
 namespace HTTP {
 
@@ -35,6 +36,8 @@ namespace HTTP {
         void stop();
         bool isRunning();
         
+        std::shared_ptr<Router> getRouter() { return _router; }
+        
         std::shared_ptr<Session> &findSession(Session *session);
         void removeSession(Session *session);
         
@@ -46,6 +49,8 @@ namespace HTTP {
         TCPServer *_tcpServer;
         std::string _ip;
         short _port;
+        
+        std::shared_ptr<Router> _router;
         std::map<Session *, std::shared_ptr<Session>> _sessions;
     };
 } // end namespace HTTP

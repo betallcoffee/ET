@@ -25,6 +25,15 @@ using namespace HTTP;
 using namespace SYSTEM;
 using namespace STRING;
 
+StaticFileHandler::StaticFileHandler(std::shared_ptr<Request> request) {
+    _request = request;
+}
+StaticFileHandler::~StaticFileHandler() {}
+
+std::shared_ptr<Handler> StaticFileHandler::createHandler(std::shared_ptr<Request> request) {
+    return std::make_shared<StaticFileHandler>(request);
+}
+
 void StaticFileHandler::execute() {
     std::shared_ptr<Request> request = _request.lock();
     if (request) {

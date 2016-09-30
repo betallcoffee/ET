@@ -17,13 +17,11 @@ namespace ET {
         
         class StaticFileHandler : public Handler {
         public:
-            StaticFileHandler(std::shared_ptr<Request> &request) : _request(request) {};
+            StaticFileHandler(std::shared_ptr<Request> request);
             ~StaticFileHandler();
             
+            std::shared_ptr<Handler> createHandler(std::shared_ptr<Request> request);
             void execute();
-            
-        private:
-            std::weak_ptr<Request> _request;
         };
         
     }  // end HTTP
