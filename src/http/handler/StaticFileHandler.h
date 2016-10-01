@@ -17,6 +17,7 @@ namespace ET {
         
         class StaticFileHandler : public Handler {
         public:
+            StaticFileHandler() {}
             StaticFileHandler(std::shared_ptr<Request> request);
             ~StaticFileHandler();
             

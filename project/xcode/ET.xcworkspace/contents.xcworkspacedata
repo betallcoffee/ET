@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ETTest/ETTest.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:EThttp/EThttp.xcodeproj">
    </FileRef>
    <FileRef

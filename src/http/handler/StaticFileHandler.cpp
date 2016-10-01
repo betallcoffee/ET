@@ -66,7 +66,14 @@ void StaticFileHandler::execute() {
                     break;
                 }
             } while (!buf.empty());
+        } else {
+            response.setStatusCode(Response::NOTFOUND);
+            response.setPhrase("Not Found");
             
+            // 设置短连接 connection: close
+            response.addHeader(ResponseHeader::kConnection, "close");
+            
+            request->connection()->send(response.createHeaders());
         }
     }
 }

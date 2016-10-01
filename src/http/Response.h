@@ -31,7 +31,8 @@ namespace HTTP {
         ~Response();
         
         typedef enum StatusCode {
-            OK = 200
+            OK = 200,
+            NOTFOUND = 404
         }eStatusCode;
         
         static const std::string kCRLF;

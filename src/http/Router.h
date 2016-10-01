@@ -11,6 +11,7 @@
 
 #include <string>
 #include <map>
+#include <regex>
 
 namespace ET {
 
@@ -25,11 +26,11 @@ namespace HTTP{
         Router();
         ~Router();
         
-        void registerHandle(std::shared_ptr<const std::string> path, std::shared_ptr<Handler> handler);
+        void registerHandle(const std::string &path, std::shared_ptr<Handler> handler);
         std::shared_ptr<Handler> disptach(std::shared_ptr<Request> request);
         
     private:
-        std::map<std::shared_ptr<const std::string>, std::shared_ptr<Handler>> _handlers;
+        std::map<std::shared_ptr<std::regex>, std::shared_ptr<Handler>> _handlers;
         
     };
         
