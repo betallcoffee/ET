@@ -31,7 +31,9 @@ namespace ET {
             size_t writeData(BufferV &buf);
             std::shared_ptr<Connection> &connection() { return _connection; }
             
-            void removeRequest(Request* request);
+            void setKeepLive(bool b) { _isKeepLive = b; }
+            void completeResponse(std::shared_ptr<Request> request);
+            void removeRequest(std::shared_ptr<Request> request);
             void finishSession();
             
             
@@ -49,6 +51,8 @@ namespace ET {
             std::shared_ptr<Connection> _connection;
             std::shared_ptr<Request> _request;
             std::map<Request*, std::shared_ptr<Request>> _requests;
+            
+            bool _isKeepLive;
         };
         
     } // end HTTP

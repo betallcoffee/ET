@@ -29,10 +29,9 @@ void ResponseRunnable::run() {
         // TODO 1. rewrite 处理 request; 2. 流式 response;
         std::shared_ptr<Handler> handler = _server->getRouter()->disptach(_request);
         handler->execute();
-        
-        // TODO support keep live.
-        _session->removeRequest(_request.get());
-        _session->finishSession();
+
+        _request->setStatus(Request::RESPONSE_COMPLETE);
+        _session->completeResponse(_request);
     }
     
 }

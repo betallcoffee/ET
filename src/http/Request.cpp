@@ -44,6 +44,11 @@ Request::eStatus Request::parse(BufferV &data) {
     return status();
 }
 
+void Request::setStatus(const eStatus status)
+{
+    _status = status;
+}
+
 std::string Request::header(const std::string &k) {
     std::string key(k);
     std::transform(key.begin(), key.end(), key.begin(), std::tolower);
@@ -52,8 +57,10 @@ std::string Request::header(const std::string &k) {
 
 void Request::addHeader(const std::string &k, const std::string &value) {
     std::string key(k);
+    std::string v(value);
     std::transform(key.begin(), key.end(), key.begin(), std::tolower);
-    _headers[key] = value;
+    std::transform(v.begin(), v.end(), v.begin(), std::tolower);
+    _headers[key] = v;
 }
 
 RequestHeader::eMethod Request::stringToMethod(const std::string &method) {
@@ -89,7 +96,7 @@ bool Request::parseFirstLine(BufferV &data) {
             _requestHeader._version.major = 1;
         }
 		
-		_status = PARSE_HEADER;
+        setStatus(PARSE_HEADER);
 	}
     return ret;
 }
@@ -108,9 +115,9 @@ bool Request::parseHeaders(BufferV &data) {
 	} else if (ret && line.size() == 2) {
         if (_requestHeader._m == RequestHeader::POST ||
             _requestHeader._m == RequestHeader::PUT) {
-            _status = READ_BODY;
+            setStatus(READ_BODY);
         } else {
-            _status = PARSE_COMPLETE;
+            setStatus(PARSE_COMPLETE);
         }
     }
     return ret;
@@ -128,10 +135,5 @@ bool Request::readBody(ET::BufferV &data) {
     } else {
         return true;
     }
-}
-
-void Request::responsing()
-{
-    _status = RESPONSING;
 }
 

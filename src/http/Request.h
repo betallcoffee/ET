@@ -27,7 +27,7 @@ namespace HTTP {
     
     class Request {
     public:
-        Request(std::shared_ptr<Connection> &connection) : _connection(connection), _status(FIRST_LINE), _body(NULL), _response(this) {
+        Request(std::weak_ptr<Session> session, std::shared_ptr<Connection> connection) : _session(session), _connection(connection), _status(FIRST_LINE), _body(NULL), _response(this) {
             LogD("Request init");
         }
 
@@ -38,7 +38,8 @@ namespace HTTP {
             PARSE_HEADER,
             READ_BODY,
             PARSE_COMPLETE,
-            RESPONSING
+            RESPONSING,
+            RESPONSE_COMPLETE
         }eStatus;
         
         friend class Response;
@@ -46,9 +47,16 @@ namespace HTTP {
         
         eStatus parse(BufferV &data);
         void reset();
-
-        void responsing();
+        
+        std::string header(const std::string &key);
+        void addHeader(const std::string &key, const std::string &value);
+        
+        Response &response() { return _response; }
+        
+        BaseHeader::sVersion httpVersion() { return _requestHeader._version; }
+        
         eStatus status() { return _status; }
+        void setStatus(const eStatus status);
         
         const std::string &method() { return _requestHeader._method; }
         void setMethod(const std::string &method) { _requestHeader._method = method; }
@@ -57,24 +65,20 @@ namespace HTTP {
         void setURL(const std::string &url) { _requestHeader._url = url; } // TODO: parse path from url;
         
         const std::string &path() { return _requestHeader._path; }
-        
-        std::string header(const std::string &key);
-        void addHeader(const std::string &key, const std::string &value);
-        
-        Response &response() { return _response; }
-        
+    
     private:
         RequestHeader::eMethod stringToMethod(const std::string &method);
         bool parseFirstLine(BufferV &data);
         bool parseHeaders(BufferV &data);
         bool readBody(BufferV &data);
         
+        std::weak_ptr<Session> _session;
         std::shared_ptr<Connection> _connection;
         eStatus _status;
         BufferV *_body;
         std::map<std::string, std::string> _headers;
         RequestHeader _requestHeader;
-    
+        
         Response _response;
     };
 }

@@ -50,9 +50,6 @@ void StaticFileHandler::execute() {
             long end = file->size();
             response.addHeader(ResponseHeader::kContentLenght, intToStr(end));
             
-            // 设置短连接 connection: close
-            response.addHeader(ResponseHeader::kConnection, "close");
-            
             request->connection()->send(response.createHeaders());
             
             BufferV buf;

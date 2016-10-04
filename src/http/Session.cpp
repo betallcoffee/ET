@@ -21,7 +21,7 @@ using namespace HTTP;
 THREAD::ThreadPool* Session::sTaskThreadPool = new THREAD::ThreadPool(10);
 
 Session::Session(Server* server, Connection* connection) :
-  _server(server), _connection(connection) {
+  _server(server), _connection(connection), _isKeepLive(false) {
       LogD("Session init");
      if (_connection != nullptr) {
          _connection->setContext(this);
@@ -35,8 +35,20 @@ Session::~Session() {
     _requests.clear();
 }
 
-void Session::removeRequest(ET::HTTP::Request *request) {
-    _requests.erase(request);
+void Session::completeResponse(std::shared_ptr<Request> request) {
+    LogD("complete response : %s", request->url().c_str());
+    if (_isKeepLive) {
+        LogD("connection keep live");
+    } else {
+        LogD("connection close");
+        removeRequest(request);
+        finishSession();
+    }
+}
+
+void Session::removeRequest(std::shared_ptr<Request> request) {
+    LogD("session revmove request : %s", request->url().c_str());
+    _requests.erase(request.get());
 }
 
 void Session::finishSession()
@@ -58,7 +70,7 @@ void Session::readData(ET::Connection *conn) {
     // 1. When non request, create a new. 2. When pre request is complete parse, create a new.
     std::shared_ptr<Session> session = _server->findSession(this);
     if (_request == nullptr || _request->status() == Request::RESPONSING) {
-        _request.reset(new Request(_connection));
+        _request.reset(new Request(session, _connection));
         _requests[_request.get()] = _request;
     }
     
@@ -66,6 +78,7 @@ void Session::readData(ET::Connection *conn) {
     _request->parse(data);
     
     if (_request->status() == Request::PARSE_COMPLETE) {
+        _request->setStatus(Request::RESPONSING);
         std::shared_ptr<ResponseRunnable> responsetRunnable = std::make_shared<ResponseRunnable>(_server, session, _request);
         Session::sTaskThreadPool->addTask(responsetRunnable);
     }
@@ -78,6 +91,7 @@ void Session::closeCallback(void *ctx, ET::Connection *conn) {
 
 void Session::closeConn(ET::Connection *conn) {
     LogD("Session close connection");
+    _requests.clear();
     _server->removeSession(this);
 }
 
