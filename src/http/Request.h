@@ -48,6 +48,7 @@ namespace HTTP {
         eStatus parse(BufferV &data);
         void reset();
         
+        std::vector<std::string> headers(const std::string &key);
         std::string header(const std::string &key);
         void addHeader(const std::string &key, const std::string &value);
         
@@ -70,11 +71,13 @@ namespace HTTP {
         RequestHeader::eMethod stringToMethod(const std::string &method);
         bool parseFirstLine(BufferV &data);
         bool parseHeaders(BufferV &data);
+        void proccessHeaders();
         bool readBody(BufferV &data);
         
         std::weak_ptr<Session> _session;
         std::shared_ptr<Connection> _connection;
         eStatus _status;
+        
         BufferV *_body;
         std::map<std::string, std::string> _headers;
         RequestHeader _requestHeader;

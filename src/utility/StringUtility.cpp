@@ -28,6 +28,8 @@ std::vector<std::string> ET::STRING::splite(const std::string &str, const std::s
 void ET::STRING::trim(std::string &str) {
     std::string res;
     str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
+    str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
 }
 
 std::string ET::STRING::intToStr(long n) {

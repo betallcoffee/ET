@@ -49,18 +49,24 @@ void Request::setStatus(const eStatus status)
     _status = status;
 }
 
-std::string Request::header(const std::string &k) {
-    std::string key(k);
-    std::transform(key.begin(), key.end(), key.begin(), std::tolower);
-    return _headers[key];
+std::vector<std::string> Request::headers(const std::string &key) {
+    std::string k(key);
+    std::transform(k.begin(), k.end(), k.begin(), std::tolower);
+    return STRING::splite(_headers[k], ",");
 }
 
-void Request::addHeader(const std::string &k, const std::string &value) {
-    std::string key(k);
+std::string Request::header(const std::string &key) {
+    std::string k(key);
+    std::transform(k.begin(), k.end(), k.begin(), std::tolower);
+    return _headers[k];
+}
+
+void Request::addHeader(const std::string &key, const std::string &value) {
+    std::string k(key);
     std::string v(value);
-    std::transform(key.begin(), key.end(), key.begin(), std::tolower);
+    std::transform(k.begin(), k.end(), k.begin(), std::tolower);
     std::transform(v.begin(), v.end(), v.begin(), std::tolower);
-    _headers[key] = v;
+    _headers[k] = v;
 }
 
 RequestHeader::eMethod Request::stringToMethod(const std::string &method) {
@@ -109,10 +115,13 @@ bool Request::parseHeaders(BufferV &data) {
         std::vector<std::string> strs = STRING::splite(line, ":", false);
         if (strs.size() >= 2) {
             LogV("request head:%s=%s", strs[0].c_str(), strs[1].c_str());
-            _headers[strs[0]] = strs[1];
+            addHeader(strs[0], strs[1]);
             _requestHeader.parseAHeaderKeyValue(strs[0], strs[1]);
         }
 	} else if (ret && line.size() == 2) {
+        
+        proccessHeaders();
+        
         if (_requestHeader._m == RequestHeader::POST ||
             _requestHeader._m == RequestHeader::PUT) {
             setStatus(READ_BODY);
@@ -121,6 +130,15 @@ bool Request::parseHeaders(BufferV &data) {
         }
     }
     return ret;
+}
+
+void Request::proccessHeaders() {
+    std::shared_ptr<Session> session = _session.lock();
+    std::string upgrade = header(RequestHeader::kUpgrade);
+    LogV("upgrade : %s", upgrade.c_str());
+    if (session && upgrade == "websocket") {
+        session->setUpgrade(Session::WEBSOCKET);
+    }
 }
 
 bool Request::readBody(ET::BufferV &data) {

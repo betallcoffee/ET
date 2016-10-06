@@ -28,14 +28,22 @@ namespace ET {
             Session(Server* server, Connection* connection);
             ~Session();
             
+            typedef enum Upgrade {
+                HTTP = 0x01,
+                WEBSOCKET = 0x02
+            }eUpgrade;
+            
             size_t writeData(BufferV &buf);
             std::shared_ptr<Connection> &connection() { return _connection; }
             
-            void setKeepLive(bool b) { _isKeepLive = b; }
             void completeResponse(std::shared_ptr<Request> request);
             void removeRequest(std::shared_ptr<Request> request);
             void finishSession();
             
+            void setKeepALive(bool b) { _isKeepALive = b; }
+            
+            void setUpgrade(eUpgrade upgrade) { _upgrade = upgrade; }
+            eUpgrade upgrade() { return _upgrade; }
             
             static THREAD::ThreadPool* sTaskThreadPool;
             
@@ -52,7 +60,8 @@ namespace ET {
             std::shared_ptr<Request> _request;
             std::map<Request*, std::shared_ptr<Request>> _requests;
             
-            bool _isKeepLive;
+            bool _isKeepALive;
+            eUpgrade _upgrade;
         };
         
     } // end HTTP

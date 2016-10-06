@@ -16,7 +16,7 @@ using namespace HTTP;
 const std::string BaseHeader::kConnection = "connection";
 const std::string BaseHeader::kDate = "date";
 const std::string BaseHeader::kMineVersion = "mime-version";
-const std::string BaseHeader::kUpdate = "update";
+const std::string BaseHeader::kUpgrade = "upgrade";
 const std::string BaseHeader::kTrailer = "trailer";
 const std::string BaseHeader::kTransforEncoding = "transfor-encoding";
 const std::string BaseHeader::kVia = "via";
@@ -32,6 +32,11 @@ const std::string BaseHeader::kContentLocation = "content-location";
 const std::string BaseHeader::kContentMD5 = "content-md5";
 const std::string BaseHeader::kContentRange = "content-range";
 const std::string BaseHeader::kContentType = "content-type";
+
+const std::string BaseHeader::kSecWebSocketKey = "sec-websocket-key";
+const std::string BaseHeader::kSecWebSocketAccept = "sec-websocket-accept";
+const std::string BaseHeader::kSecWebSocketProtocol = "sec-websocket-accept";
+const std::string BaseHeader::kSecWebSocketVersion = "sec-websocket-version";
 
 BaseHeader::sVersion BaseHeader::stringToVersion(std::string const &str) {
 	sVersion version;
@@ -56,14 +61,22 @@ bool BaseHeader::parseAHeaderKeyValue(const std::string &k, const std::string &v
         _trailer = value;
     } else if (key == kTransforEncoding) {
         _transforEncoding = value;
-    } else if (key == kUpdate) {
-        _update = value;
+    } else if (key == kUpgrade) {
+        _upgrade = value;
     } else if (key == kVia) {
         _via = value;
     } else if (key == kCacheControl) {
         _cacheControl = value;
     } else if (key == kPragma) {
         _pragma = value;
+    } else if (key == kSecWebSocketKey) {
+        _secWebSocketKey = value;
+    } else if (key == kSecWebSocketAccept) {
+        _secWebSocketAccept = value;
+    } else if (key == kSecWebSocketProtocol) {
+        _secWebSocketProtocols = STRING::splite(value, ",");
+    } else if (key == kSecWebSocketVersion) {
+        _secWebSocketVersion = std::stoi(value);
     }
     
     return ret;

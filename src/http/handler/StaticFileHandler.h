@@ -21,6 +21,8 @@ namespace ET {
             StaticFileHandler(std::shared_ptr<Request> request);
             ~StaticFileHandler();
             
+            const std::string &name() { return "StatciFileHandler"; }
+            const int type() { return Session::HTTP; }
             std::shared_ptr<Handler> createHandler(std::shared_ptr<Request> request);
             void execute();
         };

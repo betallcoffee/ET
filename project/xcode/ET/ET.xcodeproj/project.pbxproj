@@ -56,6 +56,8 @@
 		ECE7AC6D19DA9769000118A3 /* Alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE7AC6B19DA9769000118A3 /* Alloc.h */; };
 		ECE7AC7019DA97B6000118A3 /* Timestamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE7AC6E19DA97B6000118A3 /* Timestamp.cpp */; };
 		ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE7AC6F19DA97B6000118A3 /* Timestamp.h */; };
+		ECE9E2DC1DA602E600658A06 /* WebSocketHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE9E2DA1DA602E600658A06 /* WebSocketHandler.cpp */; };
+		ECE9E2DD1DA602E600658A06 /* WebSocketHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ECE9E2DB1DA602E600658A06 /* WebSocketHandler.hpp */; };
 		ECED85231BED92BF00891D1C /* ResponseRunnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */; };
 		ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED85221BED92BF00891D1C /* ResponseRunnable.h */; };
 		ECED85271BEE024C00891D1C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85251BEE024C00891D1C /* Log.cpp */; };
@@ -119,6 +121,8 @@
 		ECE7AC6B19DA9769000118A3 /* Alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alloc.h; sourceTree = "<group>"; };
 		ECE7AC6E19DA97B6000118A3 /* Timestamp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timestamp.cpp; sourceTree = "<group>"; };
 		ECE7AC6F19DA97B6000118A3 /* Timestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timestamp.h; sourceTree = "<group>"; };
+		ECE9E2DA1DA602E600658A06 /* WebSocketHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketHandler.cpp; sourceTree = "<group>"; };
+		ECE9E2DB1DA602E600658A06 /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResponseRunnable.cpp; sourceTree = "<group>"; };
 		ECED85221BED92BF00891D1C /* ResponseRunnable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseRunnable.h; sourceTree = "<group>"; };
 		ECED85251BEE024C00891D1C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 				ECE3DD001D9D69500031FAE7 /* Handler.h */,
 				ECE3DD011D9D69500031FAE7 /* StaticFileHandler.cpp */,
 				ECE3DD021D9D69500031FAE7 /* StaticFileHandler.h */,
+				ECE9E2DA1DA602E600658A06 /* WebSocketHandler.cpp */,
+				ECE9E2DB1DA602E600658A06 /* WebSocketHandler.hpp */,
 			);
 			path = handler;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 				ECE3DD051D9D69500031FAE7 /* StaticFileHandler.h in Headers */,
 				ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */,
 				EC0D9F001BB7E40B001ABA25 /* Connection.h in Headers */,
+				ECE9E2DD1DA602E600658A06 /* WebSocketHandler.hpp in Headers */,
 				EC0D9F0C1BB7E40B001ABA25 /* Watcher.h in Headers */,
 				EC0D9F0A1BB7E40B001ABA25 /* TCPServer.h in Headers */,
 			);
@@ -397,6 +404,7 @@
 				EC0D9F2C1BBD71E3001ABA25 /* Response.cpp in Sources */,
 				EC0D9EFF1BB7E40B001ABA25 /* Connection.cpp in Sources */,
 				ECED852F1BEE430200891D1C /* LoggerTarget.cpp in Sources */,
+				ECE9E2DC1DA602E600658A06 /* WebSocketHandler.cpp in Sources */,
 				ECE7AC6C19DA9769000118A3 /* Alloc.cpp in Sources */,
 				ECD9D6A01B690D7F00D1FB74 /* Dir.cpp in Sources */,
 				ECE3DCFE1D9D68A20031FAE7 /* Router.cpp in Sources */,

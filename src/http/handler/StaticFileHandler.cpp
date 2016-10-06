@@ -38,7 +38,7 @@ void StaticFileHandler::execute() {
     std::shared_ptr<Request> request = _request.lock();
     if (request) {
         Response &response = request->response();
-        std::string path = "/Users/liang/Workspace/projects/ET";
+        std::string path = "/Users/liang/Workspace/projects/ET/web/";
         path.append(request->path());
         if (File::exist(path)) {
             File *file = new File(path, "r");

@@ -27,7 +27,7 @@ void ResponseRunnable::run() {
     if (_server && _session && _request)
     {
         // TODO 1. rewrite 处理 request; 2. 流式 response;
-        std::shared_ptr<Handler> handler = _server->getRouter()->disptach(_request);
+        std::shared_ptr<Handler> handler = _server->getRouter()->disptach(_session, _request);
         handler->execute();
 
         _request->setStatus(Request::RESPONSE_COMPLETE);

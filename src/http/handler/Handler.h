@@ -9,6 +9,8 @@
 #ifndef _ET_HANDLER_
 #define _ET_HANDLER_
 
+#include <string>
+
 namespace ET {
     namespace HTTP{
         
@@ -19,6 +21,8 @@ namespace ET {
             Handler() {}
             virtual ~Handler() {}
             
+            virtual const std::string &name() = 0;
+            virtual const int type() = 0;
             virtual std::shared_ptr<Handler> createHandler(std::shared_ptr<Request> request) = 0;
             virtual void execute() = 0;
             

@@ -31,6 +31,7 @@ namespace HTTP {
         ~Response();
         
         typedef enum StatusCode {
+            SWITCH = 101,
             OK = 200,
             NOTFOUND = 404
         }eStatusCode;
@@ -49,6 +50,8 @@ namespace HTTP {
         BufferV &createHeaders();
         
     private:
+        void prepareHeaders();
+        
         Request *_request;
         std::map<std::string, std::string> _headers;
         

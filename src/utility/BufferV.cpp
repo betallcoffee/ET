@@ -57,6 +57,10 @@ bool BufferV::getLine(std::string &line) {
 	return true;
 }
 
+std::string BufferV::toString() {
+    return std::string(beginRead(), readableBytes());
+}
+
 void BufferV::ensureWriteable(size_t n)
 {
     if (n > writeableBytes()) {

@@ -15,18 +15,18 @@ int main()
 {
     // init log
     Logger::sharedInstance();
-    Logger::sharedInstance()->setLogLevel(Logger::VERBOSE);
-    LogD("Log init success");
+    Logger::sharedInstance()->setLogLevel(Logger::NONE);
+    Log("Log init success");
     
     KqueueSelect select;
     EventLoop eventLoop(&select);
     HTTP::Server server(&eventLoop, nullptr, 8080);
-    LogD("http server init 8080");
-    LogD("http server run begin");
+    Log("http server init 8080");
+    Log("http server run begin");
     if (server.run()) {
-        LogD("http server run end");
+        Log("http server run end");
     } else {
-        LogE("http server init error");
+        Log("http server run error");
     }
     
     return 0;

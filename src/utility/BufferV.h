@@ -46,6 +46,8 @@ namespace ET
          * Read a line data, and remove the data from buffer.
          */
         bool getLine(std::string &line);
+        
+        std::string toString();
 
     private:
         static const char kCRLF[];

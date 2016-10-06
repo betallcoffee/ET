@@ -15,6 +15,7 @@ using namespace ET;
 void ET::log(Logger *logger,
          int logType,
 #if defined(DEBUG)
+        void *obj,
         const char *fileName,
         int lineNo,
         const char *functionName,
@@ -29,7 +30,7 @@ void ET::log(Logger *logger,
     va_end(vaList);
     
 #if defined(DEBUG)
-    snprintf(logLineMessage + length, Logger::kMaxLineLength - length, " - %d %s", lineNo, functionName);
+    snprintf(logLineMessage + length, Logger::kMaxLineLength - length, " - %p %d %s", obj, lineNo, functionName);
 #endif
     
     logger->output(logType, logLineMessage);

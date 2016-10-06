@@ -17,6 +17,7 @@ namespace ET {
 
 namespace HTTP{
     
+    class Session;
     class Request;
     class Response;
     class Handler;
@@ -27,7 +28,7 @@ namespace HTTP{
         ~Router();
         
         void registerHandle(const std::string &path, std::shared_ptr<Handler> handler);
-        std::shared_ptr<Handler> disptach(std::shared_ptr<Request> request);
+        std::shared_ptr<Handler> disptach(std::shared_ptr<Session> session, std::shared_ptr<Request> request);
         
     private:
         std::map<std::shared_ptr<std::regex>, std::shared_ptr<Handler>> _handlers;
