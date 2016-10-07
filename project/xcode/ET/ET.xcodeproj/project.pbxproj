@@ -58,6 +58,10 @@
 		ECE7AC7119DA97B6000118A3 /* Timestamp.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE7AC6F19DA97B6000118A3 /* Timestamp.h */; };
 		ECE9E2DC1DA602E600658A06 /* WebSocketHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE9E2DA1DA602E600658A06 /* WebSocketHandler.cpp */; };
 		ECE9E2DD1DA602E600658A06 /* WebSocketHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ECE9E2DB1DA602E600658A06 /* WebSocketHandler.hpp */; };
+		ECE9E2E41DA7819C00658A06 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE9E2E01DA7819C00658A06 /* md5.cpp */; };
+		ECE9E2E51DA7819C00658A06 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE9E2E11DA7819C00658A06 /* md5.h */; };
+		ECE9E2E61DA7819C00658A06 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE9E2E21DA7819C00658A06 /* sha1.cpp */; };
+		ECE9E2E71DA7819C00658A06 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = ECE9E2E31DA7819C00658A06 /* sha1.h */; };
 		ECED85231BED92BF00891D1C /* ResponseRunnable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */; };
 		ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = ECED85221BED92BF00891D1C /* ResponseRunnable.h */; };
 		ECED85271BEE024C00891D1C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECED85251BEE024C00891D1C /* Log.cpp */; };
@@ -123,6 +127,10 @@
 		ECE7AC6F19DA97B6000118A3 /* Timestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timestamp.h; sourceTree = "<group>"; };
 		ECE9E2DA1DA602E600658A06 /* WebSocketHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketHandler.cpp; sourceTree = "<group>"; };
 		ECE9E2DB1DA602E600658A06 /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
+		ECE9E2E01DA7819C00658A06 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
+		ECE9E2E11DA7819C00658A06 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		ECE9E2E21DA7819C00658A06 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sha1.cpp; sourceTree = "<group>"; };
+		ECE9E2E31DA7819C00658A06 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
 		ECED85211BED92BF00891D1C /* ResponseRunnable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResponseRunnable.cpp; sourceTree = "<group>"; };
 		ECED85221BED92BF00891D1C /* ResponseRunnable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseRunnable.h; sourceTree = "<group>"; };
 		ECED85251BEE024C00891D1C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -186,6 +194,7 @@
 		ECA3D01B19C1627C003C02DE = {
 			isa = PBXGroup;
 			children = (
+				ECE9E2DE1DA7819C00658A06 /* vendor */,
 				ECA3D02B19C163AE003C02DE /* src */,
 				ECA3D02519C1627C003C02DE /* Products */,
 			);
@@ -261,6 +270,26 @@
 			path = handler;
 			sourceTree = "<group>";
 		};
+		ECE9E2DE1DA7819C00658A06 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				ECE9E2DF1DA7819C00658A06 /* sha1-md5 */,
+			);
+			name = vendor;
+			path = ../../../vendor;
+			sourceTree = "<group>";
+		};
+		ECE9E2DF1DA7819C00658A06 /* sha1-md5 */ = {
+			isa = PBXGroup;
+			children = (
+				ECE9E2E01DA7819C00658A06 /* md5.cpp */,
+				ECE9E2E11DA7819C00658A06 /* md5.h */,
+				ECE9E2E21DA7819C00658A06 /* sha1.cpp */,
+				ECE9E2E31DA7819C00658A06 /* sha1.h */,
+			);
+			path = "sha1-md5";
+			sourceTree = "<group>";
+		};
 		ECF48B471A0F0C4B0076A7D4 /* http */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +338,7 @@
 				EC0D9F131BB7E6F8001ABA25 /* EventLoop.h in Headers */,
 				EC0D9EFE1BB7E40B001ABA25 /* Acceptor.h in Headers */,
 				EC0D9F081BB7E40B001ABA25 /* Select.h in Headers */,
+				ECE9E2E71DA7819C00658A06 /* sha1.h in Headers */,
 				ECED85241BED92BF00891D1C /* ResponseRunnable.h in Headers */,
 				ECE3DD031D9D69500031FAE7 /* Handler.h in Headers */,
 				EC0D9F301BC513ED001ABA25 /* Session.h in Headers */,
@@ -316,6 +346,7 @@
 				ECED85341BEEF45800891D1C /* Net.h in Headers */,
 				ECED85281BEE024C00891D1C /* Log.h in Headers */,
 				ECED85301BEE430200891D1C /* LoggerTarget.h in Headers */,
+				ECE9E2E51DA7819C00658A06 /* md5.h in Headers */,
 				ECD9D6931B611EAD00D1FB74 /* File.h in Headers */,
 				EC0D9F401BCAAB4B001ABA25 /* ResponseHeader.h in Headers */,
 				ECE3DD051D9D69500031FAE7 /* StaticFileHandler.h in Headers */,
@@ -398,6 +429,7 @@
 				EC0D9F051BB7E40B001ABA25 /* KqueueSelect.cpp in Sources */,
 				ECE3DD041D9D69500031FAE7 /* StaticFileHandler.cpp in Sources */,
 				EC0D9F2F1BC513ED001ABA25 /* Session.cpp in Sources */,
+				ECE9E2E61DA7819C00658A06 /* sha1.cpp in Sources */,
 				ECD7AD961B594214005E8574 /* StringUtility.cpp in Sources */,
 				EC0D9F191BB7EBAD001ABA25 /* Buffer.cpp in Sources */,
 				EC0D9EEA1BB7E272001ABA25 /* ThreadRunnable.cpp in Sources */,
@@ -408,6 +440,7 @@
 				ECE7AC6C19DA9769000118A3 /* Alloc.cpp in Sources */,
 				ECD9D6A01B690D7F00D1FB74 /* Dir.cpp in Sources */,
 				ECE3DCFE1D9D68A20031FAE7 /* Router.cpp in Sources */,
+				ECE9E2E41DA7819C00658A06 /* md5.cpp in Sources */,
 				ECED85231BED92BF00891D1C /* ResponseRunnable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
