@@ -8,22 +8,16 @@
 
 #include <string>
 
-#include "File.h"
-#include "BufferV.h"
-#include "StringUtility.h"
-
 #include "Connection.h"
 #include "Request.h"
 #include "Response.h"
-#include "ResponseRunnable.h"
 
 #include "WebSocketHandler.hpp"
 
-
-
 using namespace ET;
 using namespace HTTP;
-using namespace STRING;
+
+const char *WebSocketHandler::kGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
 WebSocketHandler::WebSocketHandler(std::shared_ptr<Request> request) {
     _request = request;
@@ -40,6 +34,14 @@ void WebSocketHandler::execute() {
         Response &response = request->response();
         response.setStatusCode(Response::SWITCH);
         response.setPhrase("Switching Protocols");
+        
+        std::string secKey = request->header(RequestHeader::kSecWebSocketKey);
+        secKey.append(kGUID);
+        
+        char sha1[25];
+        _sha1.SHA_GO(secKey.c_str(), sha1);
+        
+        response.addHeader(ResponseHeader::kSecWebSocketAccept, sha1);
         
         request->connection()->send(response.createHeaders());
     }

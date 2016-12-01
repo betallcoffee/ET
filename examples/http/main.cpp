@@ -17,6 +17,11 @@ int main()
     Logger::sharedInstance();
     Logger::sharedInstance()->setLogLevel(Logger::NONE);
     Log("Log init success");
+    Base64 base64;
+    base64.encode("hello world");
+    Log("%s base64: %s", base64.plain(), base64.base64());
+    base64.decode(base64.base64());
+    Log("%s plain: %s", base64.base64(), base64.plain());
     
     KqueueSelect select;
     EventLoop eventLoop(&select);

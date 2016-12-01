@@ -9,6 +9,8 @@
 #ifndef WebSocketHandler_hpp
 #define WebSocketHandler_hpp
 
+#include "sha1.h"
+
 #include "Handler.h"
 #include "Request.h"
 
@@ -25,6 +27,10 @@ namespace ET {
             const int type() { return Session::WEBSOCKET; }
             std::shared_ptr<Handler> createHandler(std::shared_ptr<Request> request);
             void execute();
+            
+        private:
+            static const char *kGUID;
+            SHA1 _sha1;
         };
         
     }  // end HTTP

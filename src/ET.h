@@ -18,5 +18,6 @@
 #include "utility/Log.h"
 #include "utility/Logger.h"
 #include "utility/LoggerTarget.h"
+#include "utility/Base64.h"
 
 #endif // end _ET_H
