@@ -49,7 +49,7 @@ size_t Connection::send(const char *data, size_t size)
         return -1;
     }
 
-    if (!watcher_->isWriting()) {
+    if (!watcher_->isWriting() && outBuf_.empty()) {
         res = ::write(watcher_->getFD(), data, size);
         if (res > 0) {
             if (res == size) {
@@ -80,6 +80,16 @@ size_t Connection::send(BufferV &data)
     size_t res = send(data.beginRead(), data.readableBytes());
 
     return res;
+}
+
+void Connection::lock()
+{
+    // TODO
+}
+
+void Connection::unlock()
+{
+    // TODO
 }
 
 void Connection::connectEstablish()

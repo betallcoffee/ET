@@ -44,6 +44,8 @@ namespace ET
         size_t send(BufferV &);
         BufferV &readBuf() { return inBuf_; }
 
+        void lock();
+        void unlock();
         void connectEstablish();
         void connectClose();
         void shutdown();

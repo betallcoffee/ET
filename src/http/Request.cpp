@@ -118,7 +118,7 @@ bool Request::parseHeaders(BufferV &data) {
             addHeader(strs[0], strs[1]);
             _requestHeader.parseAHeaderKeyValue(strs[0], strs[1]);
         }
-	} else if (ret && line.size() == 2) {
+	} else if (ret && line.size() == 2 && _status == PARSE_HEADER) {
         
         proccessHeaders();
         

@@ -62,7 +62,7 @@ void SHA1::SHAInit()
 	H[4]		= 0xC3D2E1F0;
 }
 
-// space of lpSHACode_Output must be >= 20 bytes;
+// space of lpSHACode_Output must be >= 41 bytes;
 bool SHA1::SHA_GO( const char *lpData_Input, char *lpSHACode_Output)
 {
 	if (lpData_Input == NULL || lpSHACode_Output == NULL)

@@ -40,6 +40,7 @@ namespace ET {
             static const std::string kHost;
             static const std::string kReferer;
             static const std::string kUserAgent;
+            static const std::string kOrigin;
             
             static const std::string kAccept;
             static const std::string kAcceptCharset;
@@ -69,6 +70,7 @@ namespace ET {
             std::string _host; // 提供了接收请求的服务器的主机和端口号。
             std::string _referer; // 提供了包含当前请求 URI 的文档 的 URL。
             std::string _userAgent; // 将发起请求的应用程序名称告知服务器。
+            std::string _origin; // 同 referer 
             
             // Accept 首部
             std::string _accept; // 告诉服务器能够发送哪些媒体类型。

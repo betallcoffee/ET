@@ -16,6 +16,7 @@ const std::string RequestHeader::kFrom = "from";
 const std::string RequestHeader::kHost = "host";
 const std::string RequestHeader::kReferer = "referer";
 const std::string RequestHeader::kUserAgent = "user-agent";
+const std::string RequestHeader::kOrigin = "origin";
 
 const std::string RequestHeader::kAccept = "accept";
 const std::string RequestHeader::kAcceptCharset = "accept-charset";
@@ -49,6 +50,8 @@ bool RequestHeader::parseAHeaderKeyValue(const std::string &k, const std::string
             _referer = value;
         } else if (key == kUserAgent) {
             _userAgent = value;
+        } else if (key == kOrigin) {
+            _origin = value;
         } else if (key == kAccept) {
             _accept = value;
         } else if (key == kAcceptCharset) {

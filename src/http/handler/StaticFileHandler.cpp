@@ -50,6 +50,7 @@ void StaticFileHandler::execute() {
             long end = file->size();
             response.addHeader(ResponseHeader::kContentLenght, intToStr(end));
             
+            request->connection()->lock();
             request->connection()->send(response.createHeaders());
             
             BufferV buf;
@@ -63,6 +64,7 @@ void StaticFileHandler::execute() {
                     break;
                 }
             } while (!buf.empty());
+            request->connection()->unlock();
         } else {
             response.setStatusCode(Response::NOTFOUND);
             response.setPhrase("Not Found");
@@ -70,7 +72,9 @@ void StaticFileHandler::execute() {
             // 设置短连接 connection: close
             response.addHeader(ResponseHeader::kConnection, "close");
             
+            request->connection()->lock();
             request->connection()->send(response.createHeaders());
+            request->connection()->unlock();
         }
     }
 }

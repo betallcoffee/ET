@@ -8,6 +8,8 @@
 
 #include <string>
 
+#include "Base64.h"
+
 #include "Connection.h"
 #include "Request.h"
 #include "Response.h"
@@ -38,11 +40,17 @@ void WebSocketHandler::execute() {
         std::string secKey = request->header(RequestHeader::kSecWebSocketKey);
         secKey.append(kGUID);
         
-        char sha1[25];
+        char sha1[41];
+        memset(sha1, 0, sizeof(sha1));
         _sha1.SHA_GO(secKey.c_str(), sha1);
         
-        response.addHeader(ResponseHeader::kSecWebSocketAccept, sha1);
+        Base64 base64;
+        base64.encode(sha1);
         
+        response.addHeader(ResponseHeader::kSecWebSocketAccept, base64.base64());
+        
+        request->connection()->lock();
         request->connection()->send(response.createHeaders());
+        request->connection()->unlock();
     }
 }
